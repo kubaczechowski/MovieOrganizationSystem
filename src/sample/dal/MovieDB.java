@@ -2,6 +2,7 @@ package sample.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import sample.be.Movie;
+import sample.dal.exception.DALexception;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MovieDB implements MovieInterface{
 
 
     @Override
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies() throws DALexception {
         //HashMap<Integer, Movie> allMovies = new HashMap<>();
         List<Movie> allMovies = new ArrayList<>();
         String query = "SELECT * FROM Movie;";
@@ -40,18 +41,16 @@ public class MovieDB implements MovieInterface{
             }
             return allMovies;
         } catch (SQLServerException throwables) {
-            throwables.printStackTrace();
-            System.out.println("bla");
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't get all movies", throwables);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println("bla");
-
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't get all movies", throwables);
         }
-        return null;
     }
 
     @Override
-    public void addMovie(Movie movie) {
+    public void addMovie(Movie movie) throws DALexception {
         String query = " INSERT INTO MOVIE( name, rating, ratingIMDB, filelink, lastview) " +
                 "VALUES (?, ?, ? ,?, ?);";
 
@@ -72,29 +71,31 @@ public class MovieDB implements MovieInterface{
                     movie.setId(generatedKey.getInt(1));
                 }
                 else{
-                    //throw custom exception
+                    throw new DALexception("Couldn't get generated key");
                 }
             }
-
         } catch (SQLServerException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't add new movie", throwables);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't add new movie", throwables);
         }
-
     }
 
     @Override
-    public void deleteMovie(Movie movie) {
+    public void deleteMovie(Movie movie) throws DALexception {
         String query = "DELETE FROM Movie WHERE id=?;";
         try (Connection con = dbConnector.getConnection();
              PreparedStatement pstat = con.prepareStatement(query)) {
             pstat.setInt(1, movie.getId());
             pstat.execute();
         } catch (SQLServerException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't delete movie", throwables);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
+            throw new DALexception("Couldn't delete movie", throwables);
         }
     }
 
