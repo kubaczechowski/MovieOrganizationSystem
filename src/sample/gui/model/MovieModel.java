@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
+import sample.bll.exception.BLLexception;
 import sample.dal.DALController;
 import sample.dal.MovieDB;
 
@@ -28,10 +29,37 @@ public class MovieModel {
 
     public void load() {
         obsMovies.clear();
-        obsMovies.addAll(logicLayer.getAllMovies());
+        try {
+            obsMovies.addAll(logicLayer.getAllMovies());
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
     }
 
     public ObservableList<Movie> getAllMovies() {
         return obsMovies;
+    }
+
+    public void delete(Movie selectedMovie) {
+        //delete from db
+        try {
+            logicLayer.deleteMovie(selectedMovie);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        //delete from tableview
+        obsMovies.remove(selectedMovie);
+
+    }
+
+    public void save(Movie movie) {
+        //save in DB
+        try {
+            logicLayer.saveMovie(movie);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        //save in tableview
+        obsMovies.add(movie);
     }
 }

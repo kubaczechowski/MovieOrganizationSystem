@@ -6,12 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.be.Movie;
 import sample.gui.model.MovieModel;
+import sample.gui.util.AlertDisplayer;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,9 +22,11 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     private MovieModel movieModel;
+    private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
+
     }
 
     @FXML private TableView<Movie> moviesTable;
@@ -45,27 +50,23 @@ public class MainWindowController implements Initializable {
 
     public void addMovieButton(ActionEvent actionEvent) {
         //create loader
-        //"/mytunes/gui/view/addMovieWindow.fxml"
         FXMLLoader loader = null;
         Parent root = null;
-        createLoader(loader, "/mytunes/gui/view/addMovieWindow.fxml", root);
-        // pass selected movie and songmodel
-        AddMovieWindowController addMovieWindowController = loader.getController();
-        addMovieWindowController.getData(movieModel, moviesTable.getSelectionModel().getSelectedItem());
-        //create new window
-        createStage(root, "New Movie");
-
-    }
-
-    private void createLoader(FXMLLoader loader, String path, Parent root)
-    {
+        String path = "/sample/gui/view/addMovieWindow.fxml";
         loader = new FXMLLoader(getClass().getResource(path));
-
         try {
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // pass selected movie and songmodel ; i think now its not needed but lets leave it
+       // AddMovieWindowController addMovieWindowController = loader.getController();
+       // addMovieWindowController.getData(movieModel);
+
+        //create new window
+        createStage(root, "New Movie");
+
     }
 
     private void createStage(Parent root, String title)
@@ -77,6 +78,28 @@ public class MainWindowController implements Initializable {
     }
 
     public void deleteMovieButton(ActionEvent actionEvent) {
+        Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
+        //display alert if user didn't select movie
+        if(selectedMovie==null)
+            alertDisplayer.displayAlert("no movie",
+                    "please select a movie", "no movie", Alert.AlertType.INFORMATION);
+
+        //show alert to ensure that user wants to delete movie
+         boolean result = alertDisplayer.displayConfirmationAlert("Delete Movie", "Do you want to delete movie?",
+                "Delete");
+
+         //delete movie if user decided to do so
+         if(result==true) {
+             //System.out.println("do action");
+             //delete from table && db
+             movieModel.delete(selectedMovie);
+             movieModel.load();
+         }
+         //close the window if user decided not to delete movie
+         else {
+             //System.out.println("close the program");
+             //overall do nothing??
+         }
     }
 
     public void changeRatingButton(ActionEvent actionEvent) {
