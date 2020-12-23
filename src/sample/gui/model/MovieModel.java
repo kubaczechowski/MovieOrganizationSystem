@@ -6,8 +6,6 @@ import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
-import sample.dal.DALController;
-import sample.dal.MovieDB;
 
 public class MovieModel {
 

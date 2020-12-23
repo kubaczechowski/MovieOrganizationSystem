@@ -7,11 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.be.Category;
 import sample.be.Movie;
+import sample.gui.model.CategoryModel;
 import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
@@ -22,10 +25,12 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     private MovieModel movieModel;
+    private CategoryModel categoryModel;
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
+        categoryModel = CategoryModel.getInstance();
 
     }
 
@@ -33,10 +38,13 @@ public class MainWindowController implements Initializable {
     @FXML private TableColumn<Movie, String> columnName;
     @FXML private TableColumn<Movie, Integer> columnRating;
     @FXML private TableColumn<Movie, String> columnLastView;
+    //ListView
+    @FXML private ListView<Category> categoriesList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTableView();
+        initListView();
     }
 
     private void initTableView() {
@@ -45,6 +53,11 @@ public class MainWindowController implements Initializable {
         columnLastView.setCellValueFactory(new PropertyValueFactory<Movie, String>("lastview"));
         movieModel.load();
         moviesTable.setItems(movieModel.getAllMovies());
+    }
+
+    private void initListView(){
+        categoryModel.load();
+        categoriesList.setItems(categoryModel.getAllCategories());
     }
 
 
@@ -104,4 +117,36 @@ public class MainWindowController implements Initializable {
 
     public void changeRatingButton(ActionEvent actionEvent) {
     }
+
+    /**
+     * method is called when user decides to create a new category
+     * @param actionEvent
+     */
+    public void addCategory(ActionEvent actionEvent) {
+        String newCategory = alertDisplayer.ShowTextInputDialog("add category",
+               "please add new category", "new category");
+        if(newCategory!=null){
+            //System.out.println(newCategory);
+            Category category = new Category(newCategory);
+            //call category model
+            categoryModel.save(category);
+        }
+    }
+
+    public void removeCategory(ActionEvent actionEvent) {
+        Category selectedItem = categoriesList.getSelectionModel().getSelectedItem();
+        if(selectedItem==null)
+            alertDisplayer.displayAlert("No item selected",
+                    "Please select an item", "no category selected",
+                    Alert.AlertType.INFORMATION);
+        //show alert to ensure that user wants to delete movie
+        boolean result = alertDisplayer.displayConfirmationAlert("Delete Category",
+                "Do you want to delete category?", "Delete");
+        if(result==true)
+        {
+            categoryModel.delete(selectedItem);
+            categoryModel.load();
+        }
+    }
+
 }

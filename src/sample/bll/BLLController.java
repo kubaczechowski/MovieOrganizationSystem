@@ -1,5 +1,6 @@
 package sample.bll;
 
+import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
 import sample.dal.DALController;
@@ -39,6 +40,36 @@ public class BLLController implements BLLFacade{
         } catch (DALexception daLexception) {
             //daLexception.printStackTrace();
             throw new BLLexception("Couldn't save movie", daLexception);
+        }
+    }
+
+    @Override
+    public void saveCategory(Category category) throws BLLexception {
+        try {
+            dataaccess.addCategory(category);
+        } catch (DALexception daLexception) {
+            //daLexception.printStackTrace();
+            throw new BLLexception("Couldn't save category", daLexception);
+        }
+    }
+
+    @Override
+    public void deleteCategory(Category selectedItem) throws BLLexception {
+        try {
+            dataaccess.deleteCategory(selectedItem);
+        } catch (DALexception daLexception) {
+            //daLexception.printStackTrace();
+            throw new BLLexception("Couldn't delete category", daLexception);
+        }
+    }
+
+    @Override
+    public List<Category> getAllCategories() throws BLLexception {
+        try {
+            return dataaccess.getAllCategories();
+        } catch (DALexception daLexception) {
+            ///daLexception.printStackTrace();
+            throw new BLLexception("Couldn't get all categories", daLexception);
         }
     }
 }

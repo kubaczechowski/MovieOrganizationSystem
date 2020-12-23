@@ -1,5 +1,6 @@
 package sample.bll;
 
+import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
 
@@ -11,4 +12,10 @@ public interface BLLFacade {
     void deleteMovie(Movie selectedMovie) throws BLLexception;
 
     void saveMovie(Movie movie) throws BLLexception;
+
+    void saveCategory(Category category) throws BLLexception;
+
+    void deleteCategory(Category selectedItem) throws BLLexception;
+
+    List<Category> getAllCategories() throws BLLexception;
 }

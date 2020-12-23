@@ -7,20 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddMovieWindowController">
    <children>
-      <TextField layoutX="57.0" layoutY="45.0" prefHeight="27.0" prefWidth="240.0" />
-      <MenuButton layoutX="57.0" layoutY="96.0" mnemonicParsing="false" text="rating">
+      <TextField fx:id="nameField" layoutX="57.0" layoutY="45.0" prefHeight="27.0" prefWidth="240.0" />
+      <MenuButton fx:id="categories" layoutX="57.0" layoutY="96.0" mnemonicParsing="false" text="rating">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+          <MenuItem mnemonicParsing="false" onAction="#setOne" text="1" />
+          <MenuItem mnemonicParsing="false" onAction="#setTwo" text="2" />
+            <MenuItem mnemonicParsing="false" onAction="#setThree" text="3" />
+            <MenuItem mnemonicParsing="false" onAction="#setFour" text="4" />
+            <MenuItem mnemonicParsing="false" onAction="#setFive" text="5" />
+            <MenuItem mnemonicParsing="false" onAction="#setSix" text="6" />
+            <MenuItem mnemonicParsing="false" onAction="#setSeven" text="7" />
+            <MenuItem mnemonicParsing="false" onAction="#setEight" text="8" />
+            <MenuItem mnemonicParsing="false" onAction="#setNine" text="9" />
+            <MenuItem mnemonicParsing="false" onAction="#setTen" text="10" />
         </items>
       </MenuButton>
-      <TextField layoutX="57.0" layoutY="145.0" prefHeight="25.0" prefWidth="240.0" />
-      <Button layoutX="319.0" layoutY="145.0" mnemonicParsing="false" text="Choose" />
-      <Button layoutX="254.0" layoutY="241.0" mnemonicParsing="false" text="save" />
-      <Button layoutX="321.0" layoutY="241.0" mnemonicParsing="false" text="cancel" />
+      <TextField fx:id="filelink" layoutX="57.0" layoutY="145.0" prefHeight="25.0" prefWidth="240.0" />
+      <Button layoutX="319.0" layoutY="145.0" mnemonicParsing="false" onAction="#choosFilelink" text="Choose" />
+      <Button layoutX="254.0" layoutY="241.0" mnemonicParsing="false" onAction="#saveMovie" text="save" />
+      <Button layoutX="321.0" layoutY="241.0" mnemonicParsing="false" onAction="#cancel" text="cancel" />
       <Text layoutX="57.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" />
       <Text layoutX="61.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="filelink" />
    </children>

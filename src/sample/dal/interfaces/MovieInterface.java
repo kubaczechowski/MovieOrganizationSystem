@@ -1,4 +1,4 @@
-package sample.dal;
+package sample.dal.interfaces;
 
 import sample.be.Movie;
 import sample.dal.exception.DALexception;

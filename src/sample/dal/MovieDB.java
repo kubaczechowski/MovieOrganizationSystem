@@ -3,17 +3,16 @@ package sample.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import sample.be.Movie;
 import sample.dal.exception.DALexception;
+import sample.dal.interfaces.MovieInterface;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MovieDB implements MovieInterface{
+public class MovieDB implements MovieInterface {
 
     private DBConnector dbConnector;
-    private HashMap<Integer, Movie> movies = new HashMap<Integer, Movie>();
-
     public MovieDB() {
         dbConnector = new DBConnector();
     }
@@ -55,7 +54,8 @@ public class MovieDB implements MovieInterface{
                 "VALUES (?, ?, ? ,?, ?);";
 
         try (Connection con = dbConnector.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement preparedStatement = con.prepareStatement(query,
+                     Statement.RETURN_GENERATED_KEYS);
         ) {
             preparedStatement.setString(1, movie.getName());
             preparedStatement.setInt(2 , movie.getRating());

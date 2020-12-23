@@ -21,10 +21,10 @@
       <Button layoutX="36.0" layoutY="548.0" mnemonicParsing="false" onAction="#addMovieButton" prefHeight="53.0" prefWidth="155.0" text="ADD" />
       <Button layoutX="214.0" layoutY="548.0" mnemonicParsing="false" onAction="#deleteMovieButton" prefHeight="53.0" prefWidth="164.0" text="REMOVE" />
       <Button layoutX="398.0" layoutY="548.0" mnemonicParsing="false" onAction="#changeRatingButton" prefHeight="53.0" prefWidth="178.0" text="CHANGE RATING" />
-      <ListView layoutX="676.0" layoutY="72.0" prefHeight="452.0" prefWidth="250.0" />
+      <ListView fx:id="categoriesList" layoutX="676.0" layoutY="72.0" prefHeight="452.0" prefWidth="250.0" />
       <Text layoutX="676.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categories" wrappingWidth="80.13671875" />
-      <Button layoutX="948.0" layoutY="72.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="106.0" text="ADD" />
-      <Button layoutX="948.0" layoutY="161.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="106.0" text="REMOVE" />
+      <Button layoutX="948.0" layoutY="72.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="65.0" prefWidth="106.0" text="ADD" />
+      <Button layoutX="948.0" layoutY="166.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="65.0" prefWidth="106.0" text="REMOVE" />
       <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="106.0" text="SET" />
       <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
    </children>

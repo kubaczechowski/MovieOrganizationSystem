@@ -2,9 +2,11 @@ package sample.gui.util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.TilePane;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * alert types:
@@ -18,7 +20,6 @@ public class AlertDisplayer {
     /**
      * Alert suggests that the program is missing some data
      * data needs to be inserted by the user
-     *
      */
     public boolean displayConfirmationAlert(String title, String information, String header)
     {
@@ -41,7 +42,7 @@ public class AlertDisplayer {
     }
 
     public void displayAlert(String title, String information, String header,
-                                        Alert.AlertType alertType)
+   Alert.AlertType alertType)
     {
         TilePane tilePane = new TilePane();
         Alert alert = new Alert(alertType);
@@ -49,6 +50,22 @@ public class AlertDisplayer {
         alert.setTitle(title);
         alert.setContentText(information);
         alert.show(); //no other action is needed
+    }
+
+    public String ShowTextInputDialog(String title, String contentText, String header)
+    {
+        String catName = null;
+        TilePane r = new TilePane(); // create a tile pane
+        TextInputDialog td = new TextInputDialog("enter new category");
+        td.setTitle(title);
+        td.setContentText(contentText);
+        td.setHeaderText(header);
+        Optional<String> result = td.showAndWait();
+        if(result.isPresent())
+        {
+            catName = td.getEditor().getText();
+        }
+        return catName;
     }
 
 
