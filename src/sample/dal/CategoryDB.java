@@ -44,6 +44,7 @@ public class CategoryDB implements CategoryInterface {
                      Statement.RETURN_GENERATED_KEYS);
         ) {
             preparedStatement.setString(1, category.getName());
+            preparedStatement.executeUpdate();
             try(ResultSet generatedKey = preparedStatement.getGeneratedKeys()) {
                 if(generatedKey.next())
                 {
