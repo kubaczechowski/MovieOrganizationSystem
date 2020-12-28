@@ -66,6 +66,7 @@ public class MainWindowController implements Initializable {
         FXMLLoader loader = null;
         Parent root = null;
         String path = "/sample/gui/view/addMovieWindow.fxml";
+        // method returns a URL object or null if no resource with this name(path) is found.
         loader = new FXMLLoader(getClass().getResource(path));
         try {
             root = loader.load();
@@ -149,4 +150,15 @@ public class MainWindowController implements Initializable {
         }
     }
 
+    /**
+     * method sets the category on the movie if the movie is selected
+     * and the category is selected
+     * @param actionEvent
+     */
+    public void setCategory(ActionEvent actionEvent) {
+    }
+
+
+    public void unsetCategory(ActionEvent actionEvent) {
+    }
 }

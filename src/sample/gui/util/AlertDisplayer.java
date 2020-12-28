@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -30,6 +32,11 @@ public class AlertDisplayer {
         alert.setHeaderText(header);
         alert.setTitle(title);
         alert.setContentText(information);
+        //no other windows can be accessed
+        //The Modality.WINDOW_MODAL modality option means that the newly created
+        // Stage will block the Stage window that "owns" the newly created Stage,
+        // also there is Modality.NONE propably its default
+        alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait().ifPresent( buttonType -> {
             if(buttonType == ButtonType.OK)
             {

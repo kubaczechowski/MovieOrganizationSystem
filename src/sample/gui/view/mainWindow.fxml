@@ -25,7 +25,7 @@
       <Text layoutX="676.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categories" wrappingWidth="80.13671875" />
       <Button layoutX="948.0" layoutY="72.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="65.0" prefWidth="106.0" text="ADD" />
       <Button layoutX="948.0" layoutY="166.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="65.0" prefWidth="106.0" text="REMOVE" />
-      <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="106.0" text="SET" />
-      <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
+      <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" onAction="#setCategory" prefHeight="72.0" prefWidth="106.0" text="SET" />
+      <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" onAction="#unsetCategory" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
    </children>
 </AnchorPane>
