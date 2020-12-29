@@ -1,6 +1,7 @@
 package sample.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import sample.be.Category;
 import sample.be.Movie;
 import sample.dal.exception.DALexception;
 import sample.dal.interfaces.MovieInterface;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MovieDB implements MovieInterface {
-
+    private CatMovieDAO catMovieDAO = new CatMovieDAO();
     private DBConnector dbConnector;
     public MovieDB() {
         dbConnector = new DBConnector();
@@ -34,9 +35,12 @@ public class MovieDB implements MovieInterface {
                 int ratingIMDB = rs.getInt("ratingIMDB");
                 Timestamp lastview = rs.getTimestamp("lastview");
                 String filelink = rs.getString("filelink");
-                Movie movie = new Movie(id, name, rating, ratingIMDB, filelink, lastview);
-                //allMovies.put(id, movie);
+                List<Category> categories = catMovieDAO.getCategoriesFromSpecificMovie(id);
+                Movie movie = new Movie(id, name, rating, ratingIMDB, filelink, lastview,
+                        categories);
+               // movie.setCategoryList(categories);
                 allMovies.add(movie);
+                System.out.println("DB:" + movie.getCategoryList());
             }
             return allMovies;
         } catch (SQLServerException throwables) {

@@ -40,7 +40,7 @@ public class AddMovieWindowController {
         String filelink = this.filelink.getText();
         Timestamp lasview = null;
 
-        Movie movie = new Movie(id, name, rating ,ratingIMDB, filelink, lasview);
+        Movie movie = new Movie(id, name,  rating ,ratingIMDB, filelink, lasview, null);
         return movie;
     }
 

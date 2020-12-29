@@ -48,7 +48,7 @@ public class CatMovieDAO implements CatMovieInterface {
         //second part fof the method
         List<Category> categoriesForMovie = new ArrayList<>();
         try (Connection con = databaseConnector.getConnection()){
-            String query2 = "SELECT * FROM Categories WHERE id=?;";
+            String query2 = "SELECT * FROM Category WHERE id=?;";
             for(Integer integer: categoryIds)
             {
                 PreparedStatement preparedStatement = con.prepareStatement(query2);
@@ -80,6 +80,8 @@ public class CatMovieDAO implements CatMovieInterface {
                 PreparedStatement preparedStatement = con.prepareStatement(query)) {
         preparedStatement.setInt(1,categoryID );
         preparedStatement.setInt(2,movieID );
+        preparedStatement.executeUpdate();
+
         } catch (SQLServerException throwables) {
             //throwables.printStackTrace();
             throw new DALexception("couldnt add cateogry to movie", throwables);
@@ -87,6 +89,7 @@ public class CatMovieDAO implements CatMovieInterface {
             //throwables.printStackTrace();
             throw new DALexception("couldnt add category to movie", throwables);
         }
+        System.out.println("line was executed");
     }
 
     @Override

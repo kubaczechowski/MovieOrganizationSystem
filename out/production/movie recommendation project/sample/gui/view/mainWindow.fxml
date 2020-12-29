@@ -13,9 +13,10 @@
       <TextField layoutX="23.0" layoutY="36.0" prefHeight="23.0" prefWidth="633.0" />
       <TableView fx:id="moviesTable" layoutX="23.0" layoutY="72.0" prefHeight="452.0" prefWidth="633.0">
         <columns>
-          <TableColumn fx:id="columnName" prefWidth="332.0" text="name" />
-          <TableColumn fx:id="columnRating" prefWidth="106.0" text="rating" />
-            <TableColumn fx:id="columnLastView" prefWidth="194.0" text="lastview" />
+          <TableColumn fx:id="columnName" prefWidth="210.0" text="name" />
+          <TableColumn fx:id="columnRating" prefWidth="57.0" text="rating" />
+            <TableColumn fx:id="columnLastView" prefWidth="162.0" text="lastview" />
+            <TableColumn fx:id="columnCategories" prefWidth="203.0" text="Categories" />
         </columns>
       </TableView>
       <Button layoutX="36.0" layoutY="548.0" mnemonicParsing="false" onAction="#addMovieButton" prefHeight="53.0" prefWidth="155.0" text="ADD" />
@@ -25,7 +26,7 @@
       <Text layoutX="676.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categories" wrappingWidth="80.13671875" />
       <Button layoutX="948.0" layoutY="72.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="65.0" prefWidth="106.0" text="ADD" />
       <Button layoutX="948.0" layoutY="166.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="65.0" prefWidth="106.0" text="REMOVE" />
-      <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="106.0" text="SET" />
-      <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
+      <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" onAction="#setCategory" prefHeight="72.0" prefWidth="106.0" text="SET" />
+      <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" onAction="#unsetCategory" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
    </children>
 </AnchorPane>

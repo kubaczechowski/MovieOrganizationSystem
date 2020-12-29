@@ -18,4 +18,8 @@ public interface BLLFacade {
     void deleteCategory(Category selectedItem) throws BLLexception;
 
     List<Category> getAllCategories() throws BLLexception;
+
+    void addCategoryItem(int movieID, int categoryID) throws BLLexception;
+
+    void deleteCategoryItem(int movieID, int categoryID) throws BLLexception;
 }

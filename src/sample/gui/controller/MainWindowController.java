@@ -1,5 +1,7 @@
 package sample.gui.controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,32 +14,38 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import sample.be.Category;
 import sample.be.Movie;
+import sample.gui.model.CategoryItemModel;
 import sample.gui.model.CategoryModel;
 import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
     private MovieModel movieModel;
     private CategoryModel categoryModel;
+    private CategoryItemModel categoryItemModel;
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
         categoryModel = CategoryModel.getInstance();
-
+        categoryItemModel = CategoryItemModel.getInstance();
     }
 
     @FXML private TableView<Movie> moviesTable;
     @FXML private TableColumn<Movie, String> columnName;
     @FXML private TableColumn<Movie, Integer> columnRating;
     @FXML private TableColumn<Movie, String> columnLastView;
+    @FXML private  TableColumn<Movie, List<Category>> columnCategories;
     //ListView
     @FXML private ListView<Category> categoriesList;
 
@@ -51,6 +59,16 @@ public class MainWindowController implements Initializable {
         columnName.setCellValueFactory(new PropertyValueFactory<Movie, String>("name"));
         columnRating.setCellValueFactory(new PropertyValueFactory<Movie, Integer>("rating"));
         columnLastView.setCellValueFactory(new PropertyValueFactory<Movie, String>("lastview"));
+        columnCategories.setCellValueFactory(
+                new PropertyValueFactory<Movie, List<Category>>("categoryList") );
+        //categories
+        columnCategories.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movie, List<Category>>, ObservableValue<List<Category>>>() {
+            @Override
+            public ObservableValue<List<Category>> call(TableColumn.CellDataFeatures<Movie, List<Category>> movieListCellDataFeatures) {
+                return new ReadOnlyObjectWrapper( movieListCellDataFeatures.getValue().getCategoryList());
+            }
+        });
+        //load data and set items
         movieModel.load();
         moviesTable.setItems(movieModel.getAllMovies());
     }
@@ -73,14 +91,8 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // pass selected movie and songmodel ; i think now its not needed but lets leave it
-       // AddMovieWindowController addMovieWindowController = loader.getController();
-       // addMovieWindowController.getData(movieModel);
-
         //create new window
         createStage(root, "New Movie");
-
     }
 
     private void createStage(Parent root, String title)
@@ -156,9 +168,31 @@ public class MainWindowController implements Initializable {
      * @param actionEvent
      */
     public void setCategory(ActionEvent actionEvent) {
+        //get selected items
+        Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
+        Category selectedCategory = categoriesList.getSelectionModel().getSelectedItem();
+        //show alerts if needed
+        showAlertsWhenSettingCategories(selectedMovie, selectedCategory);
+        //do action
+        categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
+        categoryItemModel.load();
+        movieModel.load();
+        //Movie selectedMovie2 = moviesTable.getSelectionModel().getSelectedItem();
+        //System.out.println( "set category" + selectedMovie2.getCategoryList());
+
     }
-
-
     public void unsetCategory(ActionEvent actionEvent) {
+
+    }
+    private void showAlertsWhenSettingCategories(Movie selectedMovie, Category selectedCategory)
+    {
+        if(selectedMovie==null)
+            alertDisplayer.displayAlert("No movie selected",
+                    "Please select a movie", "no movie selected",
+                    Alert.AlertType.INFORMATION);
+        if(selectedCategory==null)
+            alertDisplayer.displayAlert("No category selected",
+                    "Please select a category", "no category selected",
+                    Alert.AlertType.INFORMATION);
     }
 }

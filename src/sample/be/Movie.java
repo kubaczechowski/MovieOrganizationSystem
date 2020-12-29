@@ -1,6 +1,8 @@
 package sample.be;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Movie {
     private int id;
@@ -9,9 +11,12 @@ public class Movie {
     private int ratingIMDB;
     private String filelink;
     private Timestamp lastview;
+    private List<Category> categoryList;
 
     //when adding a new movie dont care about id because it will be set up when adding to DB
     //we need it in constructror for retriving it from DB
+
+/*
     public Movie(int id, String name, int rating, int ratingIMDB, String filelink, Timestamp lastview) {
         this.id = id;
         this.name = name;
@@ -19,6 +24,29 @@ public class Movie {
         this.ratingIMDB = ratingIMDB;
         this.filelink = filelink;
         this.lastview = lastview;
+        categoryList = new ArrayList<>();
+    }
+
+ */
+
+    public Movie(int id, String name, int rating, int ratingIMDB, String filelink, Timestamp lastview, List<Category> categoryList) {
+        this.id = id;
+        this.name = name;
+        this.rating = rating;
+        this.ratingIMDB = ratingIMDB;
+        this.filelink = filelink;
+        this.lastview = lastview;
+       // if( this.categoryList==null) this.categoryList = new ArrayList<>();
+        this.categoryList = new ArrayList<>();
+        if(categoryList!=null) this.categoryList = categoryList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     public int getId() {

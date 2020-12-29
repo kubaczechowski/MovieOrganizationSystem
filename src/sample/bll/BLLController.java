@@ -72,4 +72,22 @@ public class BLLController implements BLLFacade{
             throw new BLLexception("Couldn't get all categories", daLexception);
         }
     }
+
+    @Override
+    public void addCategoryItem(int movieID, int categoryID) throws BLLexception {
+        try {
+            dataaccess.addCategoryToMovie(categoryID, movieID);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't add category item", daLexception);
+        }
+    }
+
+    @Override
+    public void deleteCategoryItem(int movieID, int categoryID) throws BLLexception {
+        try {
+            dataaccess.deleteCategoryFromMovie(categoryID, movieID);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't delete category item", daLexception);
+        }
+    }
 }
