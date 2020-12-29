@@ -108,4 +108,26 @@ public class CatMovieDAO implements CatMovieInterface {
             throw new DALexception("couldnt delete category from movie", throwables);
         }
     }
+
+    @Override
+    public boolean checkIfMovieHasSuchCategory(int categoryID, int movieID) throws DALexception {
+       // boolean result;
+        String query = "SELECT COUNT(1) FROM CatMovie WHERE CategoryId=? AND MovieId=?;";
+        try (Connection con = databaseConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(query)) {
+            pstat.setInt(1, categoryID);
+            pstat.setInt(2, movieID );
+            ResultSet rs = pstat.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            if(count==0)
+                return false;
+            else
+                return true;
+        } catch (SQLServerException throwables) {
+            throw new DALexception("couldnt check if movie has such category", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("couldnt check if movie has such category", throwables);
+        }
+    }
 }

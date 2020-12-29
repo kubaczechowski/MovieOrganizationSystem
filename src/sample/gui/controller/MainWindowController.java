@@ -173,12 +173,22 @@ public class MainWindowController implements Initializable {
         Category selectedCategory = categoriesList.getSelectionModel().getSelectedItem();
         //show alerts if needed
         showAlertsWhenSettingCategories(selectedMovie, selectedCategory);
+        //check if this category is added if yes show alert
+        //if true show alert
+        //if false continue
+        boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
+        if(result==true)
+            alertDisplayer.displayAlert("Category",
+                    "you cannot add one category twice", "such category is added",
+                    Alert.AlertType.WARNING);
+        else{
+            
         //do action
         categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
         categoryItemModel.load();
         movieModel.load();
-        //Movie selectedMovie2 = moviesTable.getSelectionModel().getSelectedItem();
-        //System.out.println( "set category" + selectedMovie2.getCategoryList());
+        System.out.println( "set category" + selectedMovie.getCategoryList());
+        }
 
     }
     public void unsetCategory(ActionEvent actionEvent) {

@@ -50,4 +50,14 @@ public class CategoryItemModel {
             blLexception.printStackTrace();
         }
     }
+
+    public boolean checkIfMovieHasCategory(int movieID, int categoryID) {
+        try {
+             return logicLayer.checkIfMovieHasCategory(movieID, categoryID);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        System.out.println("couldnt check if movie has category");
+        return true;
+    }
 }

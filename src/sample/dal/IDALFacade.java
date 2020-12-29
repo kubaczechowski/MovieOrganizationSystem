@@ -9,7 +9,7 @@ import sample.dal.interfaces.MovieInterface;
 
 import java.util.List;
 
-public interface IDALFacade extends MovieInterface, CategoryInterface, CatMovieInterface {
+public interface IDALFacade extends MovieInterface, CategoryInterface,  CatMovieInterface {
     //Movie
    List<Movie> getAllMovies() throws DALexception;
     void addMovie(Movie movie) throws DALexception;

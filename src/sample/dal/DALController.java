@@ -57,4 +57,9 @@ public class DALController implements IDALFacade{
     public void deleteCategoryFromMovie(int categoryID, int movieID) throws DALexception {
         catMovieDAO.deleteCategoryFromMovie(categoryID, movieID);
     }
+
+    @Override
+    public boolean checkIfMovieHasSuchCategory(int categoryID, int movieID) throws DALexception {
+         return catMovieDAO.checkIfMovieHasSuchCategory(categoryID, movieID);
+    }
 }

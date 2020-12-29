@@ -90,4 +90,13 @@ public class BLLController implements BLLFacade{
             throw new BLLexception("Couldn't delete category item", daLexception);
         }
     }
+
+    @Override
+    public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
+        try {
+            return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't check if movie has such category", daLexception);
+        }
+    }
 }

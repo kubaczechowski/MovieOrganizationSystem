@@ -22,4 +22,6 @@ public interface BLLFacade {
     void addCategoryItem(int movieID, int categoryID) throws BLLexception;
 
     void deleteCategoryItem(int movieID, int categoryID) throws BLLexception;
+
+    boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception;
 }
