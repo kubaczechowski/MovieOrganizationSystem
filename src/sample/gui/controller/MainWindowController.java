@@ -182,7 +182,7 @@ public class MainWindowController implements Initializable {
                     "you cannot add one category twice", "such category is added",
                     Alert.AlertType.WARNING);
         else{
-            
+
         //do action
         categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
         categoryItemModel.load();
@@ -192,7 +192,24 @@ public class MainWindowController implements Initializable {
 
     }
     public void unsetCategory(ActionEvent actionEvent) {
-
+        //get movie user want to modify and cateogry that has to be removed
+        Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
+        Category selectedCategory = categoriesList.getSelectionModel().getSelectedItem();
+        //check if category and movie are selected
+        showAlertsWhenSettingCategories(selectedMovie, selectedCategory);
+        //check if such category is added
+        boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
+        if(result==false)
+            alertDisplayer.displayAlert("Category",
+                    "please select category that is added to the movie",
+                    "such category isn't added to the movie",
+                    Alert.AlertType.WARNING);
+        //do action
+            else{
+                categoryItemModel.deleteCategoryItem(selectedMovie.getId(), selectedCategory.getId());
+                categoryItemModel.load();
+                movieModel.load();
+        }
     }
     private void showAlertsWhenSettingCategories(Movie selectedMovie, Category selectedCategory)
     {
