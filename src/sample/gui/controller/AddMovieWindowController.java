@@ -30,6 +30,7 @@ public class AddMovieWindowController {
 
     public void saveMovie(ActionEvent actionEvent) {
         movieModel.save(createObject());
+        closeStage(actionEvent);
     }
 
     private Movie createObject(){
@@ -45,6 +46,9 @@ public class AddMovieWindowController {
     }
 
     public void cancel(ActionEvent actionEvent) {
+        closeStage(actionEvent);
+    }
+    private void closeStage(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
@@ -80,32 +84,42 @@ public class AddMovieWindowController {
     }
 
     public void setOne(ActionEvent actionEvent) {
+        categories.setText("1");
     }
 
     public void setTwo(ActionEvent actionEvent) {
+        categories.setText("2");
     }
 
     public void setThree(ActionEvent actionEvent) {
+        categories.setText("3");
     }
 
     public void setFour(ActionEvent actionEvent) {
+        categories.setText("4");
     }
 
     public void setFive(ActionEvent actionEvent) {
+        categories.setText("5");
     }
 
     public void setSix(ActionEvent actionEvent) {
+        categories.setText("6");
     }
 
     public void setSeven(ActionEvent actionEvent) {
+        categories.setText("7");
     }
 
     public void setEight(ActionEvent actionEvent) {
+        categories.setText("8");
     }
 
     public void setNine(ActionEvent actionEvent) {
+        categories.setText("9");
     }
 
     public void setTen(ActionEvent actionEvent) {
+        categories.setText("10");
     }
 }
