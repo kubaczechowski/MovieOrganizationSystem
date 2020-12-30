@@ -24,6 +24,7 @@ import sample.gui.util.AlertDisplayer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,10 +56,24 @@ public class MainWindowController implements Initializable {
         initListView();
     }
 
+    private String lastviewToShow(Movie movie)
+    {
+        if(movie.getLastview()==null)
+            return "not seen";
+        else
+            return String.valueOf(movie.getLastview());
+    }
+
     private void initTableView() {
         columnName.setCellValueFactory(new PropertyValueFactory<Movie, String>("name"));
         columnRating.setCellValueFactory(new PropertyValueFactory<Movie, Integer>("rating"));
-        columnLastView.setCellValueFactory(new PropertyValueFactory<Movie, String>("lastview"));
+        //columnLastView.setCellValueFactory(new PropertyValueFactory<Movie, String>("lastview"));
+        columnLastView.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movie, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Movie, String> object) {
+                return new ReadOnlyObjectWrapper<>(lastviewToShow(object.getValue()));
+            }
+        });
         columnCategories.setCellValueFactory(
                 new PropertyValueFactory<Movie, List<Category>>("categoryList") );
         //categories
