@@ -109,26 +109,72 @@ public class MainWindowController implements Initializable {
         if(selectedMovie==null)
             alertDisplayer.displayAlert("no movie",
                     "please select a movie", "no movie", Alert.AlertType.INFORMATION);
+        else {
+            //show alert to ensure that user wants to delete movie
+            boolean result = alertDisplayer.displayConfirmationAlert("Delete Movie", "Do you want to delete movie?",
+                    "Delete");
 
-        //show alert to ensure that user wants to delete movie
-         boolean result = alertDisplayer.displayConfirmationAlert("Delete Movie", "Do you want to delete movie?",
-                "Delete");
-
-         //delete movie if user decided to do so
-         if(result==true) {
-             //System.out.println("do action");
-             //delete from table && db
-             movieModel.delete(selectedMovie);
-             movieModel.load();
-         }
-         //close the window if user decided not to delete movie
-         else {
-             //System.out.println("close the program");
-             //overall do nothing??
-         }
+            //delete movie if user decided to do so
+            if (result == true) {
+                //System.out.println("do action");
+                //delete from table && db
+                movieModel.delete(selectedMovie);
+                movieModel.load();
+            }
+            //close the window if user decided not to delete movie
+            else {
+                //System.out.println("close the program");
+                //overall do nothing??
+            }
+        }
     }
 
+    /**
+     * Button used to change personal rating if such is inserted or to
+     * add a new one if a movie doesn't have rating yet <-
+     * rating must be added while creating a movie so adding it here\
+     * doesn't make sense
+     * @param actionEvent
+     */
     public void changeRatingButton(ActionEvent actionEvent) {
+        Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
+        //check if movie was selected
+        if(selectedMovie==null)
+            alertDisplayer.displayAlert("No movie",
+                    "Please select a movie", "movie wasn't selected",
+                    Alert.AlertType.INFORMATION);
+        else {
+            String newRating = null;
+            //if its null
+            try {
+                newRating = alertDisplayer.ShowTextInputDialog("change rating",
+                        "please insert new rating", "changing rating");
+            } catch (NumberFormatException numberFormatException) {
+                alertDisplayer.displayAlert("Nothing was selected",
+                        "Please select an item", "nothing selected",
+                        Alert.AlertType.INFORMATION);
+            }
+            //if number wasnt selected
+            if (newRating == null)
+                alertDisplayer.displayAlert("Number wasn't selected",
+                        "Please insert a number", "number should be in range of 1 to 10",
+                        Alert.AlertType.WARNING);
+            //in case of number out of bounds or null
+             else if (Integer.parseInt(newRating) < 1 || Integer.parseInt(newRating) > 10)
+                alertDisplayer.displayAlert("Number isn't correct",
+                        "Please insert a correct number", "number should be in range of 1 to 10",
+                        Alert.AlertType.WARNING);
+             else {
+                //in case of number format exception
+                try {
+                    selectedMovie.setRating(Integer.parseInt(newRating));
+                } catch (NumberFormatException numberFormatException) {
+                    alertDisplayer.displayAlert("Number format exception",
+                            "Please insert a number", "number should be in range of 1 to 10",
+                            Alert.AlertType.WARNING);
+                }
+            }
+        }
     }
 
     /**
