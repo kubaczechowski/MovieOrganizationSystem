@@ -3,6 +3,7 @@ package sample.gui.controller;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.be.Category;
@@ -54,6 +56,22 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTableView();
         initListView();
+        //if double clicked on selected movie method is invoked
+        openMoviePlayer();
+    }
+
+    private void openMoviePlayer() {
+        moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent click) {
+                if (click.getClickCount() == 2) {
+                    //open media player and play that movie
+
+
+                    //refresh the lastview
+                }
+            }
+        });
     }
 
     private String lastviewToShow(Movie movie)
