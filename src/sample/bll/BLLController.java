@@ -99,4 +99,14 @@ public class BLLController implements BLLFacade{
             throw new BLLexception("Couldn't check if movie has such category", daLexception);
         }
     }
+
+    @Override
+    public List<Movie> getMoviesToDelete() throws BLLexception {
+        try {
+            return dataaccess.getMoviesToDelete();
+        } catch (DALexception daLexception) {
+           // daLexception.printStackTrace();
+            throw new BLLexception("Couldn't get movies to delete", daLexception);
+        }
+    }
 }

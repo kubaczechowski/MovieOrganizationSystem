@@ -9,5 +9,6 @@ public interface MovieInterface {
     List<Movie> getAllMovies() throws DALexception;
     void addMovie(Movie movie) throws DALexception;
     void deleteMovie(Movie movie) throws DALexception;
+    List<Movie> getMoviesToDelete() throws DALexception;
 
 }

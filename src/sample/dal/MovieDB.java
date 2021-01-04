@@ -8,6 +8,7 @@ import sample.dal.interfaces.MovieInterface;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,6 +102,51 @@ public class MovieDB implements MovieInterface {
             //throwables.printStackTrace();
             throw new DALexception("Couldn't delete movie", throwables);
         }
+    }
+
+    /**
+     *
+     * @return
+     * @throws DALexception
+     */
+    @Override
+    public List<Movie> getMoviesToDelete() throws DALexception {
+        //list of movies to return
+        List<Movie> moviesToDelete = new ArrayList<>();
+        //get time: now - two years
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, -365 * 2);
+        Timestamp time = new Timestamp(cal.getTimeInMillis());
+        long twoYearsAgo = cal.getTimeInMillis();
+        //query
+        String query = "SELECT * FROM Movie WHERE rating<6 AND lastview<=?;";
+
+        try (Connection con = dbConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(query)) {
+            pstat.setTimestamp(1, time);
+            ResultSet rs = pstat.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int rating = rs.getInt("rating");
+                int ratingIMDB = rs.getInt("ratingIMDB");
+                Timestamp lastview = rs.getTimestamp("lastview");
+                String filelink = rs.getString("filelink");
+                List<Category> categories = catMovieDAO.getCategoriesFromSpecificMovie(id);
+                Movie movie = new Movie(id, name, rating, ratingIMDB, filelink, lastview,
+                        categories);
+                // movie.setCategoryList(categories);
+                moviesToDelete.add(movie);
+            }
+
+        } catch (SQLServerException throwables) {
+            // throwables.printStackTrace();
+            throw new DALexception("count get movies to delete", throwables);
+        } catch (SQLException throwables) {
+            // throwables.printStackTrace();
+            throw new DALexception("count get movies to delete", throwables);
+        }
+        return moviesToDelete;
     }
 
 

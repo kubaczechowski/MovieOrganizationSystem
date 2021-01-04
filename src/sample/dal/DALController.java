@@ -27,6 +27,11 @@ public class DALController implements IDALFacade{
         movieDB.deleteMovie(movie);
     }
 
+    @Override
+    public List<Movie> getMoviesToDelete() throws DALexception {
+        return movieDB.getMoviesToDelete();
+    }
+
     //category
     @Override
     public List<Category> getAllCategories() throws DALexception {
