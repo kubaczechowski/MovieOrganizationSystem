@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
@@ -15,6 +17,27 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        //create loader
+        FXMLLoader loader = null;
+        Parent root2 = null;
+        String path = "/sample/gui/view/deleteUnwatchedMovies.fxml";
+        // method returns a URL object or null if no resource with this name(path) is found.
+        loader = new FXMLLoader(getClass().getResource(path));
+        try {
+            root2 = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //create new window
+        createStage(root2, "delete movies");
+    }
+
+    private void createStage(Parent root, String title) {
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 

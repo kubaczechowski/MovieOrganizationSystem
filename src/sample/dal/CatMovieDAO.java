@@ -109,6 +109,26 @@ public class CatMovieDAO implements CatMovieInterface {
         }
     }
 
+    /**
+     * before deleting a movie we need to delete all categories in the CatMovie table
+     * other way we get an exception
+     * @param movieID
+     * @throws DALexception
+     */
+    @Override
+    public void deleteAllCategoriesForMovie(int movieID) throws DALexception {
+        String query = "DELETE FROM CatMovie WHERE(MovieId=?);";
+        try (Connection con = databaseConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(query)) {
+            pstat.setInt(1, movieID);
+            pstat.executeUpdate();
+        } catch (SQLServerException throwables) {
+            throw new DALexception("couldn't delete all cateogies from a movie", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("couldn't delete all cateogies from a movie", throwables);
+        }
+    }
+
     @Override
     public boolean checkIfMovieHasSuchCategory(int categoryID, int movieID) throws DALexception {
        // boolean result;

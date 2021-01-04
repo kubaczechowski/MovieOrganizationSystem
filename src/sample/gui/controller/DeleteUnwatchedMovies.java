@@ -32,12 +32,26 @@ public class DeleteUnwatchedMovies implements Initializable {
     }
 
     public void deleteAll(ActionEvent actionEvent) {
+        deleteUnwatchedModel.deleteAll();
+        deleteUnwatchedModel.load();
     }
 
+    /**
+     * method enables to select multiple movies
+     * @param actionEvent
+     */
     public void deleteSelected(ActionEvent actionEvent) {
+    List<Movie> moviesToDelete = moviesTable.getSelectionModel().getSelectedItems();
+    deleteUnwatchedModel.delete(moviesToDelete);
+    deleteUnwatchedModel.load();
     }
 
+    /**
+     * method simply does nothing and only closes that window
+     * @param actionEvent
+     */
     public void notDelete(ActionEvent actionEvent) {
+
     }
 
     @Override

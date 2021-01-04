@@ -92,6 +92,16 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public void deleteCategoriesItemsAssociated(int movieID) throws BLLexception {
+        try {
+            dataaccess.deleteAllCategoriesForMovie(movieID);
+        } catch (DALexception daLexception) {
+            //daLexception.printStackTrace();
+            throw new BLLexception("Couldn't delete categoires assocaited with the movie", daLexception);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);
@@ -109,4 +119,5 @@ public class BLLController implements BLLFacade{
             throw new BLLexception("Couldn't get movies to delete", daLexception);
         }
     }
+
 }
