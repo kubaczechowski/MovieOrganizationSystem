@@ -5,13 +5,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.gui.model.DeleteUnwatchedModel;
+import sample.gui.model.MovieModel;
 
 import java.net.URL;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.ResourceBundle;
 public class DeleteUnwatchedMovies implements Initializable {
 
     private static DeleteUnwatchedModel deleteUnwatchedModel;
+    private static MovieModel movieModel;
 
     @FXML private TableView<Movie> moviesTable;
     @FXML private TableColumn<Movie, String> columnName;
@@ -29,11 +33,15 @@ public class DeleteUnwatchedMovies implements Initializable {
 
     public DeleteUnwatchedMovies() {
         deleteUnwatchedModel = DeleteUnwatchedModel.getInstance();
+        movieModel = MovieModel.getInstance();
     }
 
     public void deleteAll(ActionEvent actionEvent) {
         deleteUnwatchedModel.deleteAll();
         deleteUnwatchedModel.load();
+        //refresh moviemodel
+        movieModel.load();
+        closeStage(actionEvent);
     }
 
     /**
@@ -44,6 +52,10 @@ public class DeleteUnwatchedMovies implements Initializable {
     List<Movie> moviesToDelete = moviesTable.getSelectionModel().getSelectedItems();
     deleteUnwatchedModel.delete(moviesToDelete);
     deleteUnwatchedModel.load();
+    //refresh moviemodel
+    movieModel.load();
+    //close stage
+        closeStage(actionEvent);
     }
 
     /**
@@ -51,7 +63,13 @@ public class DeleteUnwatchedMovies implements Initializable {
      * @param actionEvent
      */
     public void notDelete(ActionEvent actionEvent) {
+        closeStage(actionEvent);
+    }
 
+    private void closeStage(ActionEvent event){
+        Node n = (Node) event.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
     @Override
