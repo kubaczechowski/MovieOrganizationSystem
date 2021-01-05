@@ -15,6 +15,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.be.Category;
@@ -25,7 +28,11 @@ import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -65,10 +72,17 @@ public class MainWindowController implements Initializable {
             @Override
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
-                    //open media player and play that movie
-
-
-                    //refresh the lastview
+                    //get chosen movie
+                    Movie movieToPlay = moviesTable.getSelectionModel().getSelectedItem();
+                    if(movieToPlay==null)
+                        System.out.println("movie to play is null");
+                    //send the movie to play
+                    //moviePlayerController.setFilePath(movieToPlay.getFilelink());
+                    //open the window for video playing
+                    MoviePlayerController moviePlayerController = new MoviePlayerController(movieToPlay.getFilelink());
+                   // moviePlayerController.setFilePath(movieToPlay.getFilelink());
+                    moviePlayerController.open();
+                    moviePlayerController.play();
                 }
             }
         });

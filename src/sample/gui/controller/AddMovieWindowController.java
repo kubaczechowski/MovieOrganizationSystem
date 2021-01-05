@@ -90,7 +90,7 @@ public class AddMovieWindowController {
 
         //create a copy in the application folder
         try {
-            Files.copy(pathOrigin, destinationPath, COPY_ATTRIBUTES);// then lateer add replace existing
+            Files.copy(pathOrigin, destinationPath, REPLACE_EXISTING);// then lateer add replace existing
         } catch (IOException e) {
             e.printStackTrace();
         }

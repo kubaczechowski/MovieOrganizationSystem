@@ -21,7 +21,7 @@ public class Main extends Application {
         //create loader
         FXMLLoader loader = null;
         Parent root2 = null;
-        String path = "/sample/gui/view/deleteUnwatchedMovies.fxml";
+        String path = "gui/view/deleteUnwatchedMovies.fxml";
         // method returns a URL object or null if no resource with this name(path) is found.
         loader = new FXMLLoader(getClass().getResource(path));
         try {
