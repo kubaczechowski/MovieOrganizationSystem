@@ -90,6 +90,7 @@ public class MainWindowController implements Initializable {
                     }
                     MoviePlayerController moviePlayerController = loader.getController();
                     moviePlayerController.setFilePath(movieToPlay.getFilelink());
+                    moviePlayerController.sendMovieName(movieToPlay.getName());
                     Stage stage = new Stage();
                     stage.setTitle("movie player");
                     stage.setScene(new Scene(root));
