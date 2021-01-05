@@ -79,9 +79,22 @@ public class MainWindowController implements Initializable {
                     //send the movie to play
                     //moviePlayerController.setFilePath(movieToPlay.getFilelink());
                     //open the window for video playing
-                    MoviePlayerController moviePlayerController = new MoviePlayerController(movieToPlay.getFilelink());
                    // moviePlayerController.setFilePath(movieToPlay.getFilelink());
-                    moviePlayerController.open();
+                    FXMLLoader loader = new FXMLLoader(getClass().
+                            getResource("/sample/gui/view/moviePlayer.fxml"));
+                    Parent root=null; //local variables arent automatically initialized
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    MoviePlayerController moviePlayerController = loader.getController();
+                    moviePlayerController.setFilePath(movieToPlay.getFilelink());
+                    Stage stage = new Stage();
+                    stage.setTitle("movie player");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
                     moviePlayerController.play();
                 }
             }
