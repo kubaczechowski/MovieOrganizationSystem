@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -65,6 +66,47 @@ public class MainWindowController implements Initializable {
         initListView();
         //if double clicked on selected movie method is invoked
        moviePlayer();
+       webBrowser();
+    }
+
+    private void webBrowser() {
+        moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //if right clicked
+               if(mouseEvent.getButton()== MouseButton.SECONDARY)
+                {
+                    //meybe later add some icon to click meybe a loop
+                    //open a new window with web browser
+                    Movie movieToBrowse = getSelectedMovie();
+                    openSearcher(movieToBrowse.getName()).openPage();
+                }
+            }
+        });
+    }
+
+    private WebBrowserController openSearcher(String string)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().
+                getResource("/sample/gui/view/webBrowser.fxml"));
+        Parent root=null; //local variables arent automatically initialized
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WebBrowserController webBrowserController = loader.getController();
+        webBrowserController.setSearchQuery(string);
+        Stage stage = new Stage();
+        stage.setTitle("web browser");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        return webBrowserController;
+    }
+
+    private Movie getSelectedMovie() {
+        return moviesTable.getSelectionModel().getSelectedItem();
     }
 
     private void moviePlayer() {
@@ -73,7 +115,7 @@ public class MainWindowController implements Initializable {
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     //get chosen movie
-                    Movie movieToPlay = moviesTable.getSelectionModel().getSelectedItem();
+                    Movie movieToPlay = getSelectedMovie();
                     //open the window with movie player
                     openMoviePlayer(movieToPlay).play();
                     //refresh the lastview
@@ -120,17 +162,7 @@ public class MainWindowController implements Initializable {
      * @param movie
      * @return
      */
-    private String lastviewToShow(Movie movie)
-    {
-        //Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        /*if(movie.getLastview()==null)
-            return "not seen";
-        else
-           return String.valueOf(movie.getLastview());
-
-         */
-
-
+    private String lastviewToShow(Movie movie) {
         if(movie.getLastview()==null)
             return "not seen";
 
@@ -143,8 +175,6 @@ public class MainWindowController implements Initializable {
             return movieModel.timeDifference(currentTimeInMillis,
                     lastviewInMillis, movie.getLastview());
         }
-
-
     }
 
     private void initTableView() {

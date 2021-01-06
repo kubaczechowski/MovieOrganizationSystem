@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+
+<AnchorPane prefHeight="484.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.WebBrowserController">
+   <children>
+      <WebView fx:id="webView" layoutX="97.0" layoutY="59.0" prefHeight="324.0" prefWidth="514.0" />
+   </children>
+</AnchorPane>
