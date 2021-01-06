@@ -28,4 +28,6 @@ public interface BLLFacade {
     List<Movie> getMoviesToDelete() throws BLLexception;
 
     void deleteCategoriesItemsAssociated(int id) throws BLLexception;
+
+    void updateLastview(Movie movieToPlay) throws BLLexception;
 }

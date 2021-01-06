@@ -64,43 +64,47 @@ public class MainWindowController implements Initializable {
         initTableView();
         initListView();
         //if double clicked on selected movie method is invoked
-        openMoviePlayer();
+       moviePlayer();
     }
 
-    private void openMoviePlayer() {
+    private void moviePlayer() {
         moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     //get chosen movie
                     Movie movieToPlay = moviesTable.getSelectionModel().getSelectedItem();
-                    if(movieToPlay==null)
-                        System.out.println("movie to play is null");
-                    //send the movie to play
-                    //moviePlayerController.setFilePath(movieToPlay.getFilelink());
-                    //open the window for video playing
-                   // moviePlayerController.setFilePath(movieToPlay.getFilelink());
-                    FXMLLoader loader = new FXMLLoader(getClass().
-                            getResource("/sample/gui/view/moviePlayer.fxml"));
-                    Parent root=null; //local variables arent automatically initialized
-                    try {
-                        root = loader.load();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    MoviePlayerController moviePlayerController = loader.getController();
-                    moviePlayerController.setFilePath(movieToPlay.getFilelink());
-                    moviePlayerController.sendMovieName(movieToPlay.getName());
-                    Stage stage = new Stage();
-                    stage.setTitle("movie player");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-
-                    moviePlayerController.play();
+                    //open the window with movie player
+                    openMoviePlayer(movieToPlay).play();
+                    //refresh the lastview
+                    movieModel.updateLastview(movieToPlay);
+                    movieModel.load();
                 }
             }
         });
     }
+
+    private MoviePlayerController openMoviePlayer(Movie movieToPlay)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().
+                getResource("/sample/gui/view/moviePlayer.fxml"));
+        Parent root=null; //local variables arent automatically initialized
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MoviePlayerController moviePlayerController = loader.getController();
+        moviePlayerController.setFilePath(movieToPlay.getFilelink());
+        moviePlayerController.sendMovieName(movieToPlay.getName());
+        Stage stage = new Stage();
+        stage.setTitle("movie player");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        return moviePlayerController;
+    }
+
 
     private String lastviewToShow(Movie movie)
     {

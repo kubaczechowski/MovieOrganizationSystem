@@ -60,4 +60,12 @@ public class MovieModel {
         //save in tableview
         obsMovies.add(movie);
     }
+
+    public void updateLastview(Movie movieToPlay) {
+        try {
+            logicLayer.updateLastview(movieToPlay);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+    }
 }

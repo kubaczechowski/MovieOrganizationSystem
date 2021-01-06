@@ -149,5 +149,29 @@ public class MovieDB implements MovieInterface {
         return moviesToDelete;
     }
 
+    /**
+     * Method is called when the user opens a movie. Then the date of the last
+     * time they saw the movie is updated.
+     * @param movie
+     * @throws DALexception
+     */
+    @Override
+    public void updateLastViewFor(Movie movie) throws DALexception {
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        // format 2016-11-16 06:43:19.77
+        String update = "UPDATE Movie SET lastview=? WHERE id=?;";
+        try (Connection con = dbConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(update)) {
+        pstat.setTimestamp(1, currentTime);
+        pstat.setInt(2, movie.getId());
+        pstat.executeUpdate();
+        } catch (SQLServerException throwables) {
+            throw new DALexception("count update lastview", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("count update lastview", throwables);
+        }
+
+    }
+
 
 }

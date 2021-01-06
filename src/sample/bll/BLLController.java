@@ -102,6 +102,15 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public void updateLastview(Movie movieToPlay) throws BLLexception {
+        try {
+            dataaccess.updateLastViewFor(movieToPlay);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't update lastview", daLexception);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);
