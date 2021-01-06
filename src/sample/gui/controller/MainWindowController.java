@@ -78,6 +78,8 @@ public class MainWindowController implements Initializable {
                     openMoviePlayer(movieToPlay).play();
                     //refresh the lastview
                     movieModel.updateLastview(movieToPlay);
+                    //refresh the movie model so that changes
+                    //are reflected in the tableview
                     movieModel.load();
                 }
             }
@@ -105,13 +107,44 @@ public class MainWindowController implements Initializable {
         return moviePlayerController;
     }
 
-
+    /**
+     * at the end it should be in the logic i guess
+     *
+     * method shows lastview differently depending
+     * on when it was the last time the movie was opened.
+     * - less than a quarter show ex. less than a quater ago
+     * - less than a day show ex. 4 hours ago
+     * - less than a week for ex 6 days ago
+     * - then show a concreate date when the movie was opened
+     * in the format ex. 2021-01-16 06:43:19.77
+     * @param movie
+     * @return
+     */
     private String lastviewToShow(Movie movie)
     {
-        if(movie.getLastview()==null)
+        //Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        /*if(movie.getLastview()==null)
             return "not seen";
         else
-            return String.valueOf(movie.getLastview());
+           return String.valueOf(movie.getLastview());
+
+         */
+
+
+        if(movie.getLastview()==null)
+            return "not seen";
+
+        else {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            // method get time Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+            int currentTimeInMillis = (int) currentTime.getTime(); //downcast long to int
+            int lastviewInMillis = (int) movie.getLastview().getTime();
+
+            return movieModel.timeDifference(currentTimeInMillis,
+                    lastviewInMillis, movie.getLastview());
+        }
+
+
     }
 
     private void initTableView() {

@@ -3,14 +3,17 @@ package sample.bll;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
+import sample.bll.util.TimeCalculator;
 import sample.dal.DALController;
 import sample.dal.IDALFacade;
 import sample.dal.exception.DALexception;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class BLLController implements BLLFacade{
     private IDALFacade dataaccess = new DALController();
+    private TimeCalculator timeCalculator = new TimeCalculator();
 
     @Override
     public List<Movie> getAllMovies() throws BLLexception {
@@ -108,6 +111,12 @@ public class BLLController implements BLLFacade{
         } catch (DALexception daLexception) {
             throw new BLLexception("Couldn't update lastview", daLexception);
         }
+    }
+
+    //timeconverter
+    @Override
+    public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp timestamp) {
+        return timeCalculator.timeDifference(currentTimeInMillis, lastviewInMillis, timestamp);
     }
 
     @Override

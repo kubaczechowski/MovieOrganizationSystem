@@ -7,6 +7,8 @@ import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
 
+import java.sql.Timestamp;
+
 public class MovieModel {
 
     private static MovieModel movieModel;
@@ -67,5 +69,9 @@ public class MovieModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+    }
+
+    public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp lastview) {
+       return logicLayer.timeDifference(currentTimeInMillis, lastviewInMillis, lastview);
     }
 }
