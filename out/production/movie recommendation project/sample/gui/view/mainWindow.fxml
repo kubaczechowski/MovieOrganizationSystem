@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.MainWindowController">
    <children>
-      <TextField layoutX="23.0" layoutY="36.0" prefHeight="23.0" prefWidth="633.0" />
+      <TextField fx:id="searchField" layoutX="23.0" layoutY="36.0" onKeyPressed="#searchBar" prefHeight="23.0" prefWidth="633.0" />
       <TableView fx:id="moviesTable" layoutX="23.0" layoutY="72.0" prefHeight="452.0" prefWidth="633.0">
         <columns>
           <TableColumn fx:id="columnName" prefWidth="210.0" text="name" />

@@ -8,11 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.be.Category;
@@ -31,6 +30,7 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
+    public TextField searchField;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private CategoryItemModel categoryItemModel;
@@ -282,5 +282,14 @@ public class MainWindowController implements Initializable {
             alertDisplayer.displayAlert("No category selected",
                     "Please select a category", "no category selected",
                     Alert.AlertType.INFORMATION);
+    }
+
+    public void searchBar(KeyEvent keyEvent) {
+        if (keyEvent.getCode()== KeyCode.ENTER){
+            moviesTable.setItems(movieModel.searchMoviesByTitle(searchField.getText()));
+
+
+        }
+
     }
 }

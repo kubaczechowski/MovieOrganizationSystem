@@ -7,6 +7,10 @@ import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovieModel {
 
     private static MovieModel movieModel;
@@ -60,4 +64,18 @@ public class MovieModel {
         //save in tableview
         obsMovies.add(movie);
     }
+
+    public ObservableList<Movie> searchMoviesByTitle(String text){
+        List<Movie> movies = new ArrayList<>();
+
+        for (Movie m:obsMovies)
+        {
+            if (m.getName().toUpperCase().contains(text.toUpperCase()) || String.valueOf(m.getRating()).contains(text))
+                movies.add(m);
+        }
+        return FXCollections.observableArrayList(movies);
+
+    }
+
+
 }
