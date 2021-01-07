@@ -3,6 +3,7 @@ package sample.gui.controller;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,8 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.be.Category;
@@ -22,7 +31,11 @@ import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +54,7 @@ public class MainWindowController implements Initializable {
         categoryModel = CategoryModel.getInstance();
         categoryItemModel = CategoryItemModel.getInstance();
     }
-
+    //TableView
     @FXML private TableView<Movie> moviesTable;
     @FXML private TableColumn<Movie, String> columnName;
     @FXML private TableColumn<Movie, Integer> columnRating;
@@ -54,14 +67,100 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTableView();
         initListView();
+        moviesTableListener();
     }
 
-    private String lastviewToShow(Movie movie)
+    private void moviesTableListener() {
+        moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //if right clicked
+              moviePlayer(mouseEvent);
+              //if double clicked. default on left click
+              webBrowser(mouseEvent);
+            }
+        });
+    }
+
+    private void moviePlayer(MouseEvent mouseEvent)
     {
+        if(mouseEvent.getButton()== MouseButton.SECONDARY)
+        {
+            //meybe later add some icon to click meybe a loop
+            //open a new window with web browser
+            Movie movieToBrowse = getSelectedMovie();
+            openSearcher(movieToBrowse.getName()).openPage();
+        }
+    }
+
+    private void webBrowser(MouseEvent mouseEvent){
+        if (mouseEvent.getClickCount() == 2) {
+            //get chosen movie
+            Movie movieToPlay = getSelectedMovie();
+            //open the window with movie player
+            openMoviePlayer(movieToPlay).play();
+            //refresh the lastview
+            movieModel.updateLastview(movieToPlay);
+            //refresh the movie model so that changes
+            //are reflected in the tableview
+            movieModel.load();
+        }
+    }
+
+    private WebBrowserController openSearcher(String string)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().
+                getResource("/sample/gui/view/webBrowser.fxml"));
+        Parent root=null; //local variables arent automatically initialized
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WebBrowserController webBrowserController = loader.getController();
+        webBrowserController.setSearchQuery(string);
+        //create and show stage
+        createStage(root, "web browser");
+        return webBrowserController;
+    }
+
+    private Movie getSelectedMovie() {
+        return moviesTable.getSelectionModel().getSelectedItem();
+    }
+
+    private MoviePlayerController openMoviePlayer(Movie movieToPlay)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().
+                getResource("/sample/gui/view/moviePlayer.fxml"));
+        Parent root=null; //local variables arent automatically initialized
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MoviePlayerController moviePlayerController = loader.getController();
+        moviePlayerController.setFilePath(movieToPlay.getFilelink());
+        moviePlayerController.sendMovieName(movieToPlay.getName());
+        //create and show stage
+        createStage(root, "movie player");
+
+        return moviePlayerController;
+    }
+
+
+    private String lastviewToShow(Movie movie) {
         if(movie.getLastview()==null)
             return "not seen";
-        else
-            return String.valueOf(movie.getLastview());
+
+        else {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            // method get time Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+            int currentTimeInMillis = (int) currentTime.getTime(); //downcast long to int
+            int lastviewInMillis = (int) movie.getLastview().getTime();
+
+            return movieModel.timeDifference(currentTimeInMillis,
+                    lastviewInMillis, movie.getLastview());
+        }
     }
 
     private void initTableView() {
@@ -200,10 +299,19 @@ public class MainWindowController implements Initializable {
         String newCategory = alertDisplayer.ShowTextInputDialog("add category",
                "please add new category", "new category");
         if(newCategory!=null){
-            //System.out.println(newCategory);
-            Category category = new Category(newCategory);
-            //call category model
-            categoryModel.save(category);
+            //check in db if such category exists
+            boolean exists = categoryModel.chechIfExists(newCategory);
+            //show alert
+            if(exists)
+                alertDisplayer.displayAlert("Category",
+                        "you cannot add one category twice", "such category is added",
+                        Alert.AlertType.WARNING);
+            else {
+                //System.out.println(newCategory);
+                Category category = new Category(newCategory);
+                //call category model
+                categoryModel.save(category);
+            }
         }
     }
 

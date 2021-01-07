@@ -32,6 +32,11 @@ public class DALController implements IDALFacade{
         return movieDB.getMoviesToDelete();
     }
 
+    @Override
+    public void updateLastViewFor(Movie movie) throws DALexception {
+        movieDB.updateLastViewFor(movie);
+    }
+
     //category
     @Override
     public List<Category> getAllCategories() throws DALexception {
@@ -46,6 +51,11 @@ public class DALController implements IDALFacade{
     @Override
     public void deleteCategory(Category category) throws DALexception {
         categoryDB.deleteCategory(category);
+    }
+
+    @Override
+    public boolean checkIfSuchCategoryExists(String name) throws DALexception {
+        return categoryDB.checkIfSuchCategoryExists(name);
     }
 
     @Override

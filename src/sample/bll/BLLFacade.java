@@ -4,6 +4,7 @@ import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface BLLFacade {
@@ -28,4 +29,13 @@ public interface BLLFacade {
     List<Movie> getMoviesToDelete() throws BLLexception;
 
     void deleteCategoriesItemsAssociated(int id) throws BLLexception;
+
+    void updateLastview(Movie movieToPlay) throws BLLexception;
+
+    //timeconverter
+    String timeDifference(int currentTimeInMillis,
+                          int lastviewInMillis, Timestamp timestamp);
+    List<String> getSimilarMovies(String newTitle) throws BLLexception;
+
+    boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 }

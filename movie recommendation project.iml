@@ -11,6 +11,6 @@
     <orderEntry type="library" name="org.openjfx:javafx-fxml:12-ea+6" level="project" />
     <orderEntry type="library" name="org.openjfx:javafx-media:12-ea+6" level="project" />
     <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:9.1.0.jre11-preview" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="org.openjfx:javafx-web:16-ea+4" level="project" />
   </component>
 </module>

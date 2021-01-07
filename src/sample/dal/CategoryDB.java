@@ -78,4 +78,25 @@ public class CategoryDB implements CategoryInterface {
             throw new DALexception("Couldn't delete category", throwables);
         }
     }
+
+    @Override
+    public boolean checkIfSuchCategoryExists(String newCategoryName) throws DALexception {
+       String query = "SELECT COUNT(1) FROM Category WHERE name=?;";
+        try (Connection con = dbConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(query)) {
+            pstat.setString(1, newCategoryName);
+            ResultSet rs = pstat.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            if(count==0)
+                return false;
+            else
+                return true;
+        } catch (SQLServerException throwables) {
+            throw new DALexception("couldnt check if such category exists", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("couldnt check if such category exists", throwables);
+        }
+
+    }
 }

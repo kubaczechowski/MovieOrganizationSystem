@@ -7,8 +7,13 @@ import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
 
+
 import java.awt.*;
 import java.util.ArrayList;
+
+import java.sql.Timestamp;
+import java.util.Collections;
+
 import java.util.List;
 
 public class MovieModel {
@@ -65,6 +70,7 @@ public class MovieModel {
         obsMovies.add(movie);
     }
 
+
     public ObservableList<Movie> searchMoviesByTitle(String text){
         List<Movie> movies = new ArrayList<>();
 
@@ -77,5 +83,28 @@ public class MovieModel {
 
     }
 
+
+
+    public void updateLastview(Movie movieToPlay) {
+        try {
+            logicLayer.updateLastview(movieToPlay);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+    }
+
+    public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp lastview) {
+       return logicLayer.timeDifference(currentTimeInMillis, lastviewInMillis, lastview);
+    }
+
+    public List<String> searchForSimilar(String text) {
+        try {
+            return logicLayer.getSimilarMovies(text);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        //if we get there its a bad sign
+        return Collections.singletonList("problem happened in movie model");
+    }
 
 }

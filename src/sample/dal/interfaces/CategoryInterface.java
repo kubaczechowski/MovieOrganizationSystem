@@ -9,4 +9,5 @@ public interface CategoryInterface {
     List<Category> getAllCategories() throws DALexception;
     void addCategory(Category category) throws DALexception;
     void deleteCategory(Category category) throws DALexception;
+    boolean checkIfSuchCategoryExists(String name) throws DALexception;
 }

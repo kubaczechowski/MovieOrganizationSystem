@@ -10,5 +10,6 @@ public interface MovieInterface {
     void addMovie(Movie movie) throws DALexception;
     void deleteMovie(Movie movie) throws DALexception;
     List<Movie> getMoviesToDelete() throws DALexception;
+    void updateLastViewFor(Movie movie) throws DALexception;
 
 }

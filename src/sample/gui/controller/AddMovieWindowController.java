@@ -13,8 +13,14 @@ import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
+import java.util.List;
+
+import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class AddMovieWindowController {
     @FXML
@@ -29,6 +35,29 @@ public class AddMovieWindowController {
 
 
     public void saveMovie(ActionEvent actionEvent) {
+        //check if similar movie is in DB
+        List<String> namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
+        //show information to the user
+        if(namesOfSimilarMovies!=null){
+            String similar = " ";
+            for(String item: namesOfSimilarMovies)
+            {
+                if(similar.length()>1)
+                    similar+= ", ";
+
+                similar +=  item+ " ";
+            }
+           boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar movies",
+                   "Here are similar titles: " + similar, "if you want to add this movie press ok"  );
+            if(doYouWantToSave)
+                saveMovieToDB(actionEvent);
+        }
+        else {
+           saveMovieToDB(actionEvent);
+        }
+    }
+
+    private void saveMovieToDB(ActionEvent actionEvent){
         movieModel.save(createObject());
         closeStage(actionEvent);
     }
@@ -75,12 +104,20 @@ public class AddMovieWindowController {
                     "incorrect extension", Alert.AlertType.WARNING);
         //set destination path regarding the file extension
         if (pathOrigin.toString().contains(".mp4"))
-            destinationPath = Path.of("../Movies/" + nameField.getText() + ".mp4" );
+            destinationPath = Path.of("src/../Movies/" + nameField.getText() + ".mp4" );
         else if(pathOrigin.toString().contains(".mpeg4"))
-            destinationPath = Path.of("../Movies/" + nameField.getText() + ".mpeg4" );
+            destinationPath = Path.of("/Movies/" + nameField.getText() + ".mpeg4" );
 
         //show the destination path to the user
         filelink.setText(String.valueOf(destinationPath));
+
+
+        //create a copy in the application folder
+        try {
+            Files.copy(pathOrigin, destinationPath, REPLACE_EXISTING);// then lateer add replace existing
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setOne(ActionEvent actionEvent) {
