@@ -9,7 +9,6 @@ import sample.dal.interfaces.MovieInterface;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class MovieDB implements MovieInterface {

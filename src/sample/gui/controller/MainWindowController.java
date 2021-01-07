@@ -51,7 +51,7 @@ public class MainWindowController implements Initializable {
         categoryModel = CategoryModel.getInstance();
         categoryItemModel = CategoryItemModel.getInstance();
     }
-
+    //TableView
     @FXML private TableView<Movie> moviesTable;
     @FXML private TableColumn<Movie, String> columnName;
     @FXML private TableColumn<Movie, Integer> columnRating;
@@ -64,25 +64,44 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTableView();
         initListView();
-        //if double clicked on selected movie method is invoked
-       moviePlayer();
-       webBrowser();
+        moviesTableListener();
     }
 
-    private void webBrowser() {
+    private void moviesTableListener() {
         moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 //if right clicked
-               if(mouseEvent.getButton()== MouseButton.SECONDARY)
-                {
-                    //meybe later add some icon to click meybe a loop
-                    //open a new window with web browser
-                    Movie movieToBrowse = getSelectedMovie();
-                    openSearcher(movieToBrowse.getName()).openPage();
-                }
+              moviePlayer(mouseEvent);
+              //if double clicked. default on left click
+              webBrowser(mouseEvent);
             }
         });
+    }
+
+    private void moviePlayer(MouseEvent mouseEvent)
+    {
+        if(mouseEvent.getButton()== MouseButton.SECONDARY)
+        {
+            //meybe later add some icon to click meybe a loop
+            //open a new window with web browser
+            Movie movieToBrowse = getSelectedMovie();
+            openSearcher(movieToBrowse.getName()).openPage();
+        }
+    }
+
+    private void webBrowser(MouseEvent mouseEvent){
+        if (mouseEvent.getClickCount() == 2) {
+            //get chosen movie
+            Movie movieToPlay = getSelectedMovie();
+            //open the window with movie player
+            openMoviePlayer(movieToPlay).play();
+            //refresh the lastview
+            movieModel.updateLastview(movieToPlay);
+            //refresh the movie model so that changes
+            //are reflected in the tableview
+            movieModel.load();
+        }
     }
 
     private WebBrowserController openSearcher(String string)
@@ -97,35 +116,13 @@ public class MainWindowController implements Initializable {
         }
         WebBrowserController webBrowserController = loader.getController();
         webBrowserController.setSearchQuery(string);
-        Stage stage = new Stage();
-        stage.setTitle("web browser");
-        stage.setScene(new Scene(root));
-        stage.show();
-
+        //create and show stage
+        createStage(root, "web browser");
         return webBrowserController;
     }
 
     private Movie getSelectedMovie() {
         return moviesTable.getSelectionModel().getSelectedItem();
-    }
-
-    private void moviePlayer() {
-        moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent click) {
-                if (click.getClickCount() == 2) {
-                    //get chosen movie
-                    Movie movieToPlay = getSelectedMovie();
-                    //open the window with movie player
-                    openMoviePlayer(movieToPlay).play();
-                    //refresh the lastview
-                    movieModel.updateLastview(movieToPlay);
-                    //refresh the movie model so that changes
-                    //are reflected in the tableview
-                    movieModel.load();
-                }
-            }
-        });
     }
 
     private MoviePlayerController openMoviePlayer(Movie movieToPlay)
@@ -141,27 +138,13 @@ public class MainWindowController implements Initializable {
         MoviePlayerController moviePlayerController = loader.getController();
         moviePlayerController.setFilePath(movieToPlay.getFilelink());
         moviePlayerController.sendMovieName(movieToPlay.getName());
-        Stage stage = new Stage();
-        stage.setTitle("movie player");
-        stage.setScene(new Scene(root));
-        stage.show();
+        //create and show stage
+        createStage(root, "movie player");
 
         return moviePlayerController;
     }
 
-    /**
-     * at the end it should be in the logic i guess
-     *
-     * method shows lastview differently depending
-     * on when it was the last time the movie was opened.
-     * - less than a quarter show ex. less than a quater ago
-     * - less than a day show ex. 4 hours ago
-     * - less than a week for ex 6 days ago
-     * - then show a concreate date when the movie was opened
-     * in the format ex. 2021-01-16 06:43:19.77
-     * @param movie
-     * @return
-     */
+
     private String lastviewToShow(Movie movie) {
         if(movie.getLastview()==null)
             return "not seen";
@@ -313,10 +296,19 @@ public class MainWindowController implements Initializable {
         String newCategory = alertDisplayer.ShowTextInputDialog("add category",
                "please add new category", "new category");
         if(newCategory!=null){
-            //System.out.println(newCategory);
-            Category category = new Category(newCategory);
-            //call category model
-            categoryModel.save(category);
+            //check in db if such category exists
+            boolean exists = categoryModel.chechIfExists(newCategory);
+            //show alert
+            if(exists)
+                alertDisplayer.displayAlert("Category",
+                        "you cannot add one category twice", "such category is added",
+                        Alert.AlertType.WARNING);
+            else {
+                //System.out.println(newCategory);
+                Category category = new Category(newCategory);
+                //call category model
+                categoryModel.save(category);
+            }
         }
     }
 

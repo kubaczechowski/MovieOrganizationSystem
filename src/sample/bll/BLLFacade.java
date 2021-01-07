@@ -35,4 +35,6 @@ public interface BLLFacade {
     //timeconverter
     String timeDifference(int currentTimeInMillis,
                           int lastviewInMillis, Timestamp timestamp);
+
+    boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 }

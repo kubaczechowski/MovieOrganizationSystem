@@ -54,6 +54,11 @@ public class DALController implements IDALFacade{
     }
 
     @Override
+    public boolean checkIfSuchCategoryExists(String name) throws DALexception {
+        return categoryDB.checkIfSuchCategoryExists(name);
+    }
+
+    @Override
     public List<Category> getCategoriesFromSpecificMovie(int movieID) throws DALexception {
         return catMovieDAO.getCategoriesFromSpecificMovie(movieID);
     }

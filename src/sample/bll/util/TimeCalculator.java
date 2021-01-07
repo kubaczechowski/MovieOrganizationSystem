@@ -2,6 +2,15 @@ package sample.bll.util;
 
 import java.sql.Timestamp;
 
+/**
+ * method shows lastview differently depending
+ *      * on when it was the last time the movie was opened.
+ *      * - less than a quarter show ex. less than a quater ago
+ *      * - less than a day show ex. 4 hours ago
+ *      * - less than a week for ex 6 days ago
+ *      * - then show a concreate date when the movie was opened
+ * in the format ex. 2021-01-16 06:43:19.77
+ */
 public class TimeCalculator {
 
     public String timeDifference(int currentTimeInMillis,

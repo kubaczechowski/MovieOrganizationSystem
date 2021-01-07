@@ -120,6 +120,15 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public boolean checkIfCategoryExists(String newCategory) throws BLLexception {
+        try {
+            return dataaccess.checkIfSuchCategoryExists(newCategory);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't check if category exists", daLexception);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);
