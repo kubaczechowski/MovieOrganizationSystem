@@ -3,6 +3,7 @@ package sample.bll;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
+import sample.bll.util.searchForSimilarTitles;
 import sample.bll.util.TimeCalculator;
 import sample.dal.DALController;
 import sample.dal.IDALFacade;
@@ -14,6 +15,16 @@ import java.util.List;
 public class BLLController implements BLLFacade{
     private IDALFacade dataaccess = new DALController();
     private TimeCalculator timeCalculator = new TimeCalculator();
+    private searchForSimilarTitles searchForSimilarTitles;
+
+    //understand that
+    {
+        try {
+            searchForSimilarTitles = new searchForSimilarTitles(getAllMovies());
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+    }
 
     @Override
     public List<Movie> getAllMovies() throws BLLexception {
@@ -117,6 +128,11 @@ public class BLLController implements BLLFacade{
     @Override
     public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp timestamp) {
         return timeCalculator.timeDifference(currentTimeInMillis, lastviewInMillis, timestamp);
+    }
+
+    @Override
+    public List<String> getSimilarMovies(String newTitle) throws BLLexception {
+        return searchForSimilarTitles.getSimilarMovies(newTitle);
     }
 
     @Override

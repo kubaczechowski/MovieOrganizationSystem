@@ -35,6 +35,7 @@ public interface BLLFacade {
     //timeconverter
     String timeDifference(int currentTimeInMillis,
                           int lastviewInMillis, Timestamp timestamp);
+    List<String> getSimilarMovies(String newTitle) throws BLLexception;
 
     boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 }

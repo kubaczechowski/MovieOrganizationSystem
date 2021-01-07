@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
+import java.util.List;
 
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -34,6 +35,29 @@ public class AddMovieWindowController {
 
 
     public void saveMovie(ActionEvent actionEvent) {
+        //check if similar movie is in DB
+        List<String> namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
+        //show information to the user
+        if(namesOfSimilarMovies!=null){
+            String similar = " ";
+            for(String item: namesOfSimilarMovies)
+            {
+                if(similar.length()>1)
+                    similar+= ", ";
+
+                similar +=  item+ " ";
+            }
+           boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar movies",
+                   "Here are similar titles: " + similar, "if you want to add this movie press ok"  );
+            if(doYouWantToSave)
+                saveMovieToDB(actionEvent);
+        }
+        else {
+           saveMovieToDB(actionEvent);
+        }
+    }
+
+    private void saveMovieToDB(ActionEvent actionEvent){
         movieModel.save(createObject());
         closeStage(actionEvent);
     }
