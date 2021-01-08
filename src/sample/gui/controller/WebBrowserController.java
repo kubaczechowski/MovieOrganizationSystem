@@ -82,5 +82,10 @@ public class WebBrowserController implements Initializable {
     }
 
     public void fullScreen(ActionEvent actionEvent) {
+        if(getStage().isFullScreen())
+            getStage().setFullScreen(false);
+        else {
+            getStage().setFullScreen(true);
+        }
     }
 }
