@@ -104,8 +104,19 @@ public class MainWindowController implements Initializable {
         }
     }
 
+    /**
+     * In order to load FXML file we use FXMLloader
+     * we reference the controller of that file to the
+     * WebBrowserClass instance
+     * Then we use a method createStage()
+     * @param string
+     * @return WebBrowserController
+     */
     private WebBrowserController openSearcher(String string)
     {
+        //getClass is the method of the Object class
+        //method is used to access the meta data of the class of the object in question
+        //Method getResource returns the URL and the new object is initialized?
         FXMLLoader loader = new FXMLLoader(getClass().
                 getResource("/sample/gui/view/webBrowser.fxml"));
         Parent root=null; //local variables arent automatically initialized
@@ -208,8 +219,16 @@ public class MainWindowController implements Initializable {
 
     private void createStage(Parent root, String title)
     {
+        //here we declare a variable "state" and reference to it an object
+        //  the new operator allocates a memory for a new object
+        //and returns the reference to that memory. Also new operator invokes
+        // Stage() constructor. The new object is initialized (it means that
+        // we already assigned that object to a variable)
         Stage stage = new Stage();
         stage.setTitle(title);
+        //as a parameter we pass a scene. Scene constructor requiers the Parent type
+        //Parent -> The base class for all nodes that have children in the scene graph.
+        //All controllers and layouts inherit from a Node abstract superclass
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -235,7 +254,7 @@ public class MainWindowController implements Initializable {
             //close the window if user decided not to delete movie
             else {
                 //System.out.println("close the program");
-                //overall do nothing??
+                //overall do nothing for now
             }
         }
     }

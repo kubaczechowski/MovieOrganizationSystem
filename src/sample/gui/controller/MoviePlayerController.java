@@ -11,10 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
-
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -67,8 +64,9 @@ public class MoviePlayerController implements Initializable {
         final DoubleProperty width = mediaView.fitWidthProperty();
         final DoubleProperty height = mediaView.fitHeightProperty();
 
-        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+       //set width and height
+       width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+       height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
         mediaView.setPreserveRatio(true);
     }
 
@@ -89,8 +87,6 @@ public class MoviePlayerController implements Initializable {
 
       //play
         mediaPlayer.setAutoPlay(true);
-
-
         //other actoion
         //volume slider
        setVolumeSlider();
