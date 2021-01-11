@@ -107,4 +107,14 @@ public class MovieModel {
         return Collections.singletonList("problem happened in movie model");
     }
 
+    /**
+     * Method used for searching functionality
+     * It refreshes the Observable List with the relevant titles
+     * @param query
+     */
+    public void searchingFunctionality(String query) {
+        List<Movie> searchResult = logicLayer.searchMovies(query);
+        obsMovies.clear();
+        obsMovies.addAll(searchResult);
+    }
 }

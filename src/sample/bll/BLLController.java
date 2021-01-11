@@ -3,6 +3,7 @@ package sample.bll;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
+import sample.bll.util.MovieSearcher;
 import sample.bll.util.SearchForSimilarTitles;
 import sample.bll.util.TimeCalculator;
 import sample.dal.DALController;
@@ -16,6 +17,7 @@ public class BLLController implements BLLFacade{
     private IDALFacade dataaccess = new DALController();
     private TimeCalculator timeCalculator = new TimeCalculator();
     private SearchForSimilarTitles searchForSimilarTitles;
+    private MovieSearcher movieSearcher;
 
     //Initializer block. Called even before the constructor
     //used to initialize an instance variable
@@ -156,6 +158,13 @@ public class BLLController implements BLLFacade{
         } catch (DALexception daLexception) {
             throw new BLLexception("Couldn't check if category exists", daLexception);
         }
+    }
+
+    @Override
+    public List<Movie> searchMovies(String query) throws BLLexception {
+        List<Movie> allMovies = getAllMovies();
+        List<Movie> searchResult = movieSearcher.getSearch(allMovies, query);
+        return searchResult;
     }
 
     @Override

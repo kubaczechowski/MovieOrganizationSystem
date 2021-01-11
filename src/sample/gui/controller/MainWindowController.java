@@ -68,6 +68,12 @@ public class MainWindowController implements Initializable {
         initTableView();
         initListView();
         moviesTableListener();
+        searchingFunctionalityListener();
+    }
+
+    private void searchingFunctionalityListener() {
+        searchField.textProperty().addListener((observableValue, oldValue, newValue) ->
+                movieModel.searchingFunctionality(newValue));
     }
 
     private void moviesTableListener() {

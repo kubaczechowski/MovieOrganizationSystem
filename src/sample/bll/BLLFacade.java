@@ -38,4 +38,6 @@ public interface BLLFacade {
     List<String> getSimilarMovies(String newTitle) throws BLLexception;
 
     boolean checkIfCategoryExists(String newCategory) throws BLLexception;
+
+    List<Movie> searchMovies(String query) throws BLLexception;
 }
