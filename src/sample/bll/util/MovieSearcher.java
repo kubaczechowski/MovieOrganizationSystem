@@ -33,26 +33,31 @@ public class MovieSearcher {
             // sort movies. i guess its descending order
             //there is no need to sort movies ealier
             allMovies.sort((movie1, movie2) -> Integer.compare(movie2.getRating(), movie1.getRating()));
+            for(Movie movie: allMovies)
+                System.out.println(movie.toString());
+
             int indexOfFound = binarySearch(Inumber);
             //add found movie
             moviesToReturn.add(allMovies.get(indexOfFound));
             //add movies in between
             moviesToReturn.addAll(moviesInBetween(indexOfFound));
+            System.out.println("movies to return");
+            for(Movie movie: moviesToReturn)
+                System.out.println(movie.toString());
         }
     }
 
     private List<Movie> moviesInBetween(int indexOfFound) {
         List<Movie> otherMovies = new ArrayList<>();
-        Movie movie= allMovies.get(indexOfFound);
         int indexOfFoundCopy = indexOfFound;
 
-        while(allMovies.get(indexOfFound).getRating() == allMovies.get(indexOfFound-1).getRating()
+        while((allMovies.get(indexOfFound).getRating() == allMovies.get(indexOfFound-1).getRating())
                 && indexOfFound>=0){
             otherMovies.add(allMovies.get(indexOfFound-1));
             indexOfFound--;
         }
-        while(allMovies.get(indexOfFoundCopy).getRating() == allMovies.get(indexOfFoundCopy-1).getRating()
-                && indexOfFoundCopy<=(allMovies.size()-1)){
+        while(indexOfFoundCopy<(allMovies.size()-1) && (allMovies.get(indexOfFoundCopy).getRating() == allMovies.get(indexOfFoundCopy+1).getRating())
+                 ){
             otherMovies.add(allMovies.get(indexOfFoundCopy+1));
            indexOfFoundCopy++;
         }

@@ -40,7 +40,7 @@ public class MovieDB implements MovieInterface {
                         categories);
                // movie.setCategoryList(categories);
                 allMovies.add(movie);
-                System.out.println("DB:" + movie.getCategoryList());
+               // System.out.println("DB:" + movie.getCategoryList());
             }
             return allMovies;
         } catch (SQLServerException throwables) {

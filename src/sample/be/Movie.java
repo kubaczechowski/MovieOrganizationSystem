@@ -97,4 +97,17 @@ public class Movie {
     public void setLastview(Timestamp lastview) {
         this.lastview = lastview;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", ratingIMDB=" + ratingIMDB +
+                ", filelink='" + filelink + '\'' +
+                ", lastview=" + lastview +
+                ", categoryList=" + categoryList +
+                '}';
+    }
 }

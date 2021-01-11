@@ -115,8 +115,13 @@ public class MovieModel {
      * @param query
      */
     public void searchingFunctionality(String query ) {
-        if(query!=null) {
+        if(query==null || query==" ")
+        {
+            obsMovies.clear();
+            obsMovies.addAll(getAllMovies());
+        }
 
+        else {
 
             List<Movie> searchResult = null;
             try {
