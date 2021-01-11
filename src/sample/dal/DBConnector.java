@@ -8,6 +8,10 @@ import java.sql.Connection;
 public class DBConnector {
     private SQLServerDataSource dataSource;
 
+    /**
+     * In the constructor we initialize the SQLServerDataSource
+     * and set initial values
+     */
     public DBConnector() {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");

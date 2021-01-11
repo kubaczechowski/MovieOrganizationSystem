@@ -47,7 +47,7 @@ public class TimeCalculator {
         {
             //when downcasting we will get full days
             //if it will be 5 days and 5 hours we will get 5 days
-            int days = (int) difference/ 24 * 60*60;
+            int days = (int) difference/ (24 * 60*60);
             if(days==1)
                 return "1 day ago";
             else

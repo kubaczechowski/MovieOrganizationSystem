@@ -41,6 +41,7 @@ public class Movie {
         if(categoryList!=null) this.categoryList = categoryList;
     }
 
+
     public List<Category> getCategoryList() {
         return categoryList;
     }

@@ -35,13 +35,15 @@ public class AddMovieWindowController {
 
 
     public void saveMovie(ActionEvent actionEvent) {
-        //check if similar movie is in DB
+        //check if similar movie/movies is/are in DB
         List<String> namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
         //show information to the user
         if(namesOfSimilarMovies!=null){
             String similar = " ";
             for(String item: namesOfSimilarMovies)
             {
+                //I dont want to start with a comma not like this: ,item1,item2
+                //add comma if already there is an item
                 if(similar.length()>1)
                     similar+= ", ";
 
@@ -62,6 +64,11 @@ public class AddMovieWindowController {
         closeStage(actionEvent);
     }
 
+    /**
+     * method takes data from the user input and
+     * makes a Movie object from that
+     * @return Movie
+     */
     private Movie createObject(){
         int id = -1;
         String name = nameField.getText();
@@ -74,6 +81,10 @@ public class AddMovieWindowController {
         return movie;
     }
 
+    /**
+     * just close the scene if the button close is pressed
+     * @param actionEvent
+     */
     public void cancel(ActionEvent actionEvent) {
         closeStage(actionEvent);
     }
@@ -89,6 +100,7 @@ public class AddMovieWindowController {
         Path destinationPath = null;
 
         //open a file explorer
+        //I guess that a button presses is a parent of node
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         fileChooser.setTitle("Choose song");

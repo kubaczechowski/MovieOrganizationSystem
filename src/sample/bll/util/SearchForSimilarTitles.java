@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class searchForSimilarTitles {
+public class SearchForSimilarTitles {
     private List<Movie> allMovies;
 
 
-    public searchForSimilarTitles(List<Movie> allMovies) {
+    public SearchForSimilarTitles(List<Movie> allMovies) {
         this.allMovies = allMovies;
     }
 
