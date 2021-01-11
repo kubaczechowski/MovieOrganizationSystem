@@ -115,14 +115,16 @@ public class MovieModel {
      * @param query
      */
     public void searchingFunctionality(String query ) {
-        if(query==null || query==" ")
+        if(query.isEmpty())
         {
             obsMovies.clear();
-            obsMovies.addAll(getAllMovies());
+            try {
+                obsMovies.addAll(logicLayer.getAllMovies());
+            } catch (BLLexception blLexception) {
+                blLexception.printStackTrace();
+            }
         }
-
         else {
-
             List<Movie> searchResult = null;
             try {
                 searchResult = logicLayer.searchMovies(query);
