@@ -17,7 +17,7 @@ public class BLLController implements BLLFacade{
     private IDALFacade dataaccess = new DALController();
     private TimeCalculator timeCalculator = new TimeCalculator();
     private SearchForSimilarTitles searchForSimilarTitles;
-    private MovieSearcher movieSearcher;
+    private MovieSearcher movieSearcher = new MovieSearcher();
 
     //Initializer block. Called even before the constructor
     //used to initialize an instance variable

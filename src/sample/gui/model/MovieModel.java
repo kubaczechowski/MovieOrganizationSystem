@@ -70,7 +70,7 @@ public class MovieModel {
         obsMovies.add(movie);
     }
 
-
+/*
     public ObservableList<Movie> searchMoviesByTitle(String text){
         List<Movie> movies = new ArrayList<>();
 
@@ -82,6 +82,8 @@ public class MovieModel {
         return FXCollections.observableArrayList(movies);
 
     }
+
+ */
 
 
 
@@ -112,9 +114,19 @@ public class MovieModel {
      * It refreshes the Observable List with the relevant titles
      * @param query
      */
-    public void searchingFunctionality(String query) {
-        List<Movie> searchResult = logicLayer.searchMovies(query);
-        obsMovies.clear();
-        obsMovies.addAll(searchResult);
+    public void searchingFunctionality(String query ) {
+        if(query!=null) {
+
+
+            List<Movie> searchResult = null;
+            try {
+                searchResult = logicLayer.searchMovies(query);
+            } catch (BLLexception blLexception) {
+                blLexception.printStackTrace();
+            }
+            obsMovies.clear();
+            if (searchResult != null)
+                obsMovies.addAll(searchResult);
+        }
     }
 }

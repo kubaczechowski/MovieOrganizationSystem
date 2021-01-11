@@ -18,9 +18,10 @@ public class MovieSearcher {
 
     public List<Movie> getSearch(List<Movie> allMovies, String query) {
         setAllMovies(allMovies);
-        
-        ratingSearcher(query);
 
+       ratingSearcher(query);
+
+        return moviesToReturn;
     }
 
     private void ratingSearcher(String query){

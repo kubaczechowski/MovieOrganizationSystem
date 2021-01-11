@@ -68,13 +68,15 @@ public class MainWindowController implements Initializable {
         initTableView();
         initListView();
         moviesTableListener();
-        searchingFunctionalityListener();
+      //  searchingFunctionalityListener();
     }
-
+/*
     private void searchingFunctionalityListener() {
         searchField.textProperty().addListener((observableValue, oldValue, newValue) ->
                 movieModel.searchingFunctionality(newValue));
-    }
+    }\
+
+ */
 
     private void moviesTableListener() {
         moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -416,7 +418,7 @@ public class MainWindowController implements Initializable {
                     "Please select a category", "no category selected",
                     Alert.AlertType.INFORMATION);
     }
-
+/*
     public void searchBar(KeyEvent keyEvent) {
         if (keyEvent.getCode()== KeyCode.ENTER){
             moviesTable.setItems(movieModel.searchMoviesByTitle(searchField.getText()));
@@ -425,4 +427,10 @@ public class MainWindowController implements Initializable {
         }
 
     }
+
+ */
+public void searchBar(KeyEvent keyEvent) {
+
+
+}
 }
