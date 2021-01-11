@@ -10,19 +10,22 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.MoviePlayerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.MoviePlayerController">
    <bottom>
       <VBox prefHeight="112.0" prefWidth="741.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="59.0" prefWidth="741.0">
+            <HBox prefHeight="76.0" prefWidth="741.0">
                <children>
-                  <Slider fx:id="progressBar" prefHeight="20.0" prefWidth="742.0">
+                  <Slider fx:id="progressBar" prefHeight="20.0" prefWidth="742.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
                         <Insets top="30.0" />
-                     </HBox.margin></Slider>
+                     </padding></Slider>
                </children>
             </HBox>
-            <HBox prefHeight="72.0" prefWidth="741.0">
+            <HBox prefHeight="49.0" prefWidth="819.0">
                <children>
                   <Text fx:id="label" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="147.13671875">
                      <HBox.margin>
@@ -37,7 +40,7 @@
                      <HBox.margin>
                         <Insets left="30.0" right="5.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#playStopButton" text="play/stop">
+                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#playStopButton" text="play/stop">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></Button>
@@ -57,10 +60,13 @@
       </VBox>
    </bottom>
    <center>
-      <StackPane prefHeight="330.0" prefWidth="741.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="417.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </StackPane>
    </center>
 </BorderPane>

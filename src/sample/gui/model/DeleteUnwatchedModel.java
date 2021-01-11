@@ -14,7 +14,7 @@ public class DeleteUnwatchedModel {
     private ObservableList<Movie> obsMoviesToDelete;
     private BLLFacade logicLayer;
 
-    public DeleteUnwatchedModel() {
+    private DeleteUnwatchedModel() {
         obsMoviesToDelete = FXCollections.observableArrayList();
         logicLayer = new BLLController();
     }

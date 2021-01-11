@@ -44,6 +44,7 @@ public class WebBrowserController implements Initializable {
         makeResponsive();
     }
 
+
     private void makeResponsive() {
         //set fixed height to width ratio
         Stage stage = getStage();

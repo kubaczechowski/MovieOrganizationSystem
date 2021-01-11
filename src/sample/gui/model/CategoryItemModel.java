@@ -13,7 +13,8 @@ public class CategoryItemModel {
     private ObservableList<Category> obsCategoryItems;
     private BLLFacade logicLayer;
 
-    public CategoryItemModel() {
+    //we use singleton pattern
+    private CategoryItemModel() {
         obsCategoryItems = FXCollections.observableArrayList();
         logicLayer = new BLLController();
     }

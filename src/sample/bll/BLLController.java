@@ -3,7 +3,7 @@ package sample.bll;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
-import sample.bll.util.searchForSimilarTitles;
+import sample.bll.util.SearchForSimilarTitles;
 import sample.bll.util.TimeCalculator;
 import sample.dal.DALController;
 import sample.dal.IDALFacade;
@@ -15,16 +15,30 @@ import java.util.List;
 public class BLLController implements BLLFacade{
     private IDALFacade dataaccess = new DALController();
     private TimeCalculator timeCalculator = new TimeCalculator();
-    private searchForSimilarTitles searchForSimilarTitles;
+    private SearchForSimilarTitles searchForSimilarTitles;
 
-    //understand that
+    //Initializer block. Called even before the constructor
+    //used to initialize an instance variable
     {
         try {
-            searchForSimilarTitles = new searchForSimilarTitles(getAllMovies());
+            searchForSimilarTitles = new SearchForSimilarTitles(getAllMovies());
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
     }
+    //Alternatively we could have written
+    //method is final because calling non-final methods during instance initialization can cause problems
+    /*
+    private final SearchForSimilarTitles initializeInstanceVariable(){
+        try {
+           searchForSimilarTitles = new SearchForSimilarTitles(getAllMovies());
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        return searchForSimilarTitles;
+    }
+
+     */
 
     @Override
     public List<Movie> getAllMovies() throws BLLexception {

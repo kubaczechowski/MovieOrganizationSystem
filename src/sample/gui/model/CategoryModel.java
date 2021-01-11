@@ -15,7 +15,8 @@ public class CategoryModel {
     private BLLFacade logicLayer;
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
-    public CategoryModel() {
+    //we use singleton pattern
+    private CategoryModel() {
         obsCategories = FXCollections.observableArrayList();
         logicLayer = new BLLController();
     }

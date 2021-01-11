@@ -11,6 +11,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -18,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -34,6 +37,7 @@ public class MoviePlayerController implements Initializable {
    @FXML private Text label;
    @FXML private Slider progressBar;
    @FXML private Slider volumeSlider;
+   @FXML private Button playButton;
 
    private Media media;
    private MediaPlayer mediaPlayer;
@@ -61,6 +65,8 @@ public class MoviePlayerController implements Initializable {
     }
 
     private void setProperties() {
+        playButton.setAlignment(Pos.BOTTOM_CENTER);
+
         final DoubleProperty width = mediaView.fitWidthProperty();
         final DoubleProperty height = mediaView.fitHeightProperty();
 
@@ -69,8 +75,20 @@ public class MoviePlayerController implements Initializable {
        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
         mediaView.setPreserveRatio(true);
     }
+    private Stage getStage(){
+        Stage stage = (Stage) label.getScene().getWindow();
+        return stage;
+    }
 
     public void play(){
+        //set fixed height to width ratio
+        Stage stage = getStage();
+        stage.minHeightProperty().bind(stage.widthProperty().multiply(0.68));
+        stage.maxHeightProperty().bind(stage.widthProperty().multiply(0.68));
+
+        //stage.widthProperty().addListener((observableValue, number, t1) -> playButton.);
+        playButton.setAlignment(Pos.BOTTOM_CENTER);
+
         if(getFilePath()==null)
             System.out.println("file path is null");
         //create media and media player

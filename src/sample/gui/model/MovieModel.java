@@ -17,7 +17,7 @@ public class MovieModel {
     private ObservableList<Movie> obsMovies ;
     private BLLFacade logicLayer;
 
-    public MovieModel() {
+    private MovieModel() {
         obsMovies = FXCollections.observableArrayList();
         logicLayer = new BLLController();
     }
