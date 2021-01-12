@@ -68,7 +68,7 @@ public class MainWindowController implements Initializable {
         initTableView();
         initListView();
         moviesTableListener();
-       searchingFunctionalityListener();
+        searchingFunctionalityListener();
     }
 
     private void searchingFunctionalityListener() {
@@ -307,6 +307,7 @@ public class MainWindowController implements Initializable {
              else {
                 //in case of number format exception
                 try {
+                    //finally here we can do something!!
                     selectedMovie.setRating(Integer.parseInt(newRating));
                 } catch (NumberFormatException numberFormatException) {
                     alertDisplayer.displayAlert("Number format exception",

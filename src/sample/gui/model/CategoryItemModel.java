@@ -45,12 +45,22 @@ public class CategoryItemModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+        try {
+            logicLayer.refreshcashList();
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
     }
 
     public void deleteCategoryItem(int movieID, int categoryID)
     {
         try {
             logicLayer.deleteCategoryItem(movieID, categoryID);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        try {
+            logicLayer.refreshcashList();
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }

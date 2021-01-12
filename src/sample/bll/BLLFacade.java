@@ -44,4 +44,10 @@ public interface BLLFacade {
     //cashe thingi
     void saveMovieToCache(Movie movie);
     List<Movie> getMoviesFromCashe();
+
+    void deleteMovieFromCashe(Movie... selectedMovies);
+
+    void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete);
+
+    void refreshcashList() throws BLLexception;
 }

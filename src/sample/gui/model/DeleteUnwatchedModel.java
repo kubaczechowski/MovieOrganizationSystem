@@ -59,6 +59,7 @@ public class DeleteUnwatchedModel {
             } catch (BLLexception blLexception) {
                 blLexception.printStackTrace();
             }
+            logicLayer.deleteMovieFromCashe(item);
         }
     }
 
@@ -76,6 +77,7 @@ public class DeleteUnwatchedModel {
                 blLexception.printStackTrace();
             }
         }
+        logicLayer.deleteListOfMoviesFromCashe(moviesToDelete);
     }
 
     private void deleteCategories(Movie item) {

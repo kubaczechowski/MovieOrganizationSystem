@@ -191,6 +191,21 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public void deleteMovieFromCashe(Movie... selectedMovies) {
+        movieCache.removeMovie(selectedMovies);
+    }
+
+    @Override
+    public void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete) {
+        movieCache.removeListOfMovies(moviesToDelete);
+    }
+
+    @Override
+    public void refreshcashList() throws BLLexception {
+        movieCache.refresh(getAllMovies());
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);

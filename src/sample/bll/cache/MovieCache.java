@@ -36,12 +36,23 @@ public class MovieCache {
     }
 
 
-    public void removeMovie(Movie movie) {
-        movies.removeIf(m -> m.getId() == movie.getId());
+    public void removeMovie(Movie... movies) {
+        for(Movie movie: movies)
+            this.movies.removeIf(m -> m.getId() == movie.getId());
+    }
+
+    public void removeListOfMovies(List<Movie> moviesToDel){
+        for(Movie movie: moviesToDel){
+            this.movies.removeIf(m -> m.getId() == movie.getId());
+        }
     }
 
 
     public List<Movie> getAllMovies() {
         return movies;
+    }
+
+    public void refresh(List<Movie> allMovies) {
+        this.movies = allMovies;
     }
 }

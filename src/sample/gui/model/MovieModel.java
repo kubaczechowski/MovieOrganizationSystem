@@ -66,6 +66,8 @@ public class MovieModel {
         }
         //delete from tableview
         obsMovies.remove(selectedMovie);
+        //delete from cashe
+        logicLayer.deleteMovieFromCashe(selectedMovie);
 
     }
 
