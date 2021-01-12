@@ -66,31 +66,22 @@ public class MovieSearcher {
      * @param query
      */
     private void Searcher(String query) {
+        //search for a movie title
         for (Movie movie : allMovies) {
-            if(compareToMovieTitle(query, movie))
-            {
+            if(compareToMovieName(query, movie.toString()))
                 moviesToReturn.add(movie);
-            }
         }
-    }
-    private boolean compareToMovieTitle(String query, Movie movie) {
-        return movie.getName().toLowerCase().contains(query.toLowerCase());
+
     }
 
-    /*
-    private boolean containsCategory(String query, Movie movie){
-            if(movie.getCategoryList().toString().toLowerCase().contains(query.toLowerCase()))
-                return true;
-            //if(searchForSimilarTitles.getSimilarCategories(query, allCategories).contains(category))
-                //return true;
-        return false;
+    private boolean compareToMovieName(String query, String movieToString) {
+        if(movieToString.toLowerCase().contains(query.toLowerCase()))
+            return true;
+        else
+            return false;
     }
-
-     */
-
 
     private void ratingSearcher(String query){
-
        // boolean isNumeric = query.chars().allMatch( Character::isDigit );
         double Dnumber = Double.valueOf(query);
         int Inumber = (int) Dnumber;

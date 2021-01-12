@@ -100,14 +100,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", rating=" + rating +
-                ", ratingIMDB=" + ratingIMDB +
-                ", filelink='" + filelink + '\'' +
-                ", lastview=" + lastview +
-                ", categoryList=" + categoryList +
-                '}';
+        return name + categoryList.toString().replace(",", "");
+
     }
 }
