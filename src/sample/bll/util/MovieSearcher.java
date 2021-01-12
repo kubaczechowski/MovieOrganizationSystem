@@ -9,17 +9,11 @@ import java.util.*;
 
 public class MovieSearcher {
     List<Movie> allMovies;
-    List<Category> allCategories;
+
     List<Movie> moviesToReturn = new ArrayList<>();
 
     private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
-    public List<Category> getAllCategories() {
-        return allCategories;
-    }
 
-    public void setAllCategories(List<Category> allCategories) {
-        this.allCategories = allCategories;
-    }
 
     public List<Movie> getAllMovies() {
         return allMovies;
@@ -29,11 +23,10 @@ public class MovieSearcher {
         this.allMovies = allMovies;
     }
 
-    public List<Movie> getSearch(List<Movie> allMovies, String query, List<Category> allCategories) {
+    public List<Movie> getSearch(List<Movie> allMovies, String query) {
         moviesToReturn.removeAll(moviesToReturn);
         //it should be outlined
         setAllMovies(allMovies);
-        setAllCategories(allCategories);
 
         //run only if query is isn't a letter or word
         if(isNumeric(query)){

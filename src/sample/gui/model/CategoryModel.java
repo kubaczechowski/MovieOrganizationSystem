@@ -18,7 +18,11 @@ public class CategoryModel {
     //we use singleton pattern
     private CategoryModel() {
         obsCategories = FXCollections.observableArrayList();
-        logicLayer = new BLLController();
+        try {
+            logicLayer = new BLLController();
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
     }
 
     public static CategoryModel getInstance() {

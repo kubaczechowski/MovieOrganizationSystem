@@ -40,4 +40,6 @@ public interface BLLFacade {
     boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 
     List<Movie> searchMovies(String query) throws BLLexception;
+
+    void saveMovieToCache(Movie movie);
 }

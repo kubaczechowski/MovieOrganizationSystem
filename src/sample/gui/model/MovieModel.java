@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
+import sample.bll.cache.MovieCache;
 import sample.bll.exception.BLLexception;
 
 
@@ -22,9 +23,16 @@ public class MovieModel {
     private ObservableList<Movie> obsMovies ;
     private BLLFacade logicLayer;
 
+
+
+
     private MovieModel() {
         obsMovies = FXCollections.observableArrayList();
-        logicLayer = new BLLController();
+        try {
+            logicLayer = new BLLController();
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
     }
 
     public static MovieModel getInstance() {
@@ -68,6 +76,8 @@ public class MovieModel {
         }
         //save in tableview
         obsMovies.add(movie);
+        //save in the movieCache
+        logicLayer.saveMovieToCache(movie);
     }
 
 /*
@@ -135,9 +145,7 @@ public class MovieModel {
             obsMovies.clear();
 
             obsMovies.addAll(searchResult);
-            for(Movie movie: searchResult){
-                System.out.println(movie.toString());
-            }
         }
     }
+
 }

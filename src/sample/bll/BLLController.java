@@ -2,6 +2,7 @@ package sample.bll;
 
 import sample.be.Category;
 import sample.be.Movie;
+import sample.bll.cache.MovieCache;
 import sample.bll.exception.BLLexception;
 import sample.bll.util.MovieSearcher;
 import sample.bll.util.SearchForSimilarTitles;
@@ -18,6 +19,8 @@ public class BLLController implements BLLFacade{
     private TimeCalculator timeCalculator = new TimeCalculator();
     private SearchForSimilarTitles searchForSimilarTitles;
     private MovieSearcher movieSearcher = new MovieSearcher();
+    private MovieCache movieCache = MovieCache.getInstance();
+
 
     //Initializer block. Called even before the constructor
     //used to initialize an instance variable
@@ -27,7 +30,15 @@ public class BLLController implements BLLFacade{
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+        //set movieCache
+        //movieCache.setAllMovies(getAllMovies());
     }
+
+    public BLLController() throws BLLexception {
+        movieCache.setAllMovies(getAllMovies());
+    }
+
+
     //Alternatively we could have written
     //method is final because calling non-final methods during instance initialization can cause problems
     /*
@@ -162,10 +173,15 @@ public class BLLController implements BLLFacade{
 
     @Override
     public List<Movie> searchMovies(String query) throws BLLexception {
-        List<Movie> allMovies = getAllMovies();
-        List<Category> allCategories = getAllCategories();
-        List<Movie> searchResult = movieSearcher.getSearch(allMovies, query, allCategories);
+        //List<Movie> allMovies = getAllMovies();
+       // List<Category> allCategories = getAllCategories();
+        List<Movie> searchResult = movieSearcher.getSearch(movieCache.getAllMovies() , query);
         return searchResult;
+    }
+    // cashe class
+    @Override
+    public void saveMovieToCache(Movie movie) {
+        movieCache.saveMovies(movie);
     }
 
     @Override

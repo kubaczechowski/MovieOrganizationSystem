@@ -73,10 +73,9 @@ public class MainWindowController implements Initializable {
 
     private void searchingFunctionalityListener() {
         searchField.textProperty().addListener((observableValue, oldValue, newValue) ->
-                movieModel.searchingFunctionality(newValue));
+                movieModel.searchingFunctionality(newValue)
+        );
     }
-
-
 
     private void moviesTableListener() {
         moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
