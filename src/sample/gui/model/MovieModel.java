@@ -28,11 +28,13 @@ public class MovieModel {
 
     private MovieModel() {
         obsMovies = FXCollections.observableArrayList();
+
         try {
-            logicLayer = new BLLController();
+            logicLayer = new BLLController(true);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+
     }
 
     public static MovieModel getInstance() {
@@ -103,6 +105,7 @@ public class MovieModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+        logicLayer.saveMovieToCache(movieToPlay);
     }
 
     public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp lastview) {
@@ -126,14 +129,10 @@ public class MovieModel {
      */
     public void searchingFunctionality(String query ) {
         //delating text requires this
-        if(query.isEmpty())
-        {
+        if(query.isEmpty()) {
             obsMovies.clear();
-            try {
-                obsMovies.addAll(logicLayer.getAllMovies());
-            } catch (BLLexception blLexception) {
-                blLexception.printStackTrace();
-            }
+                //get all movies from cashe
+                obsMovies.addAll(logicLayer.getMoviesFromCashe());
         }
         else {
             List<Movie> searchResult = null;
@@ -143,7 +142,6 @@ public class MovieModel {
                 blLexception.printStackTrace();
             }
             obsMovies.clear();
-
             obsMovies.addAll(searchResult);
         }
     }

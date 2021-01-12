@@ -34,8 +34,9 @@ public class BLLController implements BLLFacade{
         //movieCache.setAllMovies(getAllMovies());
     }
 
-    public BLLController() throws BLLexception {
-        movieCache.setAllMovies(getAllMovies());
+    public BLLController(boolean setCache) throws BLLexception {
+        if(setCache)
+            movieCache.setAllMovies(getAllMovies());
     }
 
 
@@ -182,6 +183,11 @@ public class BLLController implements BLLFacade{
     @Override
     public void saveMovieToCache(Movie movie) {
         movieCache.saveMovies(movie);
+    }
+
+    @Override
+    public List<Movie> getMoviesFromCashe() {
+        return movieCache.getAllMovies();
     }
 
     @Override

@@ -41,5 +41,7 @@ public interface BLLFacade {
 
     List<Movie> searchMovies(String query) throws BLLexception;
 
+    //cashe thingi
     void saveMovieToCache(Movie movie);
+    List<Movie> getMoviesFromCashe();
 }

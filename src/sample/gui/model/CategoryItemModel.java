@@ -17,7 +17,7 @@ public class CategoryItemModel {
     private CategoryItemModel() {
         obsCategoryItems = FXCollections.observableArrayList();
         try {
-            logicLayer = new BLLController();
+            logicLayer = new BLLController(false);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }

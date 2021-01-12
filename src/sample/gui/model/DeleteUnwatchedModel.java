@@ -17,7 +17,7 @@ public class DeleteUnwatchedModel {
     private DeleteUnwatchedModel() {
         obsMoviesToDelete = FXCollections.observableArrayList();
         try {
-            logicLayer = new BLLController();
+            logicLayer = new BLLController(false);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
