@@ -1,12 +1,25 @@
 package sample.bll.util;
 
+import sample.be.Category;
 import sample.be.Movie;
 
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.*;
 
 public class MovieSearcher {
     List<Movie> allMovies;
+    List<Category> allCategories;
     List<Movie> moviesToReturn = new ArrayList<>();
+
+    private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
+    public List<Category> getAllCategories() {
+        return allCategories;
+    }
+
+    public void setAllCategories(List<Category> allCategories) {
+        this.allCategories = allCategories;
+    }
 
     public List<Movie> getAllMovies() {
         return allMovies;
@@ -16,20 +29,74 @@ public class MovieSearcher {
         this.allMovies = allMovies;
     }
 
-    public List<Movie> getSearch(List<Movie> allMovies, String query) {
+    public List<Movie> getSearch(List<Movie> allMovies, String query, List<Category> allCategories) {
+        moviesToReturn.removeAll(moviesToReturn);
+        //it should be outlined
         setAllMovies(allMovies);
+        setAllCategories(allCategories);
 
-       ratingSearcher(query);
+        //run only if query is isn't a letter or word
+        if(isNumeric(query)){
+            boolean isNumeric = query.chars().allMatch( Character::isDigit );
+            double Dnumber = Double.valueOf(query);
+            int Inumber = (int) Dnumber;
+
+            if(isNumeric && (Dnumber ==Inumber )
+                    && Inumber>0 && Inumber<11)
+                ratingSearcher(query);
+        }
+
+       //run if query isn't a singular number
+        else
+            Searcher(query);
 
         return moviesToReturn;
     }
 
+    public static boolean isNumeric(String str) {
+        NumberFormat formatter = NumberFormat.getInstance();
+        ParsePosition pos = new ParsePosition(0);
+        formatter.parse(str, pos);
+        return str.length() == pos.getIndex();
+    }
+
+    /**
+     * also enable searching for similar words for example if similarity
+     * is smaller or equal 2 or three (implement and then experiment)
+     * @param query
+     */
+    private void Searcher(String query) {
+        for (Movie movie : allMovies) {
+            if(compareToMovieTitle(query, movie))
+            {
+                moviesToReturn.add(movie);
+            }
+        }
+    }
+    private boolean compareToMovieTitle(String query, Movie movie) {
+        return movie.getName().toLowerCase().contains(query.toLowerCase());
+    }
+
+    /*
+    private boolean containsCategory(String query, Movie movie){
+            if(movie.getCategoryList().toString().toLowerCase().contains(query.toLowerCase()))
+                return true;
+            //if(searchForSimilarTitles.getSimilarCategories(query, allCategories).contains(category))
+                //return true;
+        return false;
+    }
+
+     */
+
+
     private void ratingSearcher(String query){
-        boolean isNumeric = query.chars().allMatch( Character::isDigit );
+
+       // boolean isNumeric = query.chars().allMatch( Character::isDigit );
         double Dnumber = Double.valueOf(query);
         int Inumber = (int) Dnumber;
         //if the user inserted integer between 1-10
-        if(isNumeric && (Dnumber ==Inumber ) && Inumber>0 && Inumber<11){
+      //  if(isNumeric && (Dnumber ==Inumber ) && Inumber>0 && Inumber<11){
+
             // sort movies. i guess its descending order
             //there is no need to sort movies ealier
             allMovies.sort((movie1, movie2) -> Integer.compare(movie2.getRating(), movie1.getRating()));
@@ -45,7 +112,7 @@ public class MovieSearcher {
             for(Movie movie: moviesToReturn)
                 System.out.println(movie.toString());
         }
-    }
+    //}
 
     private List<Movie> moviesInBetween(int indexOfFound) {
         List<Movie> otherMovies = new ArrayList<>();
@@ -56,7 +123,8 @@ public class MovieSearcher {
             otherMovies.add(allMovies.get(indexOfFound-1));
             indexOfFound--;
         }
-        while(indexOfFoundCopy<(allMovies.size()-1) && (allMovies.get(indexOfFoundCopy).getRating() == allMovies.get(indexOfFoundCopy+1).getRating())
+        while(indexOfFoundCopy<(allMovies.size()-1) && (allMovies.get(indexOfFoundCopy).getRating()
+                == allMovies.get(indexOfFoundCopy+1).getRating())
                  ){
             otherMovies.add(allMovies.get(indexOfFoundCopy+1));
            indexOfFoundCopy++;

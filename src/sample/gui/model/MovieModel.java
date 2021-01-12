@@ -115,6 +115,7 @@ public class MovieModel {
      * @param query
      */
     public void searchingFunctionality(String query ) {
+        //delating text requires this
         if(query.isEmpty())
         {
             obsMovies.clear();
@@ -132,8 +133,11 @@ public class MovieModel {
                 blLexception.printStackTrace();
             }
             obsMovies.clear();
-            if (searchResult != null)
-                obsMovies.addAll(searchResult);
+
+            obsMovies.addAll(searchResult);
+            for(Movie movie: searchResult){
+                System.out.println(movie.toString());
+            }
         }
     }
 }

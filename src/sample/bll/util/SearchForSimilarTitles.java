@@ -1,5 +1,6 @@
 package sample.bll.util;
 
+import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
 import java.util.ArrayList;
@@ -8,10 +9,21 @@ import java.util.List;
 
 public class SearchForSimilarTitles {
     private List<Movie> allMovies;
+    private List<Category> allCategories;
 
+    public List<Category> getAllCategories() {
+        return allCategories;
+    }
+
+    public void setAllCategories(List<Category> allCategories) {
+        this.allCategories = allCategories;
+    }
 
     public SearchForSimilarTitles(List<Movie> allMovies) {
         this.allMovies = allMovies;
+    }
+
+    public SearchForSimilarTitles() {
     }
 
     /**
@@ -20,26 +32,40 @@ public class SearchForSimilarTitles {
      * no prompt will appear to the user with information about
      * similar titles
      */
-    public List<String> getSimilarMovies(String newTitle) throws BLLexception {
+    public List<String> getSimilarMovies(String newTitle) {
         List<String> namesOfSimilarMovies = new ArrayList<>();
 
         for(Movie movie:allMovies)
         {
-            if(isVerySimilar(newTitle, movie.getName()))
+            if(isVerySimilar(newTitle, movie.getName(), 2, true))
                 namesOfSimilarMovies.add(movie.getName());
         }
 
         return namesOfSimilarMovies;
     }
 
+    public List<Category> getSimilarCategories(String query, List<Category> allCategories){
+        setAllCategories(allCategories);
+        List<Category> similarCategories = new ArrayList<>();
+
+        for(Category category: allCategories){
+            if(isVerySimilar(query, category.getName(), 3, true))
+                similarCategories.add(category);
+        }
+        return similarCategories;
+    }
+
     /**
      * if the similarity is smaller or equals one return true
      */
-   private boolean isVerySimilar(String newTitle, String existingTitle)
+   private boolean isVerySimilar(String newTitle, String existingTitle,
+                                 int setSimilarity, boolean includeThatNumber)
     {
         int difference = levenshteinDistance(newTitle, existingTitle);
 
-        if(difference<=2)
+        if(difference<setSimilarity)
+            return true;
+        else if(includeThatNumber && setSimilarity==difference)
             return true;
         else
             return false;

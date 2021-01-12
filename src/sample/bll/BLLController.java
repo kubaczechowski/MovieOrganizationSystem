@@ -163,7 +163,8 @@ public class BLLController implements BLLFacade{
     @Override
     public List<Movie> searchMovies(String query) throws BLLexception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.getSearch(allMovies, query);
+        List<Category> allCategories = getAllCategories();
+        List<Movie> searchResult = movieSearcher.getSearch(allMovies, query, allCategories);
         return searchResult;
     }
 
