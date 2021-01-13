@@ -220,6 +220,11 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public void updateSortingOption(boolean sortWithHigherRatings) {
+        movieSearcher.setSortingOption(sortWithHigherRatings);
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);

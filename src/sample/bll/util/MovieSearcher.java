@@ -10,6 +10,7 @@ public class MovieSearcher {
     List<Movie> allMovies;
 
     List<Movie> moviesToReturn = new ArrayList<>();
+    private boolean includeHigher;
 
     //private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
 
@@ -106,13 +107,42 @@ public class MovieSearcher {
                 moviesToReturn.add(allMovies.get(indexOfFound));
                 //add movies in between
                 //test if the problem is with movies in between
-               moviesToReturn.addAll(moviesInBetween(indexOfFound));
-                System.out.println("movies to return");
-                for (Movie movie : moviesToReturn)
-                    System.out.println(movie.toString());
+               //moviesToReturn.addAll(moviesInBetween(indexOfFound));
+                if(includeHigher){
+                    //if there are movies below too
+                    moviesToReturn.addAll(moviesBelow(indexOfFound));
+                    //all movies with bigger numbres or this same
+                    moviesToReturn.addAll(moviesWithHigherNum(indexOfFound));
+                }
+                else{
+                    moviesToReturn.addAll(moviesInBetween(indexOfFound));
+                }
             }
         }
     //}
+
+    private List<Movie> moviesBelow(int indexOfFound){
+        List<Movie> otherMovies = new ArrayList<>();
+        int indexOfFoundCopy = indexOfFound;
+
+        while(indexOfFoundCopy>0 &&(allMovies.get(indexOfFound).getRating() == allMovies.get(indexOfFound-1).getRating() )){
+            otherMovies.add(allMovies.get(indexOfFound-1));
+            if(indexOfFound>0)
+                indexOfFound--;
+        }
+        return otherMovies;
+    }
+
+    private List<Movie> moviesWithHigherNum(int indexOfFound){
+        List<Movie> otherMovies = new ArrayList<>();
+        int indexOfFoundCopy = indexOfFound;
+
+        while(indexOfFoundCopy<(allMovies.size()-1)){
+            otherMovies.add(allMovies.get(indexOfFoundCopy+1));
+            indexOfFoundCopy++;
+        }
+        return otherMovies;
+    }
 
     private List<Movie> moviesInBetween(int indexOfFound) {
         List<Movie> otherMovies = new ArrayList<>();
@@ -179,4 +209,7 @@ public class MovieSearcher {
     }
 
 
+    public void setSortingOption(boolean sortWithHigherRatings) {
+        includeHigher=sortWithHigherRatings;
+    }
 }

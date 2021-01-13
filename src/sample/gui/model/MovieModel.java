@@ -166,4 +166,8 @@ public class MovieModel {
             blLexception.printStackTrace();
         }
     }
+
+    public void updateSortingOption(boolean sortWithHigherRatings) {
+        logicLayer.updateSortingOption(sortWithHigherRatings);
+    }
 }

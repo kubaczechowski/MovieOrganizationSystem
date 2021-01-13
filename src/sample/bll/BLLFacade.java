@@ -54,4 +54,6 @@ public interface BLLFacade {
     void refreshcashList() throws BLLexception;
 
     void updateRating(Movie selectedMovie, int newRating) throws BLLexception;
+
+    void updateSortingOption(boolean sortWithHigherRatings);
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -28,5 +29,6 @@
       <Button layoutX="948.0" layoutY="166.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="65.0" prefWidth="106.0" text="REMOVE" />
       <Button layoutX="948.0" layoutY="243.0" mnemonicParsing="false" onAction="#setCategory" prefHeight="72.0" prefWidth="106.0" text="SET" />
       <Button layoutX="948.0" layoutY="333.0" mnemonicParsing="false" onAction="#unsetCategory" prefHeight="65.0" prefWidth="106.0" text="UNSET" />
+      <RadioButton layoutX="676.0" layoutY="28.0" mnemonicParsing="false" onAction="#sortWithHigherRatingsButton" text="sort also with higher" />
    </children>
 </AnchorPane>

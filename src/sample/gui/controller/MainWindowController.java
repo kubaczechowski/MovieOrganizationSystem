@@ -49,6 +49,8 @@ public class MainWindowController implements Initializable {
     private CategoryItemModel categoryItemModel;
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
+    private boolean sortWithHigherRatings; //initlialy its false
+
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
         categoryModel = CategoryModel.getInstance();
@@ -439,4 +441,12 @@ public class MainWindowController implements Initializable {
                     Alert.AlertType.INFORMATION);
     }
 
+    public void sortWithHigherRatingsButton(ActionEvent actionEvent) {
+        if (sortWithHigherRatings==false)
+            sortWithHigherRatings=true;
+        else
+            sortWithHigherRatings=false;
+
+        movieModel.updateSortingOption(sortWithHigherRatings);
+    }
 }
