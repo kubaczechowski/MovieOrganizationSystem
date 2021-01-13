@@ -172,5 +172,19 @@ public class MovieDB implements MovieInterface {
 
     }
 
+    @Override
+    public void updateRating(Movie movie, int newRating) throws DALexception {
+        String update = "UPDATE Movie SET rating=? WHERE id=?";
+        try (Connection con = dbConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(update)) {
+        pstat.setInt(1, newRating);
+        pstat.setInt(2, movie.getId());
+        } catch (SQLServerException throwables) {
+            throw new DALexception("couldnt update the rating", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("couldnt update the rating", throwables);
+        }
+    }
+
 
 }

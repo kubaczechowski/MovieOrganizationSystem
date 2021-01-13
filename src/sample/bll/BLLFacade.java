@@ -50,4 +50,6 @@ public interface BLLFacade {
     void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete);
 
     void refreshcashList() throws BLLexception;
+
+    void updateRating(Movie selectedMovie, int newRating) throws BLLexception;
 }

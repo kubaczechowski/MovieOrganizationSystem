@@ -308,7 +308,8 @@ public class MainWindowController implements Initializable {
                 //in case of number format exception
                 try {
                     //finally here we can do something!!
-                    selectedMovie.setRating(Integer.parseInt(newRating));
+                   // selectedMovie.setRating(Integer.parseInt(newRating));
+                    movieModel.updateRating(selectedMovie, Integer.parseInt(newRating));
                 } catch (NumberFormatException numberFormatException) {
                     alertDisplayer.displayAlert("Number format exception",
                             "Please insert a number", "number should be in range of 1 to 10",

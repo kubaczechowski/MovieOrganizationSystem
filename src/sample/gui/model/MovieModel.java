@@ -148,4 +148,22 @@ public class MovieModel {
         }
     }
 
+    public void updateRating(Movie selectedMovie, int newRating) {
+        try {
+            logicLayer.updateRating(selectedMovie, newRating);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        obsMovies.clear();
+        try {
+            obsMovies.addAll(logicLayer.getAllMovies());
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        try {
+            logicLayer.refreshcashList();
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+    }
 }

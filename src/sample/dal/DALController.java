@@ -37,6 +37,11 @@ public class DALController implements IDALFacade{
         movieDB.updateLastViewFor(movie);
     }
 
+    @Override
+    public void updateRating(Movie movie, int newRaing) throws DALexception {
+        movieDB.updateRating(movie, newRaing);
+    }
+
     //category
     @Override
     public List<Category> getAllCategories() throws DALexception {

@@ -206,6 +206,15 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public void updateRating(Movie selectedMovie, int newRating) throws BLLexception {
+        try {
+            dataaccess.updateRating(selectedMovie, newRating);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't update the rating", daLexception);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);
