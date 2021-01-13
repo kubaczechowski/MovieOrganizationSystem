@@ -44,13 +44,13 @@ public class SearchForSimilarTitles {
         return namesOfSimilarMovies;
     }
 
-    public List<Category> getSimilarCategories(String query, List<Category> allCategories){
+    public List<String> getSimilarCategories(String query, List<Category> allCategories){
         setAllCategories(allCategories);
-        List<Category> similarCategories = new ArrayList<>();
+        List<String> similarCategories = new ArrayList<>();
 
         for(Category category: allCategories){
             if(isVerySimilar(query, category.getName(), 3, true))
-                similarCategories.add(category);
+                similarCategories.add(category.getName());
         }
         return similarCategories;
     }

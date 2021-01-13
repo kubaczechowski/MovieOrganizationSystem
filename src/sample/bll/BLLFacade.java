@@ -37,6 +37,8 @@ public interface BLLFacade {
                           int lastviewInMillis, Timestamp timestamp);
     List<String> getSimilarMovies(String newTitle) throws BLLexception;
 
+    List<String> getSimilarCategories(String newCategory, List<Category> allCategories) throws BLLexception;
+
     boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 
     List<Movie> searchMovies(String query) throws BLLexception;

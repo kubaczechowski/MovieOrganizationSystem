@@ -1,6 +1,5 @@
 package sample.bll.util;
 
-import sample.be.Category;
 import sample.be.Movie;
 
 import java.text.NumberFormat;
@@ -12,7 +11,7 @@ public class MovieSearcher {
 
     List<Movie> moviesToReturn = new ArrayList<>();
 
-    private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
+    //private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
 
 
     public List<Movie> getAllMovies() {
@@ -30,18 +29,25 @@ public class MovieSearcher {
 
         //run only if query is isn't a letter or word
         if(isNumeric(query)){
-            boolean isNumeric = query.chars().allMatch( Character::isDigit );
+            //boolean isNumeric = query.chars().allMatch( Character::isDigit );
             double Dnumber = Double.valueOf(query);
             int Inumber = (int) Dnumber;
 
-            if(isNumeric && (Dnumber ==Inumber )
+            //case that we are looking for a rating and
+            // in the future number at the beginning of name
+            if( (Dnumber ==Inumber )
                     && Inumber>0 && Inumber<11)
                 ratingSearcher(query);
+
+            //case we are only looking for a number at the beginning of title or category
+            else if((Dnumber ==Inumber ) && (Inumber<=0 || Inumber>=11 ))
+                searcher(query);
+
         }
 
-       //run if query isn't a singular number
+       //run if query isn't a number
         else
-            Searcher(query);
+            searcher(query);
 
         return moviesToReturn;
     }
@@ -58,7 +64,7 @@ public class MovieSearcher {
      * is smaller or equal 2 or three (implement and then experiment)
      * @param query
      */
-    private void Searcher(String query) {
+    private void searcher(String query) {
         //search for a movie title
         for (Movie movie : allMovies) {
             if(compareToMovieName(query, movie.toString()))
@@ -74,27 +80,37 @@ public class MovieSearcher {
             return false;
     }
 
+
+    //make it robust and implement case that we do not find
+    //such number
     private void ratingSearcher(String query){
-       // boolean isNumeric = query.chars().allMatch( Character::isDigit );
+
         double Dnumber = Double.valueOf(query);
         int Inumber = (int) Dnumber;
-        //if the user inserted integer between 1-10
-      //  if(isNumeric && (Dnumber ==Inumber ) && Inumber>0 && Inumber<11){
 
             // sort movies. i guess its descending order
             //there is no need to sort movies ealier
-            allMovies.sort((movie1, movie2) -> Integer.compare(movie2.getRating(), movie1.getRating()));
+            allMovies.sort((movie1, movie2) -> Integer.compare(movie1.getRating(), movie2.getRating()));
             for(Movie movie: allMovies)
                 System.out.println(movie.toString());
 
             int indexOfFound = binarySearch(Inumber);
-            //add found movie
-            moviesToReturn.add(allMovies.get(indexOfFound));
-            //add movies in between
-            moviesToReturn.addAll(moviesInBetween(indexOfFound));
-            System.out.println("movies to return");
-            for(Movie movie: moviesToReturn)
-                System.out.println(movie.toString());
+
+            //didn't find
+            if(indexOfFound==-1){
+
+            }
+            //found some number
+            else {
+                //add found movie
+                moviesToReturn.add(allMovies.get(indexOfFound));
+                //add movies in between
+                //test if the problem is with movies in between
+               moviesToReturn.addAll(moviesInBetween(indexOfFound));
+                System.out.println("movies to return");
+                for (Movie movie : moviesToReturn)
+                    System.out.println(movie.toString());
+            }
         }
     //}
 
@@ -102,11 +118,12 @@ public class MovieSearcher {
         List<Movie> otherMovies = new ArrayList<>();
         int indexOfFoundCopy = indexOfFound;
 
-        while((allMovies.get(indexOfFound).getRating() == allMovies.get(indexOfFound-1).getRating())
-                && indexOfFound>=0){
+        while(indexOfFoundCopy>0 &&(allMovies.get(indexOfFound).getRating() == allMovies.get(indexOfFound-1).getRating() )){
             otherMovies.add(allMovies.get(indexOfFound-1));
-            indexOfFound--;
+            if(indexOfFound>0)
+                indexOfFound--;
         }
+
         while(indexOfFoundCopy<(allMovies.size()-1) && (allMovies.get(indexOfFoundCopy).getRating()
                 == allMovies.get(indexOfFoundCopy+1).getRating())
                  ){
@@ -120,7 +137,8 @@ public class MovieSearcher {
      * method is used to find an index of searched movie
      * @return indexOfFound
      */
-    private int binarySearch(int minimalRating)
+    //i think it doesnt work as it should
+    private int binarySearch2(int minimalRating)
     {
         int low=0;
         int high = allMovies.size()-1;
@@ -129,12 +147,34 @@ public class MovieSearcher {
             if(allMovies.get(middle).getRating()==minimalRating)
                 return middle;
             if(allMovies.get(middle).getRating()< minimalRating)
-                low = middle+1;
+                low =  middle+1;
             if(allMovies.get(middle).getRating()> minimalRating)
-                low = middle-1;
+                low =  middle-1;
         }
         //if nothing was found. its indication that nothing was found.
         return -1;
+
+    }
+
+    private int binarySearch(int minimalRating)
+    {
+        int low=0;
+        int high = allMovies.size()-1;
+        int middle; // we nn
+        while(low<high){
+            middle = low + (high-low)/2;
+
+            if(allMovies.get(middle).getRating() < minimalRating)
+                low =  middle + 1;
+            else
+                high=middle;
+        }
+        //if nothing was found. its indication that nothing was found.
+
+        if(allMovies.get(low).getRating()==minimalRating)
+            return low;
+        else
+            return -1;
 
     }
 

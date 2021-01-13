@@ -9,6 +9,9 @@ import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
 import sample.gui.util.AlertDisplayer;
 
+import java.util.Collections;
+import java.util.List;
+
 public class CategoryModel {
     private static CategoryModel categoryModel;
     private ObservableList<Category> obsCategories;
@@ -77,5 +80,14 @@ public class CategoryModel {
                 Alert.AlertType.ERROR);
         //it will prevent from adding new category
         return true;
+    }
+
+    public List<String> searchForSimilar(String newCategory) {
+        try {
+            return logicLayer.getSimilarCategories(newCategory, getAllCategories());
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        return Collections.singletonList("problem happened in category model in search for similar");
     }
 }

@@ -329,11 +329,30 @@ public class MainWindowController implements Initializable {
         if(newCategory!=null){
             //check in db if such category exists
             boolean exists = categoryModel.chechIfExists(newCategory);
+
+            List<String> namesOfSimilarCategories = categoryModel.searchForSimilar(newCategory);
             //show alert
             if(exists)
                 alertDisplayer.displayAlert("Category",
                         "you cannot add one category twice", "such category is added",
                         Alert.AlertType.WARNING);
+            else if(namesOfSimilarCategories!=null){
+                String sim = " ";
+                for(String item: namesOfSimilarCategories){
+                    if(sim.length()>1)
+                        sim+= ", ";
+
+                    sim +=  item+ " ";
+                }
+                boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar categories",
+                        "Here are similar titles: " + sim, "if you want to add this category press ok"  );
+                if(doYouWantToSave){
+                    Category category = new Category(newCategory);
+                    //call category model
+                    categoryModel.save(category);
+                }
+
+            }
             else {
                 //System.out.println(newCategory);
                 Category category = new Category(newCategory);

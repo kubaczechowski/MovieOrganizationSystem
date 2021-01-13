@@ -159,8 +159,13 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
-    public List<String> getSimilarMovies(String newTitle) throws BLLexception {
+    public List<String> getSimilarMovies(String newTitle) {
         return searchForSimilarTitles.getSimilarMovies(newTitle);
+    }
+
+    @Override
+    public List<String> getSimilarCategories(String newCategory, List<Category> allCategories)  {
+        return searchForSimilarTitles.getSimilarCategories(newCategory, allCategories);
     }
 
     @Override
