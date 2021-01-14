@@ -1,5 +1,6 @@
 package sample.bll;
 
+import javafx.scene.Node;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.cache.MovieCache;
@@ -10,6 +11,8 @@ import sample.bll.util.TimeCalculator;
 import sample.dal.DALController;
 import sample.dal.IDALFacade;
 import sample.dal.exception.DALexception;
+import sample.dal.exception.FileExceptionDAL;
+import sample.dal.exception.JCodecExceptionDAL;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -222,6 +225,33 @@ public class BLLController implements BLLFacade{
     @Override
     public void updateSortingOption(boolean sortWithHigherRatings) {
         movieSearcher.setSortingOption(sortWithHigherRatings);
+    }
+
+    @Override
+    public boolean openFileChooser(Node n, String namefield) {
+        return dataaccess.openFileChooser(n, namefield);
+
+    }
+
+    @Override
+    public void saveMovieInProgramFolder() throws BLLexception {
+        try {
+            dataaccess.saveFileInProgramFolder();
+        } catch (FileExceptionDAL fileExceptionDAL) {
+            throw new BLLexception("Couldn;t save movie in program folder",
+                    fileExceptionDAL);
+        }
+    }
+
+    @Override
+    public String setAndSaveImage(String fieldname) throws BLLexception {
+        try {
+            return dataaccess.setAndSaveImage(fieldname);
+        } catch (FileExceptionDAL fileExceptionDAL) {
+            throw new BLLexception("Couldn't save image and get filepath", fileExceptionDAL);
+        } catch (JCodecExceptionDAL jCodecExceptionDAL) {
+            throw new BLLexception("Couldn't save image and get filepath", jCodecExceptionDAL);
+        }
     }
 
     @Override

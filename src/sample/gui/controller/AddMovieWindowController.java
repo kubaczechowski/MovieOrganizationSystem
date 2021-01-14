@@ -39,15 +39,7 @@ public class AddMovieWindowController {
 
     private MovieModel movieModel = MovieModel.getInstance();
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
-    private String imagePath;
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 
     public void saveMovie(ActionEvent actionEvent) {
         //check if similar movie/movies is/are in DB
@@ -77,6 +69,9 @@ public class AddMovieWindowController {
     private void saveMovieToDB(ActionEvent actionEvent){
         movieModel.save(createObject());
         closeStage(actionEvent);
+        //closing stage first we will make an impression that program
+        //works faster than it actualy does
+        movieModel.saveMovieInProgramFolder();
     }
 
     /**
@@ -91,8 +86,9 @@ public class AddMovieWindowController {
         int ratingIMDB = -1;
         String filelink = this.filelink.getText();
         Timestamp lasview = null;
+        String imagePath = movieModel.setAndSaveImage(name);
 
-        Movie movie = new Movie(id, name,  rating ,ratingIMDB, filelink, lasview, null, getImagePath());
+        Movie movie = new Movie(id, name,  rating ,ratingIMDB, filelink, lasview, null, imagePath);
         return movie;
     }
 
@@ -110,7 +106,18 @@ public class AddMovieWindowController {
     }
 
     public void choosFilelink(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
+        Node n = (Node) actionEvent.getSource();
+      boolean insertedRightFileExtension =
+              movieModel.openFileChooser(n, nameField.getText());
+      if(insertedRightFileExtension){
+          alertDisplayer.displayAlert("adding filepath",
+                  "please select file with .mp4 / .mpeg4 extension",
+                  "incorrect extension", Alert.AlertType.WARNING);
+      }
+
+    }
+   // public void choosFilelink(ActionEvent actionEvent) {
+       /* FileChooser fileChooser = new FileChooser();
         Path pathOrigin = null;
         Path destinationPath = null;
 
@@ -156,6 +163,7 @@ public class AddMovieWindowController {
         } catch (JCodecException e) {
             e.printStackTrace();
         }
+
         BufferedImage bufferedImage = AWTUtil.toBufferedImage(frame);
         String filename = null;
         if(nameField==null) {
@@ -170,7 +178,9 @@ public class AddMovieWindowController {
             e.printStackTrace();
         }
         setImagePath("src/../Images/" + filename+ ".jpg" );
-    }
+
+        */
+   // }
 
     public void setOne(ActionEvent actionEvent) {
         categories.setText("1");

@@ -1,5 +1,6 @@
 package sample.bll;
 
+import javafx.scene.Node;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
@@ -56,4 +57,10 @@ public interface BLLFacade {
     void updateRating(Movie selectedMovie, int newRating) throws BLLexception;
 
     void updateSortingOption(boolean sortWithHigherRatings);
+
+    boolean openFileChooser(Node n, String namefield);
+
+    void saveMovieInProgramFolder() throws BLLexception;
+
+    String setAndSaveImage(String fieldname) throws BLLexception;
 }

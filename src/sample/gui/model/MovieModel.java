@@ -2,6 +2,7 @@ package sample.gui.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
@@ -169,5 +170,26 @@ public class MovieModel {
 
     public void updateSortingOption(boolean sortWithHigherRatings) {
         logicLayer.updateSortingOption(sortWithHigherRatings);
+    }
+
+    public boolean openFileChooser(Node n, String namefield) {
+       return logicLayer.openFileChooser(n, namefield);
+    }
+
+    public void saveMovieInProgramFolder() {
+        try {
+            logicLayer.saveMovieInProgramFolder();
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+    }
+
+    public String setAndSaveImage(String fieldname) {
+        try {
+            return logicLayer.setAndSaveImage(fieldname);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        return "something went wrong";
     }
 }
