@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -32,6 +34,7 @@ import sample.gui.util.AlertDisplayer;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -62,8 +65,10 @@ public class MainWindowController implements Initializable {
     @FXML private TableColumn<Movie, Integer> columnRating;
     @FXML private TableColumn<Movie, String> columnLastView;
     @FXML private  TableColumn<Movie, List<Category>> columnCategories;
+    @FXML private TableColumn<Movie, ImageView> colImage;
     //ListView
     @FXML private ListView<Category> categoriesList;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -202,9 +207,30 @@ public class MainWindowController implements Initializable {
                 return new ReadOnlyObjectWrapper( movieListCellDataFeatures.getValue().getCategoryList());
             }
         });
+        //imageView
+        colImage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movie, ImageView>, ObservableValue<ImageView>>() {
+            @Override
+            public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<Movie, ImageView> movieImageViewCellDataFeatures) {
+                return new ReadOnlyObjectWrapper(setImage(movieImageViewCellDataFeatures.getValue().getImagePath()));
+            }
+        });
         //load data and set items
         movieModel.load();
         moviesTable.setItems(movieModel.getAllMovies());
+    }
+
+    private ImageView setImage(String imagePath) {
+        //set default image
+        if(imagePath==null)
+            imagePath = "src/../Images/default.png";
+
+        imagePath= imagePath.replace("//", "src/").replace("/src", "src");
+        Path path  = FileSystems.getDefault().getPath(imagePath);
+       ImageView imageView = new ImageView(path.toUri().toString());
+       imageView.setFitHeight(25);
+        imageView.setFitWidth(50);
+
+        return imageView;
     }
 
     private void initListView(){

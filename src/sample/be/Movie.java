@@ -12,7 +12,15 @@ public class Movie {
     private String filelink;
     private Timestamp lastview;
     private List<Category> categoryList;
+    private String imagePath;
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
     //when adding a new movie dont care about id because it will be set up when adding to DB
     //we need it in constructror for retriving it from DB
 
@@ -41,6 +49,17 @@ public class Movie {
         if(categoryList!=null) this.categoryList = categoryList;
     }
 
+    public Movie(int id, String name, int rating, int ratingIMDB, String filelink, Timestamp lastview, List<Category> categoryList, String imagePath) {
+        this.id = id;
+        this.name = name;
+        this.rating = rating;
+        this.ratingIMDB = ratingIMDB;
+        this.filelink = filelink;
+        this.lastview = lastview;
+        this.categoryList = new ArrayList<>();
+        if(categoryList!=null) this.categoryList = categoryList;
+        this.imagePath = imagePath;
+    }
 
     public List<Category> getCategoryList() {
         return categoryList;
