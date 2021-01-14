@@ -224,7 +224,7 @@ public class MainWindowController implements Initializable {
         if(imagePath==null)
             imagePath = "src/../Images/default.png";
 
-        imagePath= imagePath.replace("//", "src/").replace("/src", "src");
+        //imagePath= imagePath.replace("//", "src/").replace("/src", "src");
         Path path  = FileSystems.getDefault().getPath(imagePath);
        ImageView imageView = new ImageView(path.toUri().toString());
        imageView.setFitHeight(25);

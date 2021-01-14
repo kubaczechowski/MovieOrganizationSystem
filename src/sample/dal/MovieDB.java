@@ -21,7 +21,6 @@ public class MovieDB implements MovieInterface {
 
     @Override
     public List<Movie> getAllMovies() throws DALexception {
-        //HashMap<Integer, Movie> allMovies = new HashMap<>();
         List<Movie> allMovies = new ArrayList<>();
         String query = "SELECT * FROM Movie;";
         try (Connection con = dbConnector.getConnection()) {
@@ -35,9 +34,11 @@ public class MovieDB implements MovieInterface {
                 int ratingIMDB = rs.getInt("ratingIMDB");
                 Timestamp lastview = rs.getTimestamp("lastview");
                 String filelink = rs.getString("filelink");
+                String imagePath = rs.getString("imagePath");
                 List<Category> categories = catMovieDAO.getCategoriesFromSpecificMovie(id);
+
                 Movie movie = new Movie(id, name, rating, ratingIMDB, filelink, lastview,
-                        categories);
+                        categories, imagePath);
                // movie.setCategoryList(categories);
                 allMovies.add(movie);
                // System.out.println("DB:" + movie.getCategoryList());
@@ -54,8 +55,8 @@ public class MovieDB implements MovieInterface {
 
     @Override
     public void addMovie(Movie movie) throws DALexception {
-        String query = " INSERT INTO MOVIE( name, rating, ratingIMDB, filelink, lastview) " +
-                "VALUES (?, ?, ? ,?, ?);";
+        String query = " INSERT INTO MOVIE( name, rating, ratingIMDB, filelink, lastview, imagePath) " +
+                "VALUES (?, ?, ? ,?, ?, ?);";
 
         try (Connection con = dbConnector.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query,
@@ -66,6 +67,7 @@ public class MovieDB implements MovieInterface {
             preparedStatement.setInt(3, movie.getRatingIMDB());
             preparedStatement.setString(4, movie.getFilelink());
             preparedStatement.setTimestamp(5, movie.getLastview());
+            preparedStatement.setString(6, movie.getImagePath());
             preparedStatement.executeUpdate();
 
             //set proper id for that movie

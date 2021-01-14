@@ -8,7 +8,6 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-//import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 import sample.be.Movie;
@@ -17,18 +16,12 @@ import sample.gui.util.AlertDisplayer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.List;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 
@@ -46,7 +39,15 @@ public class AddMovieWindowController {
 
     private MovieModel movieModel = MovieModel.getInstance();
     private AlertDisplayer alertDisplayer = new AlertDisplayer();
+    private String imagePath;
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public void saveMovie(ActionEvent actionEvent) {
         //check if similar movie/movies is/are in DB
@@ -91,7 +92,7 @@ public class AddMovieWindowController {
         String filelink = this.filelink.getText();
         Timestamp lasview = null;
 
-        Movie movie = new Movie(id, name,  rating ,ratingIMDB, filelink, lasview, null);
+        Movie movie = new Movie(id, name,  rating ,ratingIMDB, filelink, lasview, null, getImagePath());
         return movie;
     }
 
@@ -156,12 +157,19 @@ public class AddMovieWindowController {
             e.printStackTrace();
         }
         BufferedImage bufferedImage = AWTUtil.toBufferedImage(frame);
+        String filename = null;
+        if(nameField==null) {
+            long time = System.currentTimeMillis();
+            filename = String.valueOf(time);
+        }
+        else
+            filename = nameField.getText();
         try {
-            ImageIO.write( bufferedImage, "jpg", new File("src/../Images/"+"test" +".jpg"));
+            ImageIO.write( bufferedImage, "jpg", new File("src/../Images/"+ filename +".jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        setImagePath("src/../Images/" + filename+ ".jpg" );
     }
 
     public void setOne(ActionEvent actionEvent) {
