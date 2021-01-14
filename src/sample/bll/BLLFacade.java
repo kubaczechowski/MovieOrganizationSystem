@@ -58,7 +58,7 @@ public interface BLLFacade {
 
     void updateSortingOption(boolean sortWithHigherRatings);
 
-    boolean openFileChooser(Node n, String namefield);
+    String openFileChooser(Node n, String namefield);
 
     void saveMovieInProgramFolder() throws BLLexception;
 

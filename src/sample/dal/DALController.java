@@ -14,7 +14,7 @@ public class DALController implements IDALFacade{
     private MovieDB movieDB = new MovieDB();
     private CategoryDB categoryDB = new CategoryDB();
     private CatMovieDAO catMovieDAO = new CatMovieDAO();
-    private FilesOperations filesOperations = new FilesOperations();
+    private FilesOperations filesOperations = FilesOperations.getInstance();
 
     //Movie
     @Override
@@ -94,7 +94,7 @@ public class DALController implements IDALFacade{
     }
 
     @Override
-    public boolean openFileChooser(Node n, String namefield) {
+    public String openFileChooser(Node n, String namefield) {
        return filesOperations.openFileChooser(n, namefield);
     }
 

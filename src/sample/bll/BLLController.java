@@ -228,7 +228,7 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
-    public boolean openFileChooser(Node n, String namefield) {
+    public String openFileChooser(Node n, String namefield) {
         return dataaccess.openFileChooser(n, namefield);
 
     }

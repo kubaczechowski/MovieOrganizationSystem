@@ -24,9 +24,6 @@ public class MovieModel {
     private ObservableList<Movie> obsMovies ;
     private BLLFacade logicLayer;
 
-
-
-
     private MovieModel() {
         obsMovies = FXCollections.observableArrayList();
 
@@ -35,7 +32,6 @@ public class MovieModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
-
     }
 
     public static MovieModel getInstance() {
@@ -172,7 +168,7 @@ public class MovieModel {
         logicLayer.updateSortingOption(sortWithHigherRatings);
     }
 
-    public boolean openFileChooser(Node n, String namefield) {
+    public String openFileChooser(Node n, String namefield) {
        return logicLayer.openFileChooser(n, namefield);
     }
 

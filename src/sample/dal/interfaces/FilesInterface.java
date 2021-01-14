@@ -5,7 +5,7 @@ import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
 
 public interface FilesInterface {
-    boolean openFileChooser(Node n, String namefield);
+    String openFileChooser(Node n, String namefield);
 
     void saveFileInProgramFolder()throws FileExceptionDAL;
 

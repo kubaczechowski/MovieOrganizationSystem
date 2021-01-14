@@ -38,14 +38,14 @@ private static FilesOperations filesOperations;
 
     //boolean is for data validation
     //if true there was .mp4 / .mpeg4 file inserted
-    public boolean openFileChooser(Node nodeOfTheScene, String namefieldText){
+    public String openFileChooser(Node nodeOfTheScene, String namefieldText){
         FileChooser fileChooser = new FileChooser();
 
         //show fileChooser to the user && they decide which file
         File file = openFileChooserWindow(nodeOfTheScene, fileChooser);
 
         //validate data
-        pathOrigin = validateInput(file, pathOrigin);
+        pathOrigin = validateInput(file);
 
         //if(pathOrigin==null) send information to the higher layer
         //that user didn't insert .mp4 / .mpeg4 file
@@ -53,11 +53,11 @@ private static FilesOperations filesOperations;
 
         //user inserted .mp4 / mpeg4
         if(pathOrigin!=null) {
-            destinationPath = getDestinationPath(pathOrigin, namefieldText);
-            return true;
+           destinationPath = getDestinationPath(pathOrigin, namefieldText);
+           return destinationPath.toString();
         }
         else
-            return false;
+            return null;
     }
 
     public void saveFileInProgramFolder() throws FileExceptionDAL {
@@ -68,6 +68,11 @@ private static FilesOperations filesOperations;
             throw new FileExceptionDAL("Couldn't save movie in the program " +
                     "folder", e);
         }
+        prepareForNextOperations();
+    }
+    private void prepareForNextOperations(){
+        pathOrigin=null;
+        destinationPath= null;
     }
 
     public String setAndSaveImage(String namefieldText) throws FileExceptionDAL, JCodecExceptionDAL {
@@ -112,10 +117,10 @@ private static FilesOperations filesOperations;
         }
     }
 
-    private Path validateInput(File file, Path pathOrigin) {
+    private Path validateInput(File file) {
         if(file.getAbsolutePath().contains(".mp4") || file.getAbsolutePath().contains(".mpeg4"))
-           return pathOrigin = Path.of(file.getAbsolutePath());
-        else
+           return  Path.of(file.getAbsolutePath());
+
             return null;
     }
 

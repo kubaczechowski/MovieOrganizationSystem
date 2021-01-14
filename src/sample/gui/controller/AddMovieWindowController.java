@@ -67,11 +67,18 @@ public class AddMovieWindowController {
     }
 
     private void saveMovieToDB(ActionEvent actionEvent){
+        if(filelink.getText()==null){
+            alertDisplayer.displayAlert("path is not chosen",
+                    "please choose a correct filepath",
+                    "only mp4 and mpeg4 files", Alert.AlertType.WARNING);
+        }
+        else{
         movieModel.save(createObject());
         closeStage(actionEvent);
         //closing stage first we will make an impression that program
         //works faster than it actualy does
         movieModel.saveMovieInProgramFolder();
+        }
     }
 
     /**
@@ -107,13 +114,15 @@ public class AddMovieWindowController {
 
     public void choosFilelink(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
-      boolean insertedRightFileExtension =
+      String insertedRightFileExtension =
               movieModel.openFileChooser(n, nameField.getText());
-      if(insertedRightFileExtension){
+      if(insertedRightFileExtension==null){
           alertDisplayer.displayAlert("adding filepath",
                   "please select file with .mp4 / .mpeg4 extension",
                   "incorrect extension", Alert.AlertType.WARNING);
       }
+      else
+          filelink.setText(insertedRightFileExtension);
 
     }
    // public void choosFilelink(ActionEvent actionEvent) {

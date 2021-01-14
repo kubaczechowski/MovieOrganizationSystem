@@ -14,9 +14,9 @@
    <bottom>
       <VBox prefHeight="112.0" prefWidth="741.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="76.0" prefWidth="741.0">
+            <HBox prefHeight="82.0" prefWidth="800.0">
                <children>
-                  <Slider fx:id="progressBar" prefHeight="20.0" prefWidth="742.0" HBox.hgrow="ALWAYS">
+                  <Slider fx:id="progressBar" prefHeight="68.0" prefWidth="800.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -60,7 +60,7 @@
       </VBox>
    </bottom>
    <center>
-      <StackPane prefHeight="417.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="413.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" />
          </children>
