@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="org.bytedeco:ale:0.6.1-1.5.4" type="repository">
+    <properties maven-id="org.bytedeco:ale:0.6.1-1.5.4" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bytedeco/ale/0.6.1-1.5.4/ale-0.6.1-1.5.4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/bytedeco/javacpp/1.5.4/javacpp-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

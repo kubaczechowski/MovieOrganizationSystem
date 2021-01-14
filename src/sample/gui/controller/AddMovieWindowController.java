@@ -8,16 +8,30 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+//import org.jcodec.api.FrameGrab;
+import org.jcodec.common.model.Picture;
+import org.jcodec.scale.AWTUtil;
 import sample.be.Movie;
 import sample.gui.model.MovieModel;
 import sample.gui.util.AlertDisplayer;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.List;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import org.jcodec.api.FrameGrab;
+import org.jcodec.api.JCodecException;
+
 
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -130,6 +144,24 @@ public class AddMovieWindowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        File file1 = new File(destinationPath.toString());
+        //add image for a movie
+        Picture frame = null;
+        try {
+            frame =  FrameGrab.getFrameFromFile(file1, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JCodecException e) {
+            e.printStackTrace();
+        }
+        BufferedImage bufferedImage = AWTUtil.toBufferedImage(frame);
+        try {
+            ImageIO.write( bufferedImage, "jpg", new File("src/../Images/"+"test" +".jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setOne(ActionEvent actionEvent) {
