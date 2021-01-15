@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/mainWindow.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("gui/view/deleteUnwatchedMovies.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Movie Organisation System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 

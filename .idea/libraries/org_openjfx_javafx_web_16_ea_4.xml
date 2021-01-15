@@ -3,15 +3,15 @@
     <properties maven-id="org.openjfx:javafx-web:16-ea+4" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/16-ea+4/javafx-web-16-ea+4.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/16-ea+4/javafx-web-16-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/16-ea+4/javafx-web-16-ea+4-mac.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16-ea+4/javafx-controls-16-ea+4.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16-ea+4/javafx-controls-16-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16-ea+4/javafx-controls-16-ea+4-mac.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16-ea+4/javafx-graphics-16-ea+4.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16-ea+4/javafx-graphics-16-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16-ea+4/javafx-graphics-16-ea+4-mac.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16-ea+4/javafx-base-16-ea+4.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16-ea+4/javafx-base-16-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16-ea+4/javafx-base-16-ea+4-mac.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/16-ea+4/javafx-media-16-ea+4.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/16-ea+4/javafx-media-16-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/16-ea+4/javafx-media-16-ea+4-mac.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

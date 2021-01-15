@@ -76,6 +76,7 @@ public class MainWindowController implements Initializable {
         initListView();
         moviesTableListener();
         searchingFunctionalityListener();
+
     }
 
     private void searchingFunctionalityListener() {
