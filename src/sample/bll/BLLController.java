@@ -71,6 +71,7 @@ public class BLLController implements BLLFacade{
     @Override
     public void deleteMovie(Movie selectedMovie) throws BLLexception {
         try {
+            dataaccess.deleteAllCategoriesForMovie(selectedMovie.getId());
             dataaccess.deleteMovie(selectedMovie);
         } catch (DALexception daLexception) {
             //daLexception.printStackTrace();
@@ -252,6 +253,11 @@ public class BLLController implements BLLFacade{
         } catch (JCodecExceptionDAL jCodecExceptionDAL) {
             throw new BLLexception("Couldn't save image and get filepath", jCodecExceptionDAL);
         }
+    }
+
+    @Override
+    public boolean checkIfTitleExists(String text) {
+        return searchForSimilarTitles.checkIfExists(text);
     }
 
     @Override

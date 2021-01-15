@@ -63,4 +63,6 @@ public interface BLLFacade {
     void saveMovieInProgramFolder() throws BLLexception;
 
     String setAndSaveImage(String fieldname) throws BLLexception;
+
+    boolean checkIfTitleExists(String text);
 }

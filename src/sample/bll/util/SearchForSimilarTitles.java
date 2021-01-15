@@ -44,15 +44,26 @@ public class SearchForSimilarTitles {
         return namesOfSimilarMovies;
     }
 
+    public boolean checkIfExists(String text) {
+       for(Movie movie: allMovies){
+           if(text.toLowerCase().equals(movie.getName().toLowerCase()))
+               return true;
+       }
+       return false;
+    }
+
     public List<String> getSimilarCategories(String query, List<Category> allCategories){
         setAllCategories(allCategories);
         List<String> similarCategories = new ArrayList<>();
 
         for(Category category: allCategories){
-            if(isVerySimilar(query, category.getName(), 3, true))
+            if(isVerySimilar(query, category.getName(), 3, false))
                 similarCategories.add(category.getName());
         }
-        return similarCategories;
+        if(similarCategories.isEmpty())
+            return null;
+        else
+            return similarCategories;
     }
 
     /**
@@ -83,7 +94,7 @@ public class SearchForSimilarTitles {
      *source of the algorithm:
      * https://stackoverflow.com/questions/13564464/problems-with-levenshtein-algorithm-in-java
      */
-    private int dist( char[] s1, char[] s2 ) {
+    private int dist1( char[] s1, char[] s2 ) {
 
         // memoize only previous line of distance matrix
         int[] prev = new int[ s2.length + 1 ];
@@ -112,6 +123,37 @@ public class SearchForSimilarTitles {
             prev = curr;
         }
         return prev[ s2.length ];
+    }
+
+    public static int dist( char[] s1, char[] s2 ) {
+
+        // distance matrix - to memoize distances between substrings
+        // needed to avoid recursion
+        int[][] d = new int[ s1.length + 1 ][ s2.length + 1 ];
+
+        // d[i][j] - would contain distance between such substrings:
+        // s1.subString(0, i) and s2.subString(0, j)
+
+        for( int i = 0; i < s1.length + 1; i++ ) {
+            d[ i ][ 0 ] = i;
+        }
+
+        for(int j = 0; j < s2.length + 1; j++) {
+            d[ 0 ][ j ] = j;
+        }
+
+        for( int i = 1; i < s1.length + 1; i++ ) {
+            for( int j = 1; j < s2.length + 1; j++ ) {
+                int d1 = d[ i - 1 ][ j ] + 1;
+                int d2 = d[ i ][ j - 1 ] + 1;
+                int d3 = d[ i - 1 ][ j - 1 ];
+                if ( s1[ i - 1 ] != s2[ j - 1 ] ) {
+                    d3 += 1;
+                }
+                d[ i ][ j ] = Math.min( Math.min( d1, d2 ), d3 );
+            }
+        }
+        return d[ s1.length ][ s2.length ];
     }
 
 }

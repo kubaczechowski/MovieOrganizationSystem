@@ -81,23 +81,6 @@ public class MovieModel {
         logicLayer.saveMovieToCache(movie);
     }
 
-/*
-    public ObservableList<Movie> searchMoviesByTitle(String text){
-        List<Movie> movies = new ArrayList<>();
-
-        for (Movie m:obsMovies)
-        {
-            if (m.getName().toUpperCase().contains(text.toUpperCase()) || String.valueOf(m.getRating()).contains(text))
-                movies.add(m);
-        }
-        return FXCollections.observableArrayList(movies);
-
-    }
-
- */
-
-
-
     public void updateLastview(Movie movieToPlay) {
         try {
             logicLayer.updateLastview(movieToPlay);
@@ -151,17 +134,23 @@ public class MovieModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+       /*
         obsMovies.clear();
         try {
             obsMovies.addAll(logicLayer.getAllMovies());
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+
+        */
+
         try {
             logicLayer.refreshcashList();
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
+        obsMovies.clear();
+        obsMovies.addAll(logicLayer.getMoviesFromCashe());
     }
 
     public void updateSortingOption(boolean sortWithHigherRatings) {
@@ -187,5 +176,9 @@ public class MovieModel {
             blLexception.printStackTrace();
         }
         return "something went wrong";
+    }
+
+    public boolean checkIfThisTitleExists(String text) {
+        return logicLayer.checkIfTitleExists(text);
     }
 }

@@ -88,6 +88,6 @@ public class CategoryModel {
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
-        return Collections.singletonList("problem happened in category model in search for similar");
+        return null;
     }
 }

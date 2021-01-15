@@ -335,7 +335,6 @@ public class MainWindowController implements Initializable {
              else {
                 //in case of number format exception
                 try {
-                    //finally here we can do something!!
                    // selectedMovie.setRating(Integer.parseInt(newRating));
                     movieModel.updateRating(selectedMovie, Integer.parseInt(newRating));
                 } catch (NumberFormatException numberFormatException) {
@@ -373,7 +372,7 @@ public class MainWindowController implements Initializable {
                     sim +=  item+ " ";
                 }
                 boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar categories",
-                        "Here are similar titles: " + sim, "if you want to add this category press ok"  );
+                        "Here are similar  categories: " + sim, "if you want to add this category press ok" );
                 if(doYouWantToSave){
                     Category category = new Category(newCategory);
                     //call category model

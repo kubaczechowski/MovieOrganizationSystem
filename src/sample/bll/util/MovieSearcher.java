@@ -5,16 +5,13 @@ import sample.be.Movie;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class MovieSearcher {
     List<Movie> allMovies;
 
     List<Movie> moviesToReturn = new ArrayList<>();
     private boolean includeHigher;
-
-    //private SearchForSimilarTitles searchForSimilarTitles = new SearchForSimilarTitles();
-
-
     public List<Movie> getAllMovies() {
         return allMovies;
     }
@@ -25,7 +22,6 @@ public class MovieSearcher {
 
     public List<Movie> getSearch(List<Movie> allMovies, String query) {
         moviesToReturn.removeAll(moviesToReturn);
-        //it should be outlined
         setAllMovies(allMovies);
 
         //run only if query is isn't a letter or word
@@ -43,7 +39,6 @@ public class MovieSearcher {
             //case we are only looking for a number at the beginning of title or category
             else if((Dnumber ==Inumber ) && (Inumber<=0 || Inumber>=11 ))
                 searcher(query);
-
         }
 
        //run if query isn't a number
@@ -53,7 +48,7 @@ public class MovieSearcher {
         return moviesToReturn;
     }
 
-    public static boolean isNumeric(String str) {
+    private static boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);
         formatter.parse(str, pos);
@@ -71,6 +66,12 @@ public class MovieSearcher {
             if(compareToMovieName(query, movie.toString()))
                 moviesToReturn.add(movie);
         }
+
+       /* Predicate<Movie> compareToMovieName =
+                movie -> compareToMovieName(query, movie.toString());
+        allMovies.stream().filter(compareToMovieName).forEach(movie -> moviesToReturn.add(movie));
+
+        */
 
     }
 
@@ -92,22 +93,16 @@ public class MovieSearcher {
             // sort movies. i guess its descending order
             //there is no need to sort movies ealier
             allMovies.sort((movie1, movie2) -> Integer.compare(movie1.getRating(), movie2.getRating()));
-            for(Movie movie: allMovies)
-                System.out.println(movie.toString());
+           allMovies.forEach(movie -> System.out.println(movie.toString()));
 
             int indexOfFound = binarySearch(Inumber);
-
             //didn't find
             if(indexOfFound==-1){
 
             }
             //found some number
             else {
-                //add found movie
                 moviesToReturn.add(allMovies.get(indexOfFound));
-                //add movies in between
-                //test if the problem is with movies in between
-               //moviesToReturn.addAll(moviesInBetween(indexOfFound));
                 if(includeHigher){
                     //if there are movies below too
                     moviesToReturn.addAll(moviesBelow(indexOfFound));
@@ -183,7 +178,6 @@ public class MovieSearcher {
         }
         //if nothing was found. its indication that nothing was found.
         return -1;
-
     }
 
     private int binarySearch(int minimalRating)
@@ -207,7 +201,6 @@ public class MovieSearcher {
             return -1;
 
     }
-
 
     public void setSortingOption(boolean sortWithHigherRatings) {
         includeHigher=sortWithHigherRatings;

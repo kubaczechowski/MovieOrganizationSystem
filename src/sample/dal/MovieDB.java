@@ -181,6 +181,7 @@ public class MovieDB implements MovieInterface {
              PreparedStatement pstat = con.prepareStatement(update)) {
         pstat.setInt(1, newRating);
         pstat.setInt(2, movie.getId());
+        pstat.executeUpdate();
         } catch (SQLServerException throwables) {
             throw new DALexception("couldnt update the rating", throwables);
         } catch (SQLException throwables) {
