@@ -4,10 +4,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="151.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddCategoryWindowController">
+<AnchorPane id="background" prefHeight="151.0" prefWidth="346.0" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddCategoryWindowController">
    <children>
-      <Button layoutX="173.0" layoutY="96.0" mnemonicParsing="false" text="save" />
-      <Button layoutX="231.0" layoutY="96.0" mnemonicParsing="false" text="cancel" />
-      <TextField layoutX="51.0" layoutY="38.0" prefHeight="25.0" prefWidth="234.0" />
+      <Button layoutX="222.0" layoutY="110.0" mnemonicParsing="false" text="save" />
+      <Button layoutX="278.0" layoutY="110.0" mnemonicParsing="false" text="cancel" />
+      <TextField id="txt" layoutX="51.0" layoutY="38.0" prefHeight="25.0" prefWidth="234.0" text="new category" />
    </children>
 </AnchorPane>

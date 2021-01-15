@@ -3,6 +3,48 @@
     -fx-background-position:center;
     -fx-background-size: 954 630;
 }
+#homeImage:hover{
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/homeG.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 25 25;
+}
+#fullImage:hover{
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/fullscreenG.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 25 25;
+}
+#homeImage {
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/home.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 25 25;
+}
+#fullImage {
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/fullscreen.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 25 25;
+}
+#searchImageB{
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/search.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 20 20;
+}
+#searchImageB: hover{
+    -fx-background-color:transparent;
+    -fx-background-image: url("../images/searchG.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-background-size: 20 20;
+}
 #searchImage{
     -fx-background-color:transparent;
     -fx-background-image: url("../images/searchG.png");
@@ -98,15 +140,15 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell: hover {
-    -fx-text-background-color: grey;
-}
-
 .table-row-cell:selected {
-    -fx-background-color: white;
+    -fx-background-color: #adc4e3;
 }
 .table-row-cell:selected .text {
     -fx-fill: black;
+}
+
+.table-row-cell: hover {
+    -fx-text-background-color: grey;
 }
 
 .table-row-cell: even {
@@ -173,6 +215,18 @@
 
 
 .text-field {
+    -fx-background-color: white;
+    -fx-opacity: 0.8;
+    -fx-text-fill: black;
+}
+
+
+#txt {
+    -fx-text-fill: grey;
+}
+
+
+.button {
     -fx-background-color: white;
     -fx-opacity: 0.8;
     -fx-text-fill: black;
