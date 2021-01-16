@@ -1,6 +1,6 @@
 package sample.bll;
 
-import javafx.scene.Node;
+
 import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
