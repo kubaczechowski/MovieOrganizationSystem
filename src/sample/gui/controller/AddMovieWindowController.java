@@ -6,11 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.be.Movie;
 import sample.gui.model.MovieModel;
-import sample.gui.util.AlertDisplayer;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
@@ -25,20 +27,20 @@ public class AddMovieWindowController {
     private MenuButton categories;
 
     private MovieModel movieModel = MovieModel.getInstance();
-    private AlertDisplayer alertDisplayer = new AlertDisplayer();
+
 
 
     public void saveMovie(ActionEvent actionEvent) {
         if(!isNumeric(categories.getText()))
-            alertDisplayer.displayAlert("rating not selected",
+            movieModel.displayAlert("rating not selected",
                     "please select a rating",
                     "", Alert.AlertType.WARNING);
         if(nameField.getText().isEmpty())
-            alertDisplayer.displayAlert("name is not chosen",
+            movieModel.displayAlert("name is not chosen",
                     "please insert a name of the movie",
                     "", Alert.AlertType.WARNING);
         if(filelink.getText().isEmpty())
-            alertDisplayer.displayAlert("path is not chosen",
+            movieModel.displayAlert("path is not chosen",
                     "please choose a  filepath",
                     "only mp4 and mpeg4 files", Alert.AlertType.WARNING);
 
@@ -46,7 +48,7 @@ public class AddMovieWindowController {
         if(isNumeric(categories.getText())&& filelink.getText()!=null && nameField.getText()!=null) {
             boolean exists = movieModel.checkIfThisTitleExists(nameField.getText());
             if(exists)
-                alertDisplayer.displayAlert("title",
+                movieModel.displayAlert("title",
                         "please select another title",
                         "this title exists in the db", Alert.AlertType.WARNING);
             else {
@@ -63,7 +65,7 @@ public class AddMovieWindowController {
 
                         similar += item + " ";
                     }
-                    boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar movies",
+                    boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar movies",
                             "Here are similar titles: " + similar, "if you want to add this movie press ok");
                     if (doYouWantToSave)
                         saveMovieToDB(actionEvent);
@@ -123,15 +125,60 @@ public class AddMovieWindowController {
     public void choosFilelink(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
       String insertedRightFileExtension =
-              movieModel.openFileChooser(n, nameField.getText());
+              openFileChooser(n, nameField.getText());
       if(insertedRightFileExtension==null){
-          alertDisplayer.displayAlert("adding filepath",
+          movieModel.displayAlert("adding filepath",
                   "please select file with .mp4 / .mpeg4 extension",
                   "incorrect extension", Alert.AlertType.WARNING);
       }
       else
           filelink.setText(insertedRightFileExtension);
 
+    }
+    //boolean is for data validation
+    //if true there was .mp4 / .mpeg4 file inserted
+    public String openFileChooser(Node nodeOfTheScene, String namefieldText){
+        Path pathOrigin;
+        Path destinationPath;
+        FileChooser fileChooser = new FileChooser();
+
+        //show fileChooser to the user && they decide which file
+        File file = openFileChooserWindow(nodeOfTheScene, fileChooser);
+
+        //validate data
+        pathOrigin = validateInput(file);
+
+        //user inserted .mp4 / mpeg4
+        if(pathOrigin!=null) {
+            destinationPath = getDestinationPath(pathOrigin, namefieldText);
+            return destinationPath.toString();
+        }
+        else
+            return null;
+    }
+
+    private Path validateInput(File file) {
+        if(file.getAbsolutePath().contains(".mp4") || file.getAbsolutePath().contains(".mpeg4"))
+            return  Path.of(file.getAbsolutePath());
+
+        return null;
+    }
+
+    private File openFileChooserWindow(Node n, FileChooser fileChooser){
+        Stage stage = (Stage) n.getScene().getWindow();
+        fileChooser.setTitle("Choose song");
+        File file = fileChooser.showOpenDialog(stage);
+        return file;
+    }
+
+    private Path getDestinationPath(Path pathOrigin, String namefieldText){
+        Path destinationPath;
+        if (pathOrigin.toString().contains(".mp4"))
+            return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mp4" );
+        else if(pathOrigin.toString().contains(".mpeg4"))
+            return destinationPath = Path.of("/Movies/" + namefieldText + ".mpeg4" );
+        else
+            return null; //something went wrong
     }
 
     public void setOne(ActionEvent actionEvent) {

@@ -7,9 +7,8 @@ import sample.be.Category;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
-import sample.gui.util.AlertDisplayer;
+import sample.bll.util.AlertDisplayer;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CategoryModel {

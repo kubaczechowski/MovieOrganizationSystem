@@ -12,16 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -30,17 +24,13 @@ import sample.be.Movie;
 import sample.gui.model.CategoryItemModel;
 import sample.gui.model.CategoryModel;
 import sample.gui.model.MovieModel;
-import sample.gui.util.AlertDisplayer;
+import sample.bll.util.AlertDisplayer;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,7 +40,6 @@ public class MainWindowController implements Initializable {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private CategoryItemModel categoryItemModel;
-    private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
     private boolean sortWithHigherRatings; //initlialy its false
 
@@ -88,9 +77,9 @@ public class MainWindowController implements Initializable {
         moviesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                //if right clicked
+                //if double clicked
               moviePlayer(mouseEvent);
-              //if double clicked. default on left click
+              //if right clicked
               webBrowser(mouseEvent);
             }
         });
@@ -98,16 +87,6 @@ public class MainWindowController implements Initializable {
 
     private void moviePlayer(MouseEvent mouseEvent)
     {
-        if(mouseEvent.getButton()== MouseButton.SECONDARY)
-        {
-            //meybe later add some icon to click meybe a loop
-            //open a new window with web browser
-            Movie movieToBrowse = getSelectedMovie();
-            openSearcher(movieToBrowse.getName()).openPage();
-        }
-    }
-
-    private void webBrowser(MouseEvent mouseEvent){
         if (mouseEvent.getClickCount() == 2) {
             //get chosen movie
             Movie movieToPlay = getSelectedMovie();
@@ -118,6 +97,14 @@ public class MainWindowController implements Initializable {
             //refresh the movie model so that changes
             //are reflected in the tableview
             movieModel.load();
+        }
+    }
+
+    private void webBrowser(MouseEvent mouseEvent){
+        if(mouseEvent.getButton()== MouseButton.SECONDARY)
+        {
+            Movie movieToBrowse = getSelectedMovie();
+            openSearcher(movieToBrowse.getName()).openPage();
         }
     }
 
@@ -275,11 +262,11 @@ public class MainWindowController implements Initializable {
         Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
         //display alert if user didn't select movie
         if(selectedMovie==null)
-            alertDisplayer.displayAlert("no movie",
+            movieModel.displayAlert("no movie",
                     "please select a movie", "no movie", Alert.AlertType.INFORMATION);
         else {
             //show alert to ensure that user wants to delete movie
-            boolean result = alertDisplayer.displayConfirmationAlert("Delete Movie", "Do you want to delete movie?",
+            boolean result = movieModel.displayConfirmationAlert("Delete Movie", "Do you want to delete movie?",
                     "Delete");
 
             //delete movie if user decided to do so
@@ -308,28 +295,28 @@ public class MainWindowController implements Initializable {
         Movie selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
         //check if movie was selected
         if(selectedMovie==null)
-            alertDisplayer.displayAlert("No movie",
+            movieModel.displayAlert("No movie",
                     "Please select a movie", "movie wasn't selected",
                     Alert.AlertType.INFORMATION);
         else {
             String newRating = null;
             //if its null
             try {
-                newRating = alertDisplayer.ShowTextInputDialog("change rating",
+                newRating = movieModel.ShowTextInputDialog("change rating",
                         "please insert new rating", "changing rating");
             } catch (NumberFormatException numberFormatException) {
-                alertDisplayer.displayAlert("Nothing was selected",
+                movieModel.displayAlert("Nothing was selected",
                         "Please select an item", "nothing selected",
                         Alert.AlertType.INFORMATION);
             }
             //if number wasnt selected
             if (newRating == null)
-                alertDisplayer.displayAlert("Number wasn't selected",
+                movieModel.displayAlert("Number wasn't selected",
                         "Please insert a number", "number should be in range of 1 to 10",
                         Alert.AlertType.WARNING);
             //in case of number out of bounds or null
              else if (Integer.parseInt(newRating) < 1 || Integer.parseInt(newRating) > 10)
-                alertDisplayer.displayAlert("Number isn't correct",
+                movieModel.displayAlert("Number isn't correct",
                         "Please insert a correct number", "number should be in range of 1 to 10",
                         Alert.AlertType.WARNING);
              else {
@@ -338,7 +325,7 @@ public class MainWindowController implements Initializable {
                    // selectedMovie.setRating(Integer.parseInt(newRating));
                     movieModel.updateRating(selectedMovie, Integer.parseInt(newRating));
                 } catch (NumberFormatException numberFormatException) {
-                    alertDisplayer.displayAlert("Number format exception",
+                    movieModel.displayAlert("Number format exception",
                             "Please insert a number", "number should be in range of 1 to 10",
                             Alert.AlertType.WARNING);
                 }
@@ -351,7 +338,7 @@ public class MainWindowController implements Initializable {
      * @param actionEvent
      */
     public void addCategory(ActionEvent actionEvent) {
-        String newCategory = alertDisplayer.ShowTextInputDialog("add category",
+        String newCategory = movieModel.ShowTextInputDialog("add category",
                "please add new category", "new category");
         if(newCategory!=null){
             //check in db if such category exists
@@ -360,7 +347,7 @@ public class MainWindowController implements Initializable {
             List<String> namesOfSimilarCategories = categoryModel.searchForSimilar(newCategory);
             //show alert
             if(exists)
-                alertDisplayer.displayAlert("Category",
+                movieModel.displayAlert("Category",
                         "you cannot add one category twice", "such category is added",
                         Alert.AlertType.WARNING);
             else if(namesOfSimilarCategories!=null){
@@ -371,7 +358,7 @@ public class MainWindowController implements Initializable {
 
                     sim +=  item+ " ";
                 }
-                boolean doYouWantToSave = alertDisplayer.displayConfirmationAlert("There are similar categories",
+                boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar categories",
                         "Here are similar  categories: " + sim, "if you want to add this category press ok" );
                 if(doYouWantToSave){
                     Category category = new Category(newCategory);
@@ -392,11 +379,11 @@ public class MainWindowController implements Initializable {
     public void removeCategory(ActionEvent actionEvent) {
         Category selectedItem = categoriesList.getSelectionModel().getSelectedItem();
         if(selectedItem==null)
-            alertDisplayer.displayAlert("No item selected",
+            movieModel.displayAlert("No item selected",
                     "Please select an item", "no category selected",
                     Alert.AlertType.INFORMATION);
         //show alert to ensure that user wants to delete movie
-        boolean result = alertDisplayer.displayConfirmationAlert("Delete Category",
+        boolean result = movieModel.displayConfirmationAlert("Delete Category",
                 "Do you want to delete category?", "Delete");
         if(result==true)
         {
@@ -421,7 +408,7 @@ public class MainWindowController implements Initializable {
         //if false continue
         boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
         if(result==true)
-            alertDisplayer.displayAlert("Category",
+            movieModel.displayAlert("Category",
                     "you cannot add one category twice", "such category is added",
                     Alert.AlertType.WARNING);
         else{
@@ -443,7 +430,7 @@ public class MainWindowController implements Initializable {
         //check if such category is added
         boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
         if(result==false)
-            alertDisplayer.displayAlert("Category",
+            movieModel.displayAlert("Category",
                     "please select category that is added to the movie",
                     "such category isn't added to the movie",
                     Alert.AlertType.WARNING);
@@ -457,11 +444,11 @@ public class MainWindowController implements Initializable {
     private void showAlertsWhenSettingCategories(Movie selectedMovie, Category selectedCategory)
     {
         if(selectedMovie==null)
-            alertDisplayer.displayAlert("No movie selected",
+            movieModel.displayAlert("No movie selected",
                     "Please select a movie", "no movie selected",
                     Alert.AlertType.INFORMATION);
         if(selectedCategory==null)
-            alertDisplayer.displayAlert("No category selected",
+            movieModel.displayAlert("No category selected",
                     "Please select a category", "no category selected",
                     Alert.AlertType.INFORMATION);
     }

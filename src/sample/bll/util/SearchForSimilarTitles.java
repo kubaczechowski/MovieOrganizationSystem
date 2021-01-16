@@ -72,7 +72,7 @@ public class SearchForSimilarTitles {
    private boolean isVerySimilar(String newTitle, String existingTitle,
                                  int setSimilarity, boolean includeThatNumber)
     {
-        int difference = levenshteinDistance(newTitle, existingTitle);
+        int difference = levensteinMinDistance(newTitle, existingTitle);
 
         if(difference<setSimilarity)
             return true;
@@ -82,78 +82,34 @@ public class SearchForSimilarTitles {
             return false;
     }
 
-    public  int levenshteinDistance( String s1, String s2 ) {
-        return dist( s1.toCharArray(), s2.toCharArray() );
-    }
 
-    /**
-     * algorithm is gently borrowed from stackoverflow
-     * in this very program algorithm is used to check the similarity between
-     * the name of the movie that is being created and other movies that
-     * already exist
-     *source of the algorithm:
-     * https://stackoverflow.com/questions/13564464/problems-with-levenshtein-algorithm-in-java
-     */
-    private int dist1( char[] s1, char[] s2 ) {
+    public int levensteinMinDistance(String word1, String word2) {
+        int[][] dist =  new int[word1.length()+1][word2.length()+1];
 
-        // memoize only previous line of distance matrix
-        int[] prev = new int[ s2.length + 1 ];
-
-        for( int j = 0; j < s2.length + 1; j++ ) {
-            prev[ j ] = j;
+        //populate first column and first row because its  just simple incrementing
+        // in the first one its deleteing
+        //in the second one is inserting
+        for(int i=0; i<dist.length; i++){
+            dist[i][0] = i;
         }
-
-        for( int i = 1; i < s1.length + 1; i++ ) {
-
-            // calculate current line of distance matrix
-            int[] curr = new int[ s2.length + 1 ];
-            curr[0] = i;
-
-            for( int j = 1; j < s2.length + 1; j++ ) {
-                int d1 = prev[ j ] + 1;
-                int d2 = curr[ j - 1 ] + 1;
-                int d3 = prev[ j - 1 ];
-                if ( s1[ i - 1 ] != s2[ j - 1 ] ) {
-                    d3 += 1;
+        for(int i=0; i<dist[0].length; i++){
+            dist[0][i] = i;
+        }
+        //the most crushial part
+        for(int col=1; col<dist.length; col++){
+            for(int row =1; row< dist[0].length; row++ ){
+                //if characters are eqal
+                if(word1.charAt(col -1) == word2.charAt(row-1))
+                    dist[col][row] = dist[col-1][row-1];
+                else{
+                    //get the smallest number from all the movements
+                    //get the smallest from: delete, replace, insert
+                    dist[col][row] = Math.min(dist[col-1][row], Math.min(
+                            dist[col-1][row-1], dist[col][row-1]) ) +1;
                 }
-                curr[ j ] = Math.min( Math.min( d1, d2 ), d3 );
-            }
-
-            // define current line of distance matrix as previous
-            prev = curr;
-        }
-        return prev[ s2.length ];
-    }
-
-    public static int dist( char[] s1, char[] s2 ) {
-
-        // distance matrix - to memoize distances between substrings
-        // needed to avoid recursion
-        int[][] d = new int[ s1.length + 1 ][ s2.length + 1 ];
-
-        // d[i][j] - would contain distance between such substrings:
-        // s1.subString(0, i) and s2.subString(0, j)
-
-        for( int i = 0; i < s1.length + 1; i++ ) {
-            d[ i ][ 0 ] = i;
-        }
-
-        for(int j = 0; j < s2.length + 1; j++) {
-            d[ 0 ][ j ] = j;
-        }
-
-        for( int i = 1; i < s1.length + 1; i++ ) {
-            for( int j = 1; j < s2.length + 1; j++ ) {
-                int d1 = d[ i - 1 ][ j ] + 1;
-                int d2 = d[ i ][ j - 1 ] + 1;
-                int d3 = d[ i - 1 ][ j - 1 ];
-                if ( s1[ i - 1 ] != s2[ j - 1 ] ) {
-                    d3 += 1;
-                }
-                d[ i ][ j ] = Math.min( Math.min( d1, d2 ), d3 );
             }
         }
-        return d[ s1.length ][ s2.length ];
+        return dist[word1.length()][word2.length()];
     }
 
 }

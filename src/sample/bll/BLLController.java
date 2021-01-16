@@ -228,11 +228,6 @@ public class BLLController implements BLLFacade{
         movieSearcher.setSortingOption(sortWithHigherRatings);
     }
 
-    @Override
-    public String openFileChooser(Node n, String namefield) {
-        return dataaccess.openFileChooser(n, namefield);
-
-    }
 
     @Override
     public void saveMovieInProgramFolder() throws BLLexception {
