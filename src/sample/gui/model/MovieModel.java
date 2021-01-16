@@ -3,11 +3,13 @@ package sample.gui.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.cache.MovieCache;
 import sample.bll.exception.BLLexception;
+import sample.bll.util.AlertDisplayer;
 
 
 import java.awt.*;
@@ -23,6 +25,7 @@ public class MovieModel {
     private static MovieModel movieModel;
     private ObservableList<Movie> obsMovies ;
     private BLLFacade logicLayer;
+    private AlertDisplayer alertDisplayer = new AlertDisplayer();
 
     private MovieModel() {
         obsMovies = FXCollections.observableArrayList();
@@ -157,10 +160,6 @@ public class MovieModel {
         logicLayer.updateSortingOption(sortWithHigherRatings);
     }
 
-    public String openFileChooser(Node n, String namefield) {
-       return logicLayer.openFileChooser(n, namefield);
-    }
-
     public void saveMovieInProgramFolder() {
         try {
             logicLayer.saveMovieInProgramFolder();
@@ -181,4 +180,17 @@ public class MovieModel {
     public boolean checkIfThisTitleExists(String text) {
         return logicLayer.checkIfTitleExists(text);
     }
+
+    //alert displayer
+    public boolean displayConfirmationAlert(String title, String information, String header){
+       return alertDisplayer.displayConfirmationAlert(title, information, header);
+    }
+    public void displayAlert(String title, String information, String header,
+                             Alert.AlertType alertType){
+        alertDisplayer.displayAlert(title, information, header, alertType);
+    }
+    public String ShowTextInputDialog(String title, String contentText, String header){
+        return alertDisplayer.ShowTextInputDialog(title, contentText, header);
+    }
+
 }

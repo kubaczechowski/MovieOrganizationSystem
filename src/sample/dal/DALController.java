@@ -93,12 +93,6 @@ public class DALController implements IDALFacade{
         catMovieDAO.deleteAllCategoriesForMovie(movieID);
     }
 
-    @Override
-    public String openFileChooser(Node n, String namefield) {
-       return filesOperations.openFileChooser(n, namefield);
-    }
-
-
     public void saveFileInProgramFolder() throws FileExceptionDAL {
         filesOperations.saveFileInProgramFolder();
     }

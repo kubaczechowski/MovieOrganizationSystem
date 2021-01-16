@@ -36,29 +36,6 @@ private static FilesOperations filesOperations;
         return filesOperations;
     }
 
-    //boolean is for data validation
-    //if true there was .mp4 / .mpeg4 file inserted
-    public String openFileChooser(Node nodeOfTheScene, String namefieldText){
-        FileChooser fileChooser = new FileChooser();
-
-        //show fileChooser to the user && they decide which file
-        File file = openFileChooserWindow(nodeOfTheScene, fileChooser);
-
-        //validate data
-        pathOrigin = validateInput(file);
-
-        //if(pathOrigin==null) send information to the higher layer
-        //that user didn't insert .mp4 / .mpeg4 file
-        //it will be false - the information in question
-
-        //user inserted .mp4 / mpeg4
-        if(pathOrigin!=null) {
-           destinationPath = getDestinationPath(pathOrigin, namefieldText);
-           return destinationPath.toString();
-        }
-        else
-            return null;
-    }
 
     public void saveFileInProgramFolder() throws FileExceptionDAL {
         try {
@@ -115,30 +92,6 @@ private static FilesOperations filesOperations;
         } catch (JCodecException e) {
             throw new JCodecExceptionDAL("couldn't get a picture from a movie", e);
         }
-    }
-
-    private Path validateInput(File file) {
-        if(file.getAbsolutePath().contains(".mp4") || file.getAbsolutePath().contains(".mpeg4"))
-           return  Path.of(file.getAbsolutePath());
-
-            return null;
-    }
-
-    private File openFileChooserWindow(Node n, FileChooser fileChooser){
-        Stage stage = (Stage) n.getScene().getWindow();
-        fileChooser.setTitle("Choose song");
-        File file = fileChooser.showOpenDialog(stage);
-        return file;
-    }
-
-    private Path getDestinationPath(Path pathOrigin, String namefieldText){
-        Path destinationPath;
-        if (pathOrigin.toString().contains(".mp4"))
-           return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mp4" );
-        else if(pathOrigin.toString().contains(".mpeg4"))
-           return destinationPath = Path.of("/Movies/" + namefieldText + ".mpeg4" );
-        else
-            return null; //something went wrong
     }
 
 }
