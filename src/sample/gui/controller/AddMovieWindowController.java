@@ -10,7 +10,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.be.Movie;
 import sample.gui.model.MovieModel;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -27,25 +26,17 @@ public class AddMovieWindowController {
     private MenuButton categories;
 
     private MovieModel movieModel = MovieModel.getInstance();
-
-
+   private Path destinationPath;
+    private Path originPath;
 
     public void saveMovie(ActionEvent actionEvent) {
-        if(!isNumeric(categories.getText()))
-            movieModel.displayAlert("rating not selected",
-                    "please select a rating",
-                    "", Alert.AlertType.WARNING);
-        if(nameField.getText().isEmpty())
-            movieModel.displayAlert("name is not chosen",
-                    "please insert a name of the movie",
-                    "", Alert.AlertType.WARNING);
-        if(filelink.getText().isEmpty())
-            movieModel.displayAlert("path is not chosen",
-                    "please choose a  filepath",
-                    "only mp4 and mpeg4 files", Alert.AlertType.WARNING);
+        checkUserInput();
 
+        if(isNumeric(categories.getText()) && !filelink.getText().equals("file link") &&
+                !filelink.getText().isEmpty()
+                && nameField.getText()!=null && !nameField.getText().isEmpty()
+        && !nameField.getText().equals("name")) {
 
-        if(isNumeric(categories.getText())&& filelink.getText()!=null && nameField.getText()!=null) {
             boolean exists = movieModel.checkIfThisTitleExists(nameField.getText());
             if(exists)
                 movieModel.displayAlert("title",
@@ -76,12 +67,27 @@ public class AddMovieWindowController {
         }
     }
 
+    private void checkUserInput() {
+        if(nameField.getText().isEmpty() || nameField.getText()==null ||
+                nameField.getText().equals("name"))
+            movieModel.displayAlert("name is not chosen",
+                    "please insert a name of the movie",
+                    "", Alert.AlertType.WARNING);
+        if(!isNumeric(categories.getText()))
+            movieModel.displayAlert("rating not selected",
+                    "please select a rating",
+                    "", Alert.AlertType.WARNING);
+        //file link is the default text in the textfield
+        if(destinationPath ==null)
+            movieModel.displayAlert("path is not chosen xddddddd",
+                    "please choose a  filepath",
+                    "only mp4 and mpeg4 files", Alert.AlertType.WARNING);
+    }
+
     private void saveMovieToDB(ActionEvent actionEvent){
-                movieModel.save(createObject());
+                movieModel.saveMovieInProgramFolder(destinationPath, originPath);
+        movieModel.save(createObject());
                 closeStage(actionEvent);
-                //closing stage first we will make an impression that program
-                //works faster than it actualy does
-                movieModel.saveMovieInProgramFolder();
     }
 
     /**
@@ -94,11 +100,10 @@ public class AddMovieWindowController {
             String name = nameField.getText();
             int rating = Integer.parseInt(categories.getText());
             int ratingIMDB = -1;
-            String filelink = this.filelink.getText();
             Timestamp lasview = null;
-            String imagePath = movieModel.setAndSaveImage(name);
+            String imagePath = movieModel.setAndSaveImage(name, Path.of(filelink.getText()));
 
-            Movie movie = new Movie(id, name, rating, ratingIMDB, filelink, lasview, null, imagePath);
+            Movie movie = new Movie(id, name, rating, ratingIMDB, filelink.getText(), lasview, null, imagePath);
             return movie;
     }
 
@@ -124,6 +129,7 @@ public class AddMovieWindowController {
 
     public void choosFilelink(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
+        //its destination path
       String insertedRightFileExtension =
               openFileChooser(n, nameField.getText());
       if(insertedRightFileExtension==null){
@@ -131,26 +137,25 @@ public class AddMovieWindowController {
                   "please select file with .mp4 / .mpeg4 extension",
                   "incorrect extension", Alert.AlertType.WARNING);
       }
-      else
+      else {
           filelink.setText(insertedRightFileExtension);
-
+      }
     }
     //boolean is for data validation
     //if true there was .mp4 / .mpeg4 file inserted
     public String openFileChooser(Node nodeOfTheScene, String namefieldText){
-        Path pathOrigin;
-        Path destinationPath;
+
         FileChooser fileChooser = new FileChooser();
 
         //show fileChooser to the user && they decide which file
         File file = openFileChooserWindow(nodeOfTheScene, fileChooser);
 
         //validate data
-        pathOrigin = validateInput(file);
+        originPath = validateInput(file);
 
         //user inserted .mp4 / mpeg4
-        if(pathOrigin!=null) {
-            destinationPath = getDestinationPath(pathOrigin, namefieldText);
+        if(originPath!=null) {
+            destinationPath = getDestinationPath(namefieldText);
             return destinationPath.toString();
         }
         else
@@ -171,12 +176,11 @@ public class AddMovieWindowController {
         return file;
     }
 
-    private Path getDestinationPath(Path pathOrigin, String namefieldText){
-        Path destinationPath;
-        if (pathOrigin.toString().contains(".mp4"))
+    private Path getDestinationPath(String namefieldText){
+        if (originPath.toString().contains(".mp4"))
             return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mp4" );
-        else if(pathOrigin.toString().contains(".mpeg4"))
-            return destinationPath = Path.of("/Movies/" + namefieldText + ".mpeg4" );
+        else if(originPath.toString().contains(".mpeg4"))
+            return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mpeg4" );
         else
             return null; //something went wrong
     }

@@ -1,6 +1,5 @@
 package sample.dal;
 
-import javafx.scene.Node;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.dal.File.FilesOperations;
@@ -8,6 +7,7 @@ import sample.dal.exception.DALexception;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class DALController implements IDALFacade{
@@ -93,12 +93,12 @@ public class DALController implements IDALFacade{
         catMovieDAO.deleteAllCategoriesForMovie(movieID);
     }
 
-    public void saveFileInProgramFolder() throws FileExceptionDAL {
-        filesOperations.saveFileInProgramFolder();
+    public void saveFileInProgramFolder(Path destinationPath, Path originPath) throws FileExceptionDAL {
+        filesOperations.saveFileInProgramFolder(destinationPath, originPath);
     }
 
     @Override
-    public String setAndSaveImage(String fieldname) throws FileExceptionDAL, JCodecExceptionDAL {
-        return filesOperations.setAndSaveImage(fieldname);
+    public String setAndSaveImage(String fieldname, Path destinationPath) throws FileExceptionDAL, JCodecExceptionDAL {
+        return filesOperations.setAndSaveImage(fieldname, destinationPath);
     }
 }

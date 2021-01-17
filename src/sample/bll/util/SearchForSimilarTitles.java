@@ -23,8 +23,6 @@ public class SearchForSimilarTitles {
         this.allMovies = allMovies;
     }
 
-    public SearchForSimilarTitles() {
-    }
 
     /**
      * returns the list of movies that are similar
@@ -40,6 +38,8 @@ public class SearchForSimilarTitles {
             if(isVerySimilar(newTitle, movie.getName(), 2, true))
                 namesOfSimilarMovies.add(movie.getName());
         }
+        if(namesOfSimilarMovies.isEmpty())
+            return null;
 
         return namesOfSimilarMovies;
     }

@@ -14,6 +14,7 @@ import sample.dal.exception.DALexception;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
 
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -230,9 +231,9 @@ public class BLLController implements BLLFacade{
 
 
     @Override
-    public void saveMovieInProgramFolder() throws BLLexception {
+    public void saveMovieInProgramFolder(Path destinationPath, Path originPath) throws BLLexception {
         try {
-            dataaccess.saveFileInProgramFolder();
+            dataaccess.saveFileInProgramFolder(destinationPath, originPath);
         } catch (FileExceptionDAL fileExceptionDAL) {
             throw new BLLexception("Couldn;t save movie in program folder",
                     fileExceptionDAL);
@@ -240,9 +241,9 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
-    public String setAndSaveImage(String fieldname) throws BLLexception {
+    public String setAndSaveImage(String fieldname, Path destinationPath) throws BLLexception {
         try {
-            return dataaccess.setAndSaveImage(fieldname);
+            return dataaccess.setAndSaveImage(fieldname, destinationPath);
         } catch (FileExceptionDAL fileExceptionDAL) {
             throw new BLLexception("Couldn't save image and get filepath", fileExceptionDAL);
         } catch (JCodecExceptionDAL jCodecExceptionDAL) {

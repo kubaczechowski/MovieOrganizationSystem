@@ -1,12 +1,13 @@
 package sample.dal.interfaces;
 
-import javafx.scene.Node;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
 
+import java.nio.file.Path;
+
 public interface FilesInterface {
 
-    void saveFileInProgramFolder()throws FileExceptionDAL;
+    void saveFileInProgramFolder(Path destinationPath, Path originPath)throws FileExceptionDAL;
 
-    String setAndSaveImage(String fieldname) throws FileExceptionDAL, JCodecExceptionDAL;
+    String setAndSaveImage(String fieldname, Path destinationPath) throws FileExceptionDAL, JCodecExceptionDAL;
 }

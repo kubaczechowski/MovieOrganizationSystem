@@ -38,7 +38,7 @@
     -fx-background-position:center;
     -fx-background-size: 20 20;
 }
-#searchImageB: hover{
+#searchImageB:hover{
     -fx-background-color:transparent;
     -fx-background-image: url("../images/searchG.png");
     -fx-background-repeat: no-repeat;
@@ -147,17 +147,17 @@
     -fx-fill: black;
 }
 
-.table-row-cell: hover {
+.table-row-cell:hover {
     -fx-text-background-color: grey;
 }
 
-.table-row-cell: even {
+.table-row-cell:even {
     -fx-background-color: #dce6f4;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
-.table-row-cell: odd{
+.table-row-cell:odd{
     -fx-background-color: white;
     -fx-opacity: 0.8;
     -fx-background-insets: 0, 0 0 1 0;
@@ -193,11 +193,11 @@
 
 
 
-.list-cell: hover {
+.list-cell:hover {
     -fx-text-background-color: grey;
 }
 
-.list-cell: selected {
+.list-cell:selected {
     -fx-background-color: lightgrey;
     -fx-text-background-color: black;
 }

@@ -13,6 +13,7 @@ import sample.bll.util.AlertDisplayer;
 
 
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import java.sql.Timestamp;
@@ -160,17 +161,17 @@ public class MovieModel {
         logicLayer.updateSortingOption(sortWithHigherRatings);
     }
 
-    public void saveMovieInProgramFolder() {
+    public void saveMovieInProgramFolder(Path destinationPath, Path originPath) {
         try {
-            logicLayer.saveMovieInProgramFolder();
+            logicLayer.saveMovieInProgramFolder(destinationPath, originPath);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
     }
 
-    public String setAndSaveImage(String fieldname) {
+    public String setAndSaveImage(String fieldname, Path destinationPath) {
         try {
-            return logicLayer.setAndSaveImage(fieldname);
+            return logicLayer.setAndSaveImage(fieldname, destinationPath);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }

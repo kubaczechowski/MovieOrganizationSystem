@@ -5,6 +5,7 @@ import sample.be.Category;
 import sample.be.Movie;
 import sample.bll.exception.BLLexception;
 
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -58,9 +59,9 @@ public interface BLLFacade {
 
     void updateSortingOption(boolean sortWithHigherRatings);
 
-    void saveMovieInProgramFolder() throws BLLexception;
+    void saveMovieInProgramFolder(Path destinationPath, Path originPath) throws BLLexception;
 
-    String setAndSaveImage(String fieldname) throws BLLexception;
+    String setAndSaveImage(String fieldname, Path destinationPath) throws BLLexception;
 
     boolean checkIfTitleExists(String text);
 }
