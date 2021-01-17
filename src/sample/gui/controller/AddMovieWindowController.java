@@ -47,17 +47,10 @@ public class AddMovieWindowController {
                 List<String> namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
                 //show information to the user
                 if (namesOfSimilarMovies != null) {
-                    String similar = " ";
-                    for (String item : namesOfSimilarMovies) {
-                        //I dont want to start with a comma not like this: ,item1,item2
-                        //add comma if already there is an item
-                        if (similar.length() > 1)
-                            similar += ", ";
 
-                        similar += item + " ";
-                    }
                     boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar movies",
-                            "Here are similar titles: " + similar, "if you want to add this movie press ok");
+                            "Here are similar titles: " + getListOfSimilarMoviesTitles(namesOfSimilarMovies),
+                            "if you want to add this movie press ok");
                     if (doYouWantToSave)
                         saveMovieToDB(actionEvent);
                 } else {
@@ -65,6 +58,19 @@ public class AddMovieWindowController {
                 }
             }
         }
+    }
+
+    private String getListOfSimilarMoviesTitles(List<String> namesOfSimilarMovies){
+        String similar = " ";
+        for (String item : namesOfSimilarMovies) {
+            //I dont want to start with a comma not like this: ,item1,item2
+            //add comma if already there is an item
+            if (similar.length() > 1)
+                similar += ", ";
+
+            similar += item + " ";
+        }
+        return similar;
     }
 
     private void checkUserInput() {
@@ -144,7 +150,6 @@ public class AddMovieWindowController {
     //boolean is for data validation
     //if true there was .mp4 / .mpeg4 file inserted
     public String openFileChooser(Node nodeOfTheScene, String namefieldText){
-
         FileChooser fileChooser = new FileChooser();
 
         //show fileChooser to the user && they decide which file
@@ -156,10 +161,14 @@ public class AddMovieWindowController {
         //user inserted .mp4 / mpeg4
         if(originPath!=null) {
             destinationPath = getDestinationPath(namefieldText);
-            return destinationPath.toString();
+            if(destinationPath==null)
+                movieModel.displayAlert("adding filepath",
+                        "something went wrong",
+                        "please try again", Alert.AlertType.ERROR);
+            else
+             return destinationPath.toString();
         }
-        else
-            return null;
+            return null; // if we get there something went wrong
     }
 
     private Path validateInput(File file) {
@@ -182,7 +191,7 @@ public class AddMovieWindowController {
         else if(originPath.toString().contains(".mpeg4"))
             return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mpeg4" );
         else
-            return null; //something went wrong
+            return null; //something went wrong. there is weird case when it happens
     }
 
     public void setOne(ActionEvent actionEvent) {
