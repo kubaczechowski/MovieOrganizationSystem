@@ -140,13 +140,6 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell:selected {
-    -fx-background-color: #adc4e3;
-}
-.table-row-cell:selected .text {
-    -fx-fill: black;
-}
-
 .table-row-cell: hover {
     -fx-text-background-color: grey;
 }
@@ -155,6 +148,7 @@
     -fx-background-color: #dce6f4;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
 }
 
 .table-row-cell: odd{
@@ -162,6 +156,16 @@
     -fx-opacity: 0.8;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: grey;
+    -fx-opacity: 0.6;
+}
+.table-row-cell:selected .text {
+    -fx-fill: black;
+    -fx-opacity: 1;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,
@@ -229,5 +233,10 @@
 .button {
     -fx-background-color: white;
     -fx-opacity: 0.8;
+    -fx-text-fill: black;
+}
+.button: hover{
+    -fx-background-color: white;
+    -fx-opacity: 1;
     -fx-text-fill: black;
 }

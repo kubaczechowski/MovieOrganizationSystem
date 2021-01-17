@@ -11,9 +11,9 @@
    <children>
       <TableView fx:id="moviesTable" layoutX="30.0" layoutY="102.0" prefHeight="276.0" prefWidth="754.0">
         <columns>
-          <TableColumn fx:id="columnName" prefWidth="240.0" text="name" />
-          <TableColumn fx:id="columnRating" prefWidth="115.0" text="rating" />
-            <TableColumn fx:id="columnLastView" prefWidth="164.0" text="lastview" />
+          <TableColumn fx:id="columnName" prefWidth="240.0" text="Name" />
+          <TableColumn fx:id="columnRating" prefWidth="115.0" text="Rating" />
+            <TableColumn fx:id="columnLastView" prefWidth="164.0" text="Last viewed" />
             <TableColumn fx:id="columnCategories" prefWidth="234.0" text="Categories" />
         </columns>
       </TableView>
