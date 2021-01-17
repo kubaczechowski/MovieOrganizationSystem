@@ -28,9 +28,11 @@ public class BLLController implements BLLFacade{
     //used to initialize an instance variable
     {
         try {
+            //is it updated each time we add new movie??
             searchForSimilarTitles = new SearchForSimilarTitles(getAllMovies());
         } catch (BLLexception blLexception) {
-            blLexception.printStackTrace();
+           // blLexception.printStackTrace();
+            throw new BLLexception("couldnt search for similar titles", blLexception);
         }
     }
 
@@ -79,6 +81,7 @@ public class BLLController implements BLLFacade{
             //daLexception.printStackTrace();
             throw new BLLexception("couldn't delete movie", daLexception);
         }
+        searchForSimilarTitles.setAllMovies(getAllMovies());
     }
 
     @Override
@@ -89,6 +92,7 @@ public class BLLController implements BLLFacade{
             //daLexception.printStackTrace();
             throw new BLLexception("Couldn't save movie", daLexception);
         }
+        searchForSimilarTitles.setAllMovies(getAllMovies());
     }
 
     @Override

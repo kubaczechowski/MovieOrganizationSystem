@@ -8,6 +8,10 @@ import java.util.List;
 
 
 public class SearchForSimilarTitles {
+    public void setAllMovies(List<Movie> allMovies) {
+        this.allMovies = allMovies;
+    }
+
     private List<Movie> allMovies;
     private List<Category> allCategories;
 
