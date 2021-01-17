@@ -3,7 +3,6 @@ package sample.bll;
 
 import sample.be.Category;
 import sample.be.Movie;
-import sample.bll.cache.MovieCache;
 import sample.bll.exception.BLLexception;
 import sample.bll.util.MovieSearcher;
 import sample.bll.util.SearchForSimilarTitles;
@@ -13,7 +12,6 @@ import sample.dal.IDALFacade;
 import sample.dal.exception.DALexception;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
-
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,7 +21,7 @@ public class BLLController implements BLLFacade{
     private TimeCalculator timeCalculator = new TimeCalculator();
     private SearchForSimilarTitles searchForSimilarTitles;
     private MovieSearcher movieSearcher = new MovieSearcher();
-    private MovieCache movieCache = MovieCache.getInstance();
+
 
 
     //Initializer block. Called even before the constructor
@@ -34,13 +32,16 @@ public class BLLController implements BLLFacade{
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
-        //set movieCache
-        //movieCache.setAllMovies(getAllMovies());
     }
 
     public BLLController(boolean setCache) throws BLLexception {
-        if(setCache)
-            movieCache.setAllMovies(getAllMovies());
+        if(setCache) {
+            try {
+                dataaccess.setAllMoviesInCache();
+            } catch (DALexception daLexception) {
+                throw new BLLexception(" couldn't set all movies to the cashe", daLexception);
+            }
+        }
     }
 
 
@@ -183,36 +184,41 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
-    public List<Movie> searchMovies(String query) throws BLLexception {
+    public List<Movie> searchMovies(String query)  {
         //List<Movie> allMovies = getAllMovies();
        // List<Category> allCategories = getAllCategories();
-        List<Movie> searchResult = movieSearcher.getSearch(movieCache.getAllMovies() , query);
+        List<Movie> searchResult = movieSearcher.getSearch(dataaccess.getAllMoviesFromCache() , query);
         return searchResult;
     }
     // cashe class
     @Override
     public void saveMovieToCache(Movie movie) {
-        movieCache.saveMovies(movie);
+        dataaccess.saveMoviesInCache(movie);
     }
 
     @Override
     public List<Movie> getMoviesFromCashe() {
-        return movieCache.getAllMovies();
+        return dataaccess.getAllMoviesFromCache();
     }
 
     @Override
     public void deleteMovieFromCashe(Movie... selectedMovies) {
-        movieCache.removeMovie(selectedMovies);
+        dataaccess.deleteMovieFromCache(selectedMovies);
     }
 
     @Override
     public void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete) {
-        movieCache.removeListOfMovies(moviesToDelete);
+        dataaccess.deleteListOfMoviesFromCashe(moviesToDelete);
     }
 
     @Override
     public void refreshcashList() throws BLLexception {
-        movieCache.refresh(getAllMovies());
+        try {
+            dataaccess.refreshCacheList();
+        } catch (DALexception daLexception) {
+           throw new BLLexception("Couldn't refresh cache list", daLexception);
+        }
+        // movieCache.refresh(getAllMovies());
     }
 
     @Override

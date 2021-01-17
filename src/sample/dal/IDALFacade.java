@@ -25,4 +25,16 @@ public interface IDALFacade extends MovieInterface,
 
     @Override
     void deleteCategory(Category category) throws DALexception;
+
+    void setAllMoviesInCache() throws DALexception;
+
+ List<Movie> getAllMoviesFromCache();
+
+ void saveMoviesInCache(Movie movie);
+
+ void deleteMovieFromCache(Movie[] selectedMovies);
+
+ void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete);
+
+ void refreshCacheList() throws DALexception;
 }

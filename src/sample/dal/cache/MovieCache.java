@@ -1,4 +1,4 @@
-package sample.bll.cache;
+package sample.dal.cache;
 
 import sample.be.Movie;
 import java.util.List;

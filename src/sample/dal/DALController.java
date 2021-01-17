@@ -3,6 +3,7 @@ package sample.dal;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.dal.File.FilesOperations;
+import sample.dal.cache.MovieCache;
 import sample.dal.exception.DALexception;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
@@ -15,6 +16,7 @@ public class DALController implements IDALFacade{
     private CategoryDB categoryDB = new CategoryDB();
     private CatMovieDAO catMovieDAO = new CatMovieDAO();
     private FilesOperations filesOperations = FilesOperations.getInstance();
+    private MovieCache movieCache = MovieCache.getInstance();
 
     //Movie
     @Override
@@ -61,6 +63,36 @@ public class DALController implements IDALFacade{
     @Override
     public void deleteCategory(Category category) throws DALexception {
         categoryDB.deleteCategory(category);
+    }
+
+    @Override
+    public void setAllMoviesInCache() throws DALexception {
+        movieCache.setAllMovies(getAllMovies());
+    }
+
+    @Override
+    public List<Movie> getAllMoviesFromCache() {
+        return movieCache.getAllMovies();
+    }
+
+    @Override
+    public void saveMoviesInCache(Movie movie) {
+        movieCache.saveMovies(movie);
+    }
+
+    @Override
+    public void deleteMovieFromCache(Movie[] selectedMovies) {
+        movieCache.removeMovie(selectedMovies);
+    }
+
+    @Override
+    public void deleteListOfMoviesFromCashe(List<Movie> moviesToDelete) {
+        movieCache.removeListOfMovies(moviesToDelete);
+    }
+
+    @Override
+    public void refreshCacheList() throws DALexception {
+        movieCache.refresh(getAllMovies());
     }
 
     @Override

@@ -2,19 +2,15 @@ package sample.gui.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
-import sample.bll.cache.MovieCache;
 import sample.bll.exception.BLLexception;
 import sample.bll.util.AlertDisplayer;
 
 
-import java.awt.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 import java.sql.Timestamp;
 import java.util.Collections;
