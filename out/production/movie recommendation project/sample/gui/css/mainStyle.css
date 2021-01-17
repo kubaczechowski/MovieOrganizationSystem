@@ -38,7 +38,7 @@
     -fx-background-position:center;
     -fx-background-size: 20 20;
 }
-#searchImageB:hover{
+#searchImageB: hover{
     -fx-background-color:transparent;
     -fx-background-image: url("../images/searchG.png");
     -fx-background-repeat: no-repeat;
@@ -140,28 +140,32 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell:selected {
-    -fx-background-color: #adc4e3;
-}
-.table-row-cell:selected .text {
-    -fx-fill: black;
-}
-
-.table-row-cell:hover {
+.table-row-cell: hover {
     -fx-text-background-color: grey;
 }
 
-.table-row-cell:even {
+.table-row-cell: even {
     -fx-background-color: #dce6f4;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
 }
 
-.table-row-cell:odd{
+.table-row-cell: odd{
     -fx-background-color: white;
     -fx-opacity: 0.8;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: grey;
+    -fx-opacity: 0.6;
+}
+.table-row-cell:selected .text {
+    -fx-fill: black;
+    -fx-opacity: 1;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,
@@ -193,11 +197,11 @@
 
 
 
-.list-cell:hover {
+.list-cell: hover {
     -fx-text-background-color: grey;
 }
 
-.list-cell:selected {
+.list-cell: selected {
     -fx-background-color: lightgrey;
     -fx-text-background-color: black;
 }
@@ -229,5 +233,10 @@
 .button {
     -fx-background-color: white;
     -fx-opacity: 0.8;
+    -fx-text-fill: black;
+}
+.button: hover{
+    -fx-background-color: white;
+    -fx-opacity: 1;
     -fx-text-fill: black;
 }

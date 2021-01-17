@@ -190,8 +190,8 @@ public class MovieModel {
                              Alert.AlertType alertType){
         alertDisplayer.displayAlert(title, information, header, alertType);
     }
-    public String ShowTextInputDialog(String title, String contentText, String header){
-        return alertDisplayer.ShowTextInputDialog(title, contentText, header);
+    public String ShowTextInputDialog(String title, String contentText, String header, String whatToInput){
+        return alertDisplayer.ShowTextInputDialog(title, contentText, header, whatToInput);
     }
 
 }

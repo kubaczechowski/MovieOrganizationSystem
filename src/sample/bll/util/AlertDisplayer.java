@@ -59,11 +59,11 @@ public class AlertDisplayer {
         alert.show(); //no other action is needed
     }
 
-    public String ShowTextInputDialog(String title, String contentText, String header)
+    public String ShowTextInputDialog(String title, String contentText, String header, String whatToImput)
     {
         String catName = null;
         TilePane r = new TilePane(); // create a tile pane
-        TextInputDialog td = new TextInputDialog("enter new category");
+        TextInputDialog td = new TextInputDialog("enter " );
         td.setTitle(title);
         td.setContentText(contentText);
         td.setHeaderText(header);

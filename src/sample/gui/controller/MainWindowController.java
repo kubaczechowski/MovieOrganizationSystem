@@ -304,7 +304,7 @@ public class MainWindowController implements Initializable {
             //if its null
             try {
                 newRating = movieModel.ShowTextInputDialog("change rating",
-                        "please insert new rating", "changing rating");
+                        "please insert new rating", "changing rating", "rating");
             } catch (NumberFormatException numberFormatException) {
                 movieModel.displayAlert("Nothing was selected",
                         "Please select an item", "nothing selected",
@@ -340,7 +340,7 @@ public class MainWindowController implements Initializable {
      */
     public void addCategory(ActionEvent actionEvent) {
         String newCategory = movieModel.ShowTextInputDialog("add category",
-               "please add new category", "new category");
+               "please add new category", "new category", "category");
         if(newCategory!=null){
             //check in db if such category exists
             boolean exists = categoryModel.chechIfExists(newCategory);
