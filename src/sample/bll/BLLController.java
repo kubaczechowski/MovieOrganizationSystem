@@ -80,6 +80,9 @@ public class BLLController implements BLLFacade{
         } catch (DALexception daLexception) {
             //daLexception.printStackTrace();
             throw new BLLexception("couldn't delete movie", daLexception);
+        } catch (FileExceptionDAL fileExceptionDAL) {
+            //fileExceptionDAL.printStackTrace();
+            throw new BLLexception("couldn't delete movie", fileExceptionDAL);
         }
         searchForSimilarTitles.setAllMovies(getAllMovies());
     }

@@ -30,8 +30,9 @@ public class DALController implements IDALFacade{
     }
 
     @Override
-    public void deleteMovie(Movie movie) throws DALexception {
+    public void deleteMovie(Movie movie) throws DALexception, FileExceptionDAL {
         movieDB.deleteMovie(movie);
+        filesOperations.deleteMovie(movie);
     }
 
     @Override

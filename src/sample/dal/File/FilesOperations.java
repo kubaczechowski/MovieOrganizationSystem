@@ -4,6 +4,8 @@ import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
+import sample.be.Movie;
+import sample.dal.exception.DALexception;
 import sample.dal.exception.FileExceptionDAL;
 import sample.dal.exception.JCodecExceptionDAL;
 import sample.dal.interfaces.FilesInterface;
@@ -47,6 +49,17 @@ private static FilesOperations filesOperations;
         String filename = getFileName(namefieldText);
         saveImageInProgram(frame, filename);
         return "src/../Images/" + filename+ ".jpg";
+    }
+
+    @Override
+    public void deleteMovie(Movie movie) throws DALexception, FileExceptionDAL {
+        try {
+            Files.delete(Path.of(movie.getFilelink()));
+            Files.delete(Path.of(movie.getImagePath()));
+        } catch (IOException e) {
+            throw new FileExceptionDAL("Couldn't delete movie file", e);
+        }
+
     }
 
     private void saveImageInProgram(Picture frame, String filename) throws FileExceptionDAL {
