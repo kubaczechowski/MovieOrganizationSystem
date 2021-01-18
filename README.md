@@ -6,7 +6,7 @@ Program was developed within two weeks in collaboration with @Laszlo199 and @kam
  
 ## Which functionalities are included?
 
-- [adding / removing movies](Adding-and-removing-movies)
+- [adding / removing movies](###adding-and-removing-movies)
 - adding / removing categories
 - setting multiple categories per movie
 - filtering movies by title, rating and category
@@ -38,6 +38,10 @@ In the last case movie will be saved without any further actions.
 To remove a movie user has to select a movie and invoke the "dust bin" button in the bottom left conrner and then confirm choise.
 
 ### Adding removing categories 
+Adding and removing categories is very straighforward. User decides to do so using two buttons at the left in the bottom right corner. Two this same categories cannot be entered and if there is a similar category user will be notified.
+
+### Setting categories
+User has to select both category and movie on which they want to make changes and then regarding wether they want to set/unset a category they invoke corresponding button (they are located at the bottom right corner)
 
 
 
