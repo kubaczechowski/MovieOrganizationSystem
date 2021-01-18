@@ -1,11 +1,12 @@
 # Movie Organization System
 Program was developed within two weeks in collaboration with @Laszlo199 and @kamila0801. Program is the final assignment for the 1st semester in Business Academy Southwest.
- 
+
+![image](https://user-images.githubusercontent.com/67064580/104900972-100cf200-597d-11eb-935f-cb486047655e.png)
  
  
 ## Which functionalities are included?
 
-- adding / removing movies
+- [adding / removing movies](Adding-and-removing-movies)
 - adding / removing categories
 - setting multiple categories per movie
 - filtering movies by title, rating and category
@@ -13,5 +14,30 @@ Program was developed within two weeks in collaboration with @Laszlo199 and @kam
 - playing movie in built in media player
 - searching up a movie title in built-in browser
 - updating lastview each time user plays a movie
-- looking  up for smilar titles of movies or categories when new movie or category is being created
-- mechanism not allowing for duplicate records
+
+### Adding and removing movies
+![image](https://user-images.githubusercontent.com/67064580/104903405-3c763d80-5980-11eb-9dd7-aea372c4ca06.png)
+
+In order to add a movie user has to invoke "plus" button in the bottom left corner. Then they will see a window where they are supposed to enter the title of the movie, rating and by using the choose button the link to the movie file on the disc. 
+
+Here are three scenarios :
+- entered title exists in the database
+- entered title is similar to the title/s existing in the database
+- entered title is not similar to the existing tiltes and doesn't exist in database
+
+In the fist case user will be notified that title in question already exists and won't be able to add this same title. Warning alert will pop up
+
+![image](https://user-images.githubusercontent.com/67064580/104903569-7c3d2500-5980-11eb-95eb-a5efc282640b.png)
+
+In the second case informatory alert will pop up. User will see similar titles and will be able to decide if they want to add the record. 
+
+![image](https://user-images.githubusercontent.com/67064580/104904362-5cf2c780-5981-11eb-902a-dce2e41c8cbc.png)
+
+In the last case movie will be saved without any further actions.
+
+To remove a movie user has to select a movie and invoke the "dust bin" button in the bottom left conrner and then confirm choise.
+
+### Adding removing categories 
+
+
+
