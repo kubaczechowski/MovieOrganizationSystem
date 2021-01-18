@@ -39,7 +39,7 @@ public class SearchForSimilarTitles {
 
         for(Movie movie:allMovies)
         {
-            if(isVerySimilar(newTitle, movie.getName(), 2, true))
+            if(isVerySimilar(newTitle.toLowerCase(), movie.getName().toLowerCase(), 2, true))
                 namesOfSimilarMovies.add(movie.getName());
         }
         if(namesOfSimilarMovies.isEmpty())
@@ -61,7 +61,7 @@ public class SearchForSimilarTitles {
         List<String> similarCategories = new ArrayList<>();
 
         for(Category category: allCategories){
-            if(isVerySimilar(query, category.getName(), 3, false))
+            if(isVerySimilar(query.toLowerCase(), category.getName().toLowerCase(), 3, false))
                 similarCategories.add(category.getName());
         }
         if(similarCategories.isEmpty())
