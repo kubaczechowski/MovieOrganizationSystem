@@ -1,6 +1,9 @@
 package sample.bll.util;
 
+import sample.be.Movie;
+
 import java.sql.Timestamp;
+
 
 /**
  * method shows lastview differently depending
@@ -55,5 +58,20 @@ public class TimeCalculator {
         }
         else
             return String.valueOf(timestamp);
+    }
+
+    public String lastViewToShow(Movie movie) {
+        if(movie.getLastview()==null)
+            return "not seen";
+
+        else {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            // method get time Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+            int currentTimeInMillis = (int) currentTime.getTime(); //downcast long to int
+            int lastviewInMillis = (int) movie.getLastview().getTime();
+
+            return timeDifference(currentTimeInMillis,
+                    lastviewInMillis, movie.getLastview());
+        }
     }
 }

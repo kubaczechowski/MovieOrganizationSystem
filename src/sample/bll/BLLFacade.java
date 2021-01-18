@@ -35,11 +35,10 @@ public interface BLLFacade {
     void updateLastview(Movie movieToPlay) throws BLLexception;
 
     //timeconverter
-    String timeDifference(int currentTimeInMillis,
-                          int lastviewInMillis, Timestamp timestamp);
-    List<String> getSimilarMovies(String newTitle) throws BLLexception;
 
-    List<String> getSimilarCategories(String newCategory, List<Category> allCategories) throws BLLexception;
+  String getSimilarMovies(String newTitle) throws BLLexception;
+
+    String getSimilarCategories(String newCategory, List<Category> allCategories) throws BLLexception;
 
     boolean checkIfCategoryExists(String newCategory) throws BLLexception;
 
@@ -64,4 +63,21 @@ public interface BLLFacade {
     String setAndSaveImage(String fieldname, Path destinationPath) throws BLLexception;
 
     boolean checkIfTitleExists(String text);
+
+    //validation
+    Path getDestinationPath(String namefieldText, Path originPath);
+
+    boolean isValidFileExtension(String absolutePath);
+
+    boolean isNumeric(String text);
+
+    boolean isChosenCategory(String text);
+
+    boolean isFileLinkCorrect(String text);
+
+    boolean isNameFieldCorrect(String text);
+
+    String lastViewToShow(Movie movie);
+
+    boolean checkBoundsOfRating(int parseInt);
 }

@@ -1,6 +1,5 @@
 package sample.gui.controller;
 
-import com.jfoenix.controls.JFXToggleButton;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,7 +17,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import sample.Main;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.gui.model.CategoryItemModel;
@@ -29,7 +27,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -160,7 +157,9 @@ public class MainWindowController implements Initializable {
         return moviePlayerController;
     }
 
-
+    //this method should be in time calculator in BLL
+    // you can delete timeDifference method from movie model and blll
+    /*
     private String lastviewToShow(Movie movie) {
         if(movie.getLastview()==null)
             return "not seen";
@@ -176,6 +175,8 @@ public class MainWindowController implements Initializable {
         }
     }
 
+     */
+
     private void initTableView() {
         columnName.setCellValueFactory(new PropertyValueFactory<Movie, String>("name"));
         columnRating.setCellValueFactory(new PropertyValueFactory<Movie, Integer>("rating"));
@@ -183,7 +184,7 @@ public class MainWindowController implements Initializable {
         columnLastView.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movie, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Movie, String> object) {
-                return new ReadOnlyObjectWrapper<>(lastviewToShow(object.getValue()));
+                return new ReadOnlyObjectWrapper<>(movieModel.lastviewToShow(object.getValue()));
             }
         });
         columnCategories.setCellValueFactory(
@@ -213,8 +214,12 @@ public class MainWindowController implements Initializable {
             imagePath = "src/../Images/default.png";
 
         //imagePath= imagePath.replace("//", "src/").replace("/src", "src");
-        Path path  = FileSystems.getDefault().getPath(imagePath);
+        //File systems is a part of java.nio.file.FileSystems
+       Path path  = FileSystems.getDefault().getPath(imagePath);
+        //Path path = movieModel.getFileSystemsPath(imagePath);
+        //it must be in this way. we cannot change it
        ImageView imageView = new ImageView(path.toUri().toString());
+
        imageView.setFitHeight(25);
         imageView.setFitWidth(50);
 
@@ -277,16 +282,11 @@ public class MainWindowController implements Initializable {
 
             //delete movie if user decided to do so
             if (result == true) {
-                //System.out.println("do action");
                 //delete from table && db
                 movieModel.delete(selectedMovie);
                 movieModel.load();
             }
-            //close the window if user decided not to delete movie
-            else {
-                //System.out.println("close the program");
-                //overall do nothing for now
-            }
+
         }
     }
 
@@ -307,35 +307,31 @@ public class MainWindowController implements Initializable {
         else {
             String newRating = null;
             //if its null
-            try {
+            //try {
                 newRating = movieModel.ShowTextInputDialog("change rating",
                         "please insert new rating", "changing rating", "rating");
-            } catch (NumberFormatException numberFormatException) {
+            /*} catch (NumberFormatException numberFormatException) {
                 movieModel.displayAlert("Nothing was selected",
                         "Please select an item", "nothing selected",
                         Alert.AlertType.INFORMATION);
             }
+
+             */
             //if number wasnt selected
-            if (newRating == null)
+            if (newRating == null ||!movieModel.isNumeric(newRating))
                 movieModel.displayAlert("Number wasn't selected",
                         "Please insert a number", "number should be in range of 1 to 10",
                         Alert.AlertType.WARNING);
             //in case of number out of bounds or null
-             else if (Integer.parseInt(newRating) < 1 || Integer.parseInt(newRating) > 10)
+            // else if (Integer.parseInt(newRating) < 1 || Integer.parseInt(newRating) > 10)
+            else if (!movieModel.checkBoundsOfRating(Integer.parseInt(newRating)))
                 movieModel.displayAlert("Number isn't correct",
                         "Please insert a correct number", "number should be in range of 1 to 10",
                         Alert.AlertType.WARNING);
-             else {
-                //in case of number format exception
-                try {
-                   // selectedMovie.setRating(Integer.parseInt(newRating));
-                    movieModel.updateRating(selectedMovie, Integer.parseInt(newRating));
-                } catch (NumberFormatException numberFormatException) {
-                    movieModel.displayAlert("Number format exception",
-                            "Please insert a number", "number should be in range of 1 to 10",
-                            Alert.AlertType.WARNING);
-                }
-            }
+             else
+                 movieModel.updateRating(selectedMovie, Integer.parseInt(newRating));
+
+
         }
     }
 
@@ -346,37 +342,27 @@ public class MainWindowController implements Initializable {
     public void addCategory(ActionEvent actionEvent) {
         String newCategory = movieModel.ShowTextInputDialog("add category",
                "please add new category", "new category", "category");
+        //if user didn't cancel or nothing was inserted it would be null
         if(newCategory!=null){
             //check in db if such category exists
             boolean exists = categoryModel.chechIfExists(newCategory);
 
-            List<String> namesOfSimilarCategories = categoryModel.searchForSimilar(newCategory);
+            String namesOfSimilarCategories = categoryModel.searchForSimilar(newCategory);
             //show alert
             if(exists)
                 movieModel.displayAlert("Category",
                         "you cannot add one category twice", "such category is added",
                         Alert.AlertType.WARNING);
             else if(namesOfSimilarCategories!=null){
-                String sim = " ";
-                for(String item: namesOfSimilarCategories){
-                    if(sim.length()>1)
-                        sim+= ", ";
-
-                    sim +=  item+ " ";
-                }
                 boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar categories",
-                        "Here are similar  categories: " + sim, "if you want to add this category press ok" );
+                        "Here are similar  categories: " + namesOfSimilarCategories, "if you want to add this category press ok" );
                 if(doYouWantToSave){
                     Category category = new Category(newCategory);
-                    //call category model
                     categoryModel.save(category);
                 }
-
             }
             else {
-                //System.out.println(newCategory);
                 Category category = new Category(newCategory);
-                //call category model
                 categoryModel.save(category);
             }
         }
@@ -391,8 +377,7 @@ public class MainWindowController implements Initializable {
         //show alert to ensure that user wants to delete movie
         boolean result = movieModel.displayConfirmationAlert("Delete Category",
                 "Do you want to delete category?", "Delete");
-        if(result==true)
-        {
+        if(result==true) {
             categoryModel.delete(selectedItem);
             categoryModel.load();
         }
@@ -419,12 +404,10 @@ public class MainWindowController implements Initializable {
                         "you cannot add one category twice", "such category is added",
                         Alert.AlertType.WARNING);
             else {
-
                 //do action
                 categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
                 categoryItemModel.load();
                 movieModel.load();
-                System.out.println("set category" + selectedMovie.getCategoryList());
             }
         }
     }

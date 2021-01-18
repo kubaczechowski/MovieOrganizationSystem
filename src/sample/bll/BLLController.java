@@ -7,6 +7,7 @@ import sample.bll.exception.BLLexception;
 import sample.bll.util.MovieSearcher;
 import sample.bll.util.SearchForSimilarTitles;
 import sample.bll.util.TimeCalculator;
+import sample.bll.util.Validations;
 import sample.dal.DALController;
 import sample.dal.IDALFacade;
 import sample.dal.exception.DALexception;
@@ -21,6 +22,7 @@ public class BLLController implements BLLFacade{
     private TimeCalculator timeCalculator = new TimeCalculator();
     private SearchForSimilarTitles searchForSimilarTitles;
     private MovieSearcher movieSearcher = new MovieSearcher();
+    private Validations validations = new Validations();
 
 
 
@@ -69,7 +71,6 @@ public class BLLController implements BLLFacade{
             //daLexception.printStackTrace();
             throw new BLLexception("couldn't get all movies", daLexception);
         }
-
     }
 
     @Override
@@ -165,19 +166,14 @@ public class BLLController implements BLLFacade{
         }
     }
 
-    //timeconverter
-    @Override
-    public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp timestamp) {
-        return timeCalculator.timeDifference(currentTimeInMillis, lastviewInMillis, timestamp);
-    }
 
     @Override
-    public List<String> getSimilarMovies(String newTitle) {
+    public String getSimilarMovies(String newTitle) {
         return searchForSimilarTitles.getSimilarMovies(newTitle);
     }
 
     @Override
-    public List<String> getSimilarCategories(String newCategory, List<Category> allCategories)  {
+    public String getSimilarCategories(String newCategory, List<Category> allCategories)  {
         return searchForSimilarTitles.getSimilarCategories(newCategory, allCategories);
     }
 
@@ -267,6 +263,47 @@ public class BLLController implements BLLFacade{
     @Override
     public boolean checkIfTitleExists(String text) {
         return searchForSimilarTitles.checkIfExists(text);
+    }
+
+    @Override
+    public Path getDestinationPath(String namefieldText, Path originPath) {
+        return validations.getDestinationPath(namefieldText, originPath);
+    }
+
+    @Override
+    public boolean isValidFileExtension(String absolutePath) {
+        return validations.isValidFileExtension(absolutePath);
+    }
+
+    @Override
+    public boolean isNumeric(String text) {
+        return validations.isNumeric(text);
+    }
+
+    @Override
+    public boolean isChosenCategory(String text) {
+        //deliberately i inserted it. category is chosen if its a number
+        return validations.isNumeric(text);
+    }
+
+    @Override
+    public boolean isFileLinkCorrect(String text) {
+        return validations.isFileLinkCorrect(text);
+    }
+
+    @Override
+    public boolean isNameFieldCorrect(String text) {
+        return validations.isNameFieldCorrect(text);
+    }
+
+    @Override
+    public String lastViewToShow(Movie movie) {
+        return timeCalculator.lastViewToShow(movie);
+    }
+
+    @Override
+    public boolean checkBoundsOfRating(int parseInt) {
+        return validations.checkBoundsOfRating(parseInt);
     }
 
     @Override

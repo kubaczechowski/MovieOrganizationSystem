@@ -34,7 +34,7 @@ public class SearchForSimilarTitles {
      * no prompt will appear to the user with information about
      * similar titles
      */
-    public List<String> getSimilarMovies(String newTitle) {
+    public String getSimilarMovies(String newTitle) {
         List<String> namesOfSimilarMovies = new ArrayList<>();
 
         for(Movie movie:allMovies)
@@ -44,8 +44,21 @@ public class SearchForSimilarTitles {
         }
         if(namesOfSimilarMovies.isEmpty())
             return null;
+        else
+            return getListOfSimilarItems(namesOfSimilarMovies);
+    }
 
-        return namesOfSimilarMovies;
+    private String getListOfSimilarItems(List<String> namesOfSimilarItems){
+        String similar = " ";
+        for (String item : namesOfSimilarItems) {
+            //I dont want to start with a comma not like this: ,item1,item2
+            //add comma if already there is an item
+            if (similar.length() > 1)
+                similar += ", ";
+
+            similar += item + " ";
+        }
+        return similar;
     }
 
     public boolean checkIfExists(String text) {
@@ -56,7 +69,7 @@ public class SearchForSimilarTitles {
        return false;
     }
 
-    public List<String> getSimilarCategories(String query, List<Category> allCategories){
+    public String getSimilarCategories(String query, List<Category> allCategories){
         setAllCategories(allCategories);
         List<String> similarCategories = new ArrayList<>();
 
@@ -67,7 +80,7 @@ public class SearchForSimilarTitles {
         if(similarCategories.isEmpty())
             return null;
         else
-            return similarCategories;
+            return getListOfSimilarItems(similarCategories);
     }
 
     /**

@@ -7,7 +7,7 @@ import sample.be.Movie;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
-import sample.bll.util.AlertDisplayer;
+import sample.gui.util.AlertDisplayer;
 
 
 import java.nio.file.Path;
@@ -90,18 +90,15 @@ public class MovieModel {
         logicLayer.saveMovieToCache(movieToPlay);
     }
 
-    public String timeDifference(int currentTimeInMillis, int lastviewInMillis, Timestamp lastview) {
-       return logicLayer.timeDifference(currentTimeInMillis, lastviewInMillis, lastview);
-    }
 
-    public List<String> searchForSimilar(String text) {
+    public String searchForSimilar(String text) {
         try {
             return logicLayer.getSimilarMovies(text);
         } catch (BLLexception blLexception) {
             blLexception.printStackTrace();
         }
         //if we get there its a bad sign
-        return Collections.singletonList("problem happened in movie model");
+        return "problem happened in movie model";
     }
 
     /**
@@ -190,4 +187,35 @@ public class MovieModel {
         return alertDisplayer.ShowTextInputDialog(title, contentText, header, whatToInput);
     }
 
+    public Path getDestinationPath(String namefieldText, Path originPath) {
+        return  logicLayer.getDestinationPath(namefieldText, originPath);
+    }
+
+    public boolean isValidFileExtension(String absolutePath) {
+        return logicLayer.isValidFileExtension(absolutePath);
+    }
+
+    public boolean isNumeric(String text) {
+        return logicLayer.isNumeric(text);
+    }
+
+    public boolean isChosenCategory(String text) {
+        return logicLayer.isChosenCategory(text);
+    }
+
+    public boolean isFileLinkCorrect(String text) {
+        return logicLayer.isFileLinkCorrect(text);
+    }
+
+    public boolean isNameFieldCorrect(String text) {
+        return logicLayer.isNameFieldCorrect(text);
+    }
+
+    public String lastviewToShow(Movie movie) {
+        return logicLayer.lastViewToShow(movie);
+    }
+
+    public boolean checkBoundsOfRating(int parseInt) {
+        return logicLayer.checkBoundsOfRating(parseInt);
+    }
 }

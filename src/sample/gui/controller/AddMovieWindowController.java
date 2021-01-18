@@ -30,12 +30,16 @@ public class AddMovieWindowController {
     private Path originPath;
 
     public void saveMovie(ActionEvent actionEvent) {
-        checkUserInput();
-
-        if(isNumeric(categories.getText()) && !filelink.getText().equals("file link") &&
+        showAlertsIfNeeded();
+/*
+        if(movieModel.isNumeric(categories.getText()) && !filelink.getText().equals("file link") &&
                 !filelink.getText().isEmpty()
                 && nameField.getText()!=null && !nameField.getText().isEmpty()
-        && !nameField.getText().equals("name")) {
+        && !nameField.getText().equals("name"))
+        {
+ */
+        if(movieModel.isChosenCategory(categories.getText()) && movieModel.isFileLinkCorrect(filelink.getText()) &&
+        movieModel.isNameFieldCorrect(nameField.getText())){
 
             boolean exists = movieModel.checkIfThisTitleExists(nameField.getText());
             if(exists)
@@ -44,22 +48,24 @@ public class AddMovieWindowController {
                         "this title exists in the db", Alert.AlertType.WARNING);
             else {
                 //check if similar movie/movies is/are in DB
-                List<String> namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
+                String namesOfSimilarMovies = movieModel.searchForSimilar(nameField.getText());
                 //show information to the user
                 if (namesOfSimilarMovies != null) {
 
                     boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar movies",
-                            "Here are similar titles: " + getListOfSimilarMoviesTitles(namesOfSimilarMovies),
+                            "Here are similar titles: " + namesOfSimilarMovies,
                             "if you want to add this movie press ok");
                     if (doYouWantToSave)
                         saveMovieToDB(actionEvent);
-                } else {
+                }
+                else {
                     saveMovieToDB(actionEvent);
                 }
             }
         }
     }
 
+/*
     private String getListOfSimilarMoviesTitles(List<String> namesOfSimilarMovies){
         String similar = " ";
         for (String item : namesOfSimilarMovies) {
@@ -73,27 +79,30 @@ public class AddMovieWindowController {
         return similar;
     }
 
-    private void checkUserInput() {
-        if(nameField.getText().isEmpty() || nameField.getText()==null ||
-                nameField.getText().equals("name"))
+ */
+
+    private void showAlertsIfNeeded() {
+        if(!movieModel.isNameFieldCorrect(nameField.getText()))
             movieModel.displayAlert("name is not chosen",
                     "please insert a name of the movie",
                     "", Alert.AlertType.WARNING);
-        if(!isNumeric(categories.getText()))
+        if(!movieModel.isChosenCategory(categories.getText()))
             movieModel.displayAlert("rating not selected",
                     "please select a rating",
                     "", Alert.AlertType.WARNING);
         //file link is the default text in the textfield
-        if(destinationPath ==null)
-            movieModel.displayAlert("path is not chosen xddddddd",
+        if(!movieModel.isFileLinkCorrect(filelink.getText()))
+            movieModel.displayAlert("path is not chosen xddddd",
                     "please choose a  filepath",
                     "only mp4 and mpeg4 files", Alert.AlertType.WARNING);
     }
 
+
+
     private void saveMovieToDB(ActionEvent actionEvent){
-                movieModel.saveMovieInProgramFolder(destinationPath, originPath);
+        movieModel.saveMovieInProgramFolder(destinationPath, originPath);
         movieModel.save(createObject());
-                closeStage(actionEvent);
+        closeStage(actionEvent);
     }
 
     /**
@@ -112,13 +121,15 @@ public class AddMovieWindowController {
             Movie movie = new Movie(id, name, rating, ratingIMDB, filelink.getText(), lasview, null, imagePath);
             return movie;
     }
-
+/*
     private  boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);
         formatter.parse(str, pos);
         return str.length() == pos.getIndex();
     }
+
+ */
 
     /**
      * just close the scene if the button close is pressed
@@ -137,7 +148,7 @@ public class AddMovieWindowController {
         Node n = (Node) actionEvent.getSource();
         //its destination path
       String insertedRightFileExtension =
-              openFileChooser(n, nameField.getText());
+              getDestinationPath(n, nameField.getText());
       if(insertedRightFileExtension==null){
           movieModel.displayAlert("adding filepath",
                   "please select file with .mp4 / .mpeg4 extension",
@@ -149,18 +160,21 @@ public class AddMovieWindowController {
     }
     //boolean is for data validation
     //if true there was .mp4 / .mpeg4 file inserted
-    public String openFileChooser(Node nodeOfTheScene, String namefieldText){
+    public String getDestinationPath(Node nodeOfTheScene, String namefieldText){
         FileChooser fileChooser = new FileChooser();
 
         //show fileChooser to the user && they decide which file
         File file = openFileChooserWindow(nodeOfTheScene, fileChooser);
 
         //validate data
-        originPath = validateInput(file);
+        if(movieModel.isValidFileExtension(file.getAbsolutePath())){
+            originPath = Path.of(file.getAbsolutePath());
 
         //user inserted .mp4 / mpeg4
-        if(originPath!=null) {
-            destinationPath = getDestinationPath(namefieldText);
+
+            destinationPath = movieModel.getDestinationPath(namefieldText, originPath);
+            System.out.println(destinationPath + "in get destination path method");
+
             if(destinationPath==null)
                 movieModel.displayAlert("adding filepath",
                         "something went wrong",
@@ -170,7 +184,7 @@ public class AddMovieWindowController {
         }
             return null; // if we get there something went wrong
     }
-
+/*
     private Path validateInput(File file) {
         if(file.getAbsolutePath().contains(".mp4") || file.getAbsolutePath().contains(".mpeg4"))
             return  Path.of(file.getAbsolutePath());
@@ -178,13 +192,15 @@ public class AddMovieWindowController {
         return null;
     }
 
+ */
+
     private File openFileChooserWindow(Node n, FileChooser fileChooser){
         Stage stage = (Stage) n.getScene().getWindow();
         fileChooser.setTitle("Choose song");
         File file = fileChooser.showOpenDialog(stage);
         return file;
     }
-
+/*
     private Path getDestinationPath(String namefieldText){
         if (originPath.toString().contains(".mp4"))
             return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mp4" );
@@ -193,6 +209,8 @@ public class AddMovieWindowController {
         else
             return null; //something went wrong. there is weird case when it happens
     }
+
+ */
 
     public void setOne(ActionEvent actionEvent) {
         categories.setText("1");

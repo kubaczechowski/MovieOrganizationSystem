@@ -7,7 +7,7 @@ import sample.be.Category;
 import sample.bll.BLLController;
 import sample.bll.BLLFacade;
 import sample.bll.exception.BLLexception;
-import sample.bll.util.AlertDisplayer;
+import sample.gui.util.AlertDisplayer;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class CategoryModel {
         return true;
     }
 
-    public List<String> searchForSimilar(String newCategory) {
+    public String searchForSimilar(String newCategory) {
         try {
             return logicLayer.getSimilarCategories(newCategory, getAllCategories());
         } catch (BLLexception blLexception) {
