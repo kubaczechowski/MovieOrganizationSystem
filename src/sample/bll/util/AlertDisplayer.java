@@ -5,9 +5,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle;
-
-import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**

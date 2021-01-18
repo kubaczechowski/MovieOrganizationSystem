@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="468.0" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddMovieWindowController">
+<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="468.0"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddMovieWindowController">
    <children>
       <TextField id="txt" fx:id="nameField" layoutX="57.0" layoutY="45.0" prefHeight="27.0" prefWidth="325.0" text="name" />
       <MenuButton fx:id="categories" layoutX="57.0" layoutY="127.0" mnemonicParsing="false" text="rating">

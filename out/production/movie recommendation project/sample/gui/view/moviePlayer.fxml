@@ -10,7 +10,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="800.0" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.MoviePlayerController">
+<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="800.0" stylesheets="@../css/darkStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.MoviePlayerController">
    <bottom>
       <VBox prefHeight="112.0" prefWidth="741.0" BorderPane.alignment="CENTER">
          <children>

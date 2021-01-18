@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="background" prefHeight="151.0" prefWidth="346.0" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddCategoryWindowController">
+<AnchorPane id="background" prefHeight="151.0" prefWidth="346.0"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.AddCategoryWindowController">
    <children>
       <Button layoutX="222.0" layoutY="110.0" mnemonicParsing="false" text="save" />
       <Button layoutX="278.0" layoutY="110.0" mnemonicParsing="false" text="cancel" />

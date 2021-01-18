@@ -1,5 +1,6 @@
 package sample.gui.controller;
 
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -7,24 +8,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.image.ImageView;
-
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.Main;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.gui.model.CategoryItemModel;
 import sample.gui.model.CategoryModel;
 import sample.gui.model.MovieModel;
-import sample.bll.util.AlertDisplayer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,8 +39,9 @@ public class MainWindowController implements Initializable {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private CategoryItemModel categoryItemModel;
-
+    private boolean setDarkMode;
     private boolean sortWithHigherRatings; //initlialy its false
+
 
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
@@ -255,7 +255,12 @@ public class MainWindowController implements Initializable {
         //as a parameter we pass a scene. Scene constructor requiers the Parent type
         //Parent -> The base class for all nodes that have children in the scene graph.
         //All controllers and layouts inherit from a Node abstract superclass
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        if(setDarkMode) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("/sample/gui/css/darkStyle.css");
+        }
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -462,5 +467,22 @@ public class MainWindowController implements Initializable {
             sortWithHigherRatings=false;
 
         movieModel.updateSortingOption(sortWithHigherRatings);
+    }
+
+    public void setSetDarkMode(ActionEvent actionEvent) {
+        if(setDarkMode) {
+            setDarkMode = false;
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add("/sample/gui/css/mainStyle.css");
+        }
+        else {
+            setDarkMode = true;
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add("/sample/gui/css/darkStyle.css");
+        }
     }
 }

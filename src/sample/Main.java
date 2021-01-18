@@ -9,13 +9,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+public static Stage stage;
+
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        stage = primaryStage;
+
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/mainWindow.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("gui/view/deleteUnwatchedMovies.fxml"));
-        primaryStage.setTitle("Movie Organisation System");
-        primaryStage.setScene(new Scene(root));
+        stage.setTitle("Movie Organisation System");
+        stage.setScene(new Scene(root));
+        stage.getScene().getStylesheets().add(getClass().getResource("/sample/gui/css/mainStyle.css").toExternalForm());
         primaryStage.show();
 
         //create loader
