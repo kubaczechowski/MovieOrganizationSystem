@@ -407,20 +407,21 @@ public class MainWindowController implements Initializable {
         //check if this category is added if yes show alert
         //if true show alert
         //if false continue
-        boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
-        if(result==true)
-            movieModel.displayAlert("Category",
-                    "you cannot add one category twice", "such category is added",
-                    Alert.AlertType.WARNING);
-        else{
+        if(selectedMovie!=null && selectedCategory!=null) {
+            boolean result = categoryItemModel.checkIfMovieHasCategory(selectedMovie.getId(), selectedCategory.getId());
+            if (result == true)
+                movieModel.displayAlert("Category",
+                        "you cannot add one category twice", "such category is added",
+                        Alert.AlertType.WARNING);
+            else {
 
-        //do action
-        categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
-        categoryItemModel.load();
-        movieModel.load();
-        System.out.println( "set category" + selectedMovie.getCategoryList());
+                //do action
+                categoryItemModel.addCategoryItem(selectedMovie.getId(), selectedCategory.getId());
+                categoryItemModel.load();
+                movieModel.load();
+                System.out.println("set category" + selectedMovie.getCategoryList());
+            }
         }
-
     }
     public void unsetCategory(ActionEvent actionEvent) {
         //get movie user want to modify and cateogry that has to be removed
