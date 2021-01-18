@@ -11,4 +11,5 @@ public interface CatMovieInterface {
     void deleteCategoryFromMovie(int categoryID, int movieID) throws DALexception;
     boolean checkIfMovieHasSuchCategory(int categoryID, int MovieID) throws DALexception;
     void deleteAllCategoriesForMovie(int movieID) throws DALexception;
+    boolean categoryIsSetOnAnyMovie(int categoryID)throws DALexception;
 }

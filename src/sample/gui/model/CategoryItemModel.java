@@ -75,4 +75,13 @@ public class CategoryItemModel {
         System.out.println("couldnt check if movie has category");
         return true;
     }
+
+    public boolean categoryIsSetOnAnyMovie(int id) {
+        try {
+            return logicLayer.categoryIsSetOnAnyMovie(id);
+        } catch (BLLexception blLexception) {
+            blLexception.printStackTrace();
+        }
+        return true;
+    }
 }

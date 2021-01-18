@@ -374,12 +374,21 @@ public class MainWindowController implements Initializable {
             movieModel.displayAlert("No item selected",
                     "Please select an item", "no category selected",
                     Alert.AlertType.INFORMATION);
-        //show alert to ensure that user wants to delete movie
-        boolean result = movieModel.displayConfirmationAlert("Delete Category",
-                "Do you want to delete category?", "Delete");
-        if(result==true) {
-            categoryModel.delete(selectedItem);
-            categoryModel.load();
+
+        boolean categoryIsSetOnAnyMovie = categoryItemModel.categoryIsSetOnAnyMovie(selectedItem.getId());
+            if(categoryIsSetOnAnyMovie)
+                movieModel.displayAlert("Category",
+                    "please firstly unset category from movies",
+                    "now you can't delete category",
+                    Alert.AlertType.WARNING);
+        else {
+            //show alert to ensure that user wants to delete movie
+            boolean result = movieModel.displayConfirmationAlert("Delete Category",
+                    "Do you want to delete category?", "Delete");
+            if (result == true) {
+                categoryModel.delete(selectedItem);
+                categoryModel.load();
+            }
         }
     }
 

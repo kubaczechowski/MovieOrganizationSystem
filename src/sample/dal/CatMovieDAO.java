@@ -130,6 +130,26 @@ public class CatMovieDAO implements CatMovieInterface {
     }
 
     @Override
+    public boolean categoryIsSetOnAnyMovie(int categoryID) throws DALexception {
+        String query = "SELECT COUNT(1) FROM CatMovie WHERE CategoryId=?;";
+        try (Connection con = databaseConnector.getConnection();
+             PreparedStatement pstat = con.prepareStatement(query)) {
+            pstat.setInt(1, categoryID);
+            ResultSet rs = pstat.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            if(count==0)
+                return false;
+            else
+                return true;
+        } catch (SQLServerException throwables) {
+            throw new DALexception("couldnt check if movie has such category", throwables);
+        } catch (SQLException throwables) {
+            throw new DALexception("couldnt check if movie has such category", throwables);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasSuchCategory(int categoryID, int movieID) throws DALexception {
        // boolean result;
         String query = "SELECT COUNT(1) FROM CatMovie WHERE CategoryId=? AND MovieId=?;";

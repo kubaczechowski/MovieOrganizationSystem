@@ -80,4 +80,6 @@ public interface BLLFacade {
     String lastViewToShow(Movie movie);
 
     boolean checkBoundsOfRating(int parseInt);
+
+    boolean categoryIsSetOnAnyMovie(int id) throws BLLexception;
 }

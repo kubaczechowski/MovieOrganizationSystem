@@ -307,6 +307,15 @@ public class BLLController implements BLLFacade{
     }
 
     @Override
+    public boolean categoryIsSetOnAnyMovie(int id) throws BLLexception {
+        try {
+            return dataaccess.categoryIsSetOnAnyMovie(id);
+        } catch (DALexception daLexception) {
+            throw new BLLexception("Couldn't check if category is somewhere set", daLexception);
+        }
+    }
+
+    @Override
     public boolean checkIfMovieHasCategory(int movieID, int categoryID) throws BLLexception {
         try {
             return dataaccess.checkIfMovieHasSuchCategory(categoryID, movieID);

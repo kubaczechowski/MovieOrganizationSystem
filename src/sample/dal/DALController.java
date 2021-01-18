@@ -129,6 +129,11 @@ public class DALController implements IDALFacade{
         catMovieDAO.deleteAllCategoriesForMovie(movieID);
     }
 
+    @Override
+    public boolean categoryIsSetOnAnyMovie(int categoryID) throws DALexception {
+        return catMovieDAO.categoryIsSetOnAnyMovie(categoryID);
+    }
+
     public void saveFileInProgramFolder(Path destinationPath, Path originPath) throws FileExceptionDAL {
         filesOperations.saveFileInProgramFolder(destinationPath, originPath);
     }
