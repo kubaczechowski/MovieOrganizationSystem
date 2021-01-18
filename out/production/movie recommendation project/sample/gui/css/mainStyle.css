@@ -240,3 +240,6 @@
     -fx-opacity: 1;
     -fx-text-fill: black;
 }
+* {
+    -fx-text-fill: black;
+}

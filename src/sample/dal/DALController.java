@@ -32,7 +32,10 @@ public class DALController implements IDALFacade{
     @Override
     public void deleteMovie(Movie movie) throws DALexception, FileExceptionDAL {
         movieDB.deleteMovie(movie);
-        filesOperations.deleteMovie(movie);
+        // for the sake of test
+        // we use only one file for all the movies so if we delete a file
+        //other movies wont be able to play
+       // filesOperations.deleteMovie(movie);
     }
 
     @Override

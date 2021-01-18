@@ -54,8 +54,13 @@ private static FilesOperations filesOperations;
     @Override
     public void deleteMovie(Movie movie) throws DALexception, FileExceptionDAL {
         try {
-            Files.delete(Path.of(movie.getFilelink()));
-            Files.delete(Path.of(movie.getImagePath()));
+
+            boolean movieExists = Files.deleteIfExists(Path.of(movie.getFilelink()));
+            boolean imgExists = Files.deleteIfExists(Path.of(movie.getImagePath()));
+            if(movieExists&&imgExists) {
+                Files.delete(Path.of(movie.getFilelink()));
+                Files.delete(Path.of(movie.getImagePath()));
+            }
         } catch (IOException e) {
             throw new FileExceptionDAL("Couldn't delete movie file", e);
         }
