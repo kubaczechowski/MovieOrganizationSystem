@@ -13,7 +13,6 @@ Program was developed within two weeks in collaboration with @Laszlo199 and @kam
 - changing rating for a movie
 - playing movie in built in media player
 - searching up a movie title in built-in browser
-- updating lastview each time user plays a movie
 
 ### Adding and removing movies
 ![image](https://user-images.githubusercontent.com/67064580/104903405-3c763d80-5980-11eb-9dd7-aea372c4ca06.png)
@@ -47,7 +46,12 @@ User has to select both category and movie on which they want to make changes an
 User has to select the movie on which will be made changes and then press the "edit" icon in the bottom left corner. Alert will pop up and user will be able to make changes.
 
 ### playing movie in built-in media player
-User has to double click the movie and then movie player will appear
+User has to double click the movie and then movie player will appear. Each time user opens a movie the variable "lastview" is updated to the database.
 
 ![image](https://user-images.githubusercontent.com/67064580/104906909-9aa51f80-5984-11eb-8117-52cdf699d197.png)
 
+
+### looking up a movie in a built in web browser
+To look for a movie in a built in web browser user has to press right button on the mouse which points to the movie they want to check.
+
+![image](https://user-images.githubusercontent.com/67064580/104908952-7860d100-5987-11eb-8660-58db38ffffd4.png)
