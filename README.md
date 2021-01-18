@@ -43,5 +43,11 @@ Adding and removing categories is very straighforward. User decides to do so usi
 ### Setting categories
 User has to select both category and movie on which they want to make changes and then regarding wether they want to set/unset a category they invoke corresponding button (they are located at the bottom right corner)
 
+### Changing rating
+User has to select the movie on which will be made changes and then press the "edit" icon in the bottom left corner. Alert will pop up and user will be able to make changes.
 
+### playing movie in built-in media player
+User has to double click the movie and then movie player will appear
+
+![image](https://user-images.githubusercontent.com/67064580/104906909-9aa51f80-5984-11eb-8117-52cdf699d197.png)
 
