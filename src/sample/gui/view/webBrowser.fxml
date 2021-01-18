@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane id="background" fx:id="anchorPane" prefHeight="541.0" prefWidth="812.0" stylesheets="@../css/darkStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.WebBrowserController">
+<AnchorPane id="background" fx:id="anchorPane" prefHeight="541.0" prefWidth="812.0"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.WebBrowserController">
    <children>
       <TextField fx:id="searchField" layoutX="14.0" layoutY="31.0" prefHeight="28.0" prefWidth="574.0" />
       <Button id="searchImageB" layoutX="594.0" layoutY="33.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="40.0">

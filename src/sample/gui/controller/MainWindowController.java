@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -38,22 +39,7 @@ public class MainWindowController implements Initializable {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private CategoryItemModel categoryItemModel;
-
-    //private String theme1Url = getClass().getResource("mainStyle.css").toExternalForm();
-    //private String theme2Url = getClass().getResource("darkStyle.css").toExternalForm();
-
-
-    @FXML
-    JFXToggleButton tbdarkMode;
-
-    @FXML
-    Button darkbtn;
-
-
-
-
-
-
+    private boolean setDarkMode;
     private boolean sortWithHigherRatings; //initlialy its false
 
 
@@ -269,7 +255,12 @@ public class MainWindowController implements Initializable {
         //as a parameter we pass a scene. Scene constructor requiers the Parent type
         //Parent -> The base class for all nodes that have children in the scene graph.
         //All controllers and layouts inherit from a Node abstract superclass
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        if(setDarkMode) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("/sample/gui/css/darkStyle.css");
+        }
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -477,24 +468,20 @@ public class MainWindowController implements Initializable {
         movieModel.updateSortingOption(sortWithHigherRatings);
     }
 
-    public void btnDarkMode(ActionEvent event) {
-
-        if (tbdarkMode.isDisable()){
-            Main.stage.getScene().getStylesheets().clear();
-            Main.stage.getScene().setUserAgentStylesheet(null);
-            Main.stage.getScene().getStylesheets().add(getClass().getResource("/sample/gui/css/darkStyle.css").toExternalForm());
+    public void setSetDarkMode(ActionEvent actionEvent) {
+        if(setDarkMode) {
+            setDarkMode = false;
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add("/sample/gui/css/mainStyle.css");
         }
         else {
-            Main.stage.getScene().getStylesheets().clear();
-            Main.stage.getScene().setUserAgentStylesheet(null);
-            Main.stage.getScene().getStylesheets().add(getClass().getResource("/sample/gui/css/mainStyle.css").toExternalForm());
-
-
+            setDarkMode = true;
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add("/sample/gui/css/darkStyle.css");
         }
-
-
     }
-
-
-
 }
