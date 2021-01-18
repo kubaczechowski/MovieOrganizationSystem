@@ -16,5 +16,6 @@
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="library" name="org.jcodec:jcodec:0.2.5" level="project" />
     <orderEntry type="library" name="org.jcodec:jcodec-javase:0.2.5" level="project" />
+    <orderEntry type="library" name="com.jfoenix:jfoenix:9.0.10" level="project" />
   </component>
 </module>

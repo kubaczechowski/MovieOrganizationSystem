@@ -1,5 +1,6 @@
 package sample.gui.controller;
 
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -11,20 +12,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.image.ImageView;
-
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.Main;
 import sample.be.Category;
 import sample.be.Movie;
 import sample.gui.model.CategoryItemModel;
 import sample.gui.model.CategoryModel;
 import sample.gui.model.MovieModel;
-import sample.bll.util.AlertDisplayer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +39,23 @@ public class MainWindowController implements Initializable {
     private CategoryModel categoryModel;
     private CategoryItemModel categoryItemModel;
 
+    //private String theme1Url = getClass().getResource("mainStyle.css").toExternalForm();
+    //private String theme2Url = getClass().getResource("darkStyle.css").toExternalForm();
+
+
+    @FXML
+    JFXToggleButton tbdarkMode;
+
+    @FXML
+    Button darkbtn;
+
+
+
+
+
+
     private boolean sortWithHigherRatings; //initlialy its false
+
 
     public MainWindowController() {
         movieModel = MovieModel.getInstance();
@@ -462,4 +476,25 @@ public class MainWindowController implements Initializable {
 
         movieModel.updateSortingOption(sortWithHigherRatings);
     }
+
+    public void btnDarkMode(ActionEvent event) {
+
+        if (tbdarkMode.isDisable()){
+            Main.stage.getScene().getStylesheets().clear();
+            Main.stage.getScene().setUserAgentStylesheet(null);
+            Main.stage.getScene().getStylesheets().add(getClass().getResource("/sample/gui/css/darkStyle.css").toExternalForm());
+        }
+        else {
+            Main.stage.getScene().getStylesheets().clear();
+            Main.stage.getScene().setUserAgentStylesheet(null);
+            Main.stage.getScene().getStylesheets().add(getClass().getResource("/sample/gui/css/mainStyle.css").toExternalForm());
+
+
+        }
+
+
+    }
+
+
+
 }

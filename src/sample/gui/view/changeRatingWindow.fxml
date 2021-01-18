@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane id="background" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.ChangeRatingWindowController">
+<AnchorPane id="background" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/darkStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.controller.ChangeRatingWindowController">
 
 </AnchorPane>
