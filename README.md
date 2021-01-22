@@ -6,7 +6,7 @@ Program was developed within two weeks in collaboration with @Laszlo199 and @kam
  
 ## Which functionalities are included?
 
-- [adding / removing movies](###adding-and-removing-movies)
+- adding / removing movies
 - adding / removing categories
 - setting multiple categories per movie
 - filtering movies by title, rating and category
