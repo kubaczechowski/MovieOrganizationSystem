@@ -115,12 +115,12 @@ public class SearchForSimilarTitles {
         //the most crushial part
         for(int col=1; col<dist.length; col++){
             for(int row =1; row< dist[0].length; row++ ){
-                //if characters are eqal
+                //if characters are eqal dont do anything just paste
                 if(word1.charAt(col -1) == word2.charAt(row-1))
                     dist[col][row] = dist[col-1][row-1];
                 else{
                     //get the smallest number from all the movements
-                    //get the smallest from: delete, replace, insert
+                    //get the smallest from: insert, replace, delete
                     dist[col][row] = Math.min(dist[col-1][row], Math.min(
                             dist[col-1][row-1], dist[col][row-1]) ) +1;
                 }

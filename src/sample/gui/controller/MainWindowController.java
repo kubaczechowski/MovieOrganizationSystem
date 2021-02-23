@@ -138,6 +138,7 @@ public class MainWindowController implements Initializable {
         return moviesTable.getSelectionModel().getSelectedItem();
     }
 
+
     private MoviePlayerController openMoviePlayer(Movie movieToPlay)
     {
         FXMLLoader loader = new FXMLLoader(getClass().
@@ -344,27 +345,29 @@ public class MainWindowController implements Initializable {
                "please add new category", "new category", "category");
         //if user didn't cancel or nothing was inserted it would be null
         if(newCategory!=null){
-            //check in db if such category exists
             boolean exists = categoryModel.chechIfExists(newCategory);
-
             String namesOfSimilarCategories = categoryModel.searchForSimilar(newCategory);
-            //show alert
-            if(exists)
-                movieModel.displayAlert("Category",
-                        "you cannot add one category twice", "such category is added",
-                        Alert.AlertType.WARNING);
-            else if(namesOfSimilarCategories!=null){
-                boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar categories",
-                        "Here are similar  categories: " + namesOfSimilarCategories, "if you want to add this category press ok" );
-                if(doYouWantToSave){
-                    Category category = new Category(newCategory);
-                    categoryModel.save(category);
-                }
-            }
-            else {
+            showAlerts(exists, namesOfSimilarCategories, newCategory);
+            saveCategory(namesOfSimilarCategories, exists, newCategory);
+        }
+    }
+    private void showAlerts(boolean exists, String namesOfSimilarCategories, String newCategory){
+        if(exists)
+            movieModel.displayAlert("Category",
+                    "you cannot add one category twice", "such category is added",
+                    Alert.AlertType.WARNING);
+    }
+    private void saveCategory(String namesOfSimilarCategories, boolean exists, String newCategory){
+          if(namesOfSimilarCategories!=null && !exists ){
+            boolean doYouWantToSave = movieModel.displayConfirmationAlert("There are similar categories",
+                    "Here are similar  categories: " + namesOfSimilarCategories, "if you want to add this category press ok" );
+            if(doYouWantToSave){
                 Category category = new Category(newCategory);
                 categoryModel.save(category);
             }
+        }else if(namesOfSimilarCategories==null && !exists) {
+            Category category = new Category(newCategory);
+            categoryModel.save(category);
         }
     }
 

@@ -31,13 +31,6 @@ public class AddMovieWindowController {
 
     public void saveMovie(ActionEvent actionEvent) {
         showAlertsIfNeeded();
-/*
-        if(movieModel.isNumeric(categories.getText()) && !filelink.getText().equals("file link") &&
-                !filelink.getText().isEmpty()
-                && nameField.getText()!=null && !nameField.getText().isEmpty()
-        && !nameField.getText().equals("name"))
-        {
- */
         if(movieModel.isChosenCategory(categories.getText()) && movieModel.isFileLinkCorrect(filelink.getText()) &&
         movieModel.isNameFieldCorrect(nameField.getText())){
 
@@ -65,21 +58,6 @@ public class AddMovieWindowController {
         }
     }
 
-/*
-    private String getListOfSimilarMoviesTitles(List<String> namesOfSimilarMovies){
-        String similar = " ";
-        for (String item : namesOfSimilarMovies) {
-            //I dont want to start with a comma not like this: ,item1,item2
-            //add comma if already there is an item
-            if (similar.length() > 1)
-                similar += ", ";
-
-            similar += item + " ";
-        }
-        return similar;
-    }
-
- */
 
     private void showAlertsIfNeeded() {
         if(!movieModel.isNameFieldCorrect(nameField.getText()))
@@ -121,15 +99,6 @@ public class AddMovieWindowController {
             Movie movie = new Movie(id, name, rating, ratingIMDB, filelink.getText(), lasview, null, imagePath);
             return movie;
     }
-/*
-    private  boolean isNumeric(String str) {
-        NumberFormat formatter = NumberFormat.getInstance();
-        ParsePosition pos = new ParsePosition(0);
-        formatter.parse(str, pos);
-        return str.length() == pos.getIndex();
-    }
-
- */
 
     /**
      * just close the scene if the button close is pressed
@@ -184,15 +153,6 @@ public class AddMovieWindowController {
         }
             return null; // if we get there something went wrong
     }
-/*
-    private Path validateInput(File file) {
-        if(file.getAbsolutePath().contains(".mp4") || file.getAbsolutePath().contains(".mpeg4"))
-            return  Path.of(file.getAbsolutePath());
-
-        return null;
-    }
-
- */
 
     private File openFileChooserWindow(Node n, FileChooser fileChooser){
         Stage stage = (Stage) n.getScene().getWindow();
@@ -200,17 +160,6 @@ public class AddMovieWindowController {
         File file = fileChooser.showOpenDialog(stage);
         return file;
     }
-/*
-    private Path getDestinationPath(String namefieldText){
-        if (originPath.toString().contains(".mp4"))
-            return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mp4" );
-        else if(originPath.toString().contains(".mpeg4"))
-            return destinationPath = Path.of("src/../Movies/" + namefieldText + ".mpeg4" );
-        else
-            return null; //something went wrong. there is weird case when it happens
-    }
-
- */
 
     public void setOne(ActionEvent actionEvent) {
         categories.setText("1");

@@ -73,8 +73,9 @@ public class MoviePlayerController implements Initializable {
        //set width and height
        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
-        mediaView.setPreserveRatio(true);
+       mediaView.setPreserveRatio(true);
     }
+
     private Stage getStage(){
         Stage stage = (Stage) label.getScene().getWindow();
         return stage;

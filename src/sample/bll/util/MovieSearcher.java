@@ -163,6 +163,7 @@ public class MovieSearcher {
      * @return indexOfFound
      */
     //i think it doesnt work as it should
+    //actually it must work but list wasnt sorted in ascending order and i did last case wrongly
     private int binarySearch2(int minimalRating)
     {
         int low=0;
@@ -173,25 +174,30 @@ public class MovieSearcher {
                 return middle;
             if(allMovies.get(middle).getRating()< minimalRating)
                 low =  middle+1;
-            if(allMovies.get(middle).getRating()> minimalRating)
-                low =  middle-1;
+           // if(allMovies.get(middle).getRating()> minimalRating)
+              //  low =  middle-1; // thats wrong
+                //it should be high = middle -1;
         }
         //if nothing was found. its indication that nothing was found.
         return -1;
     }
 
-    private int binarySearch(int minimalRating)
+    //its a kind of binary search
+    // we need an ascending array. once i didnt have that and all that comparisons didnt make sense
+    private int binarySearch(int minimalRating) // three cases minimal is smaller, equal to or bigger than minimal rating(searched value)
     {
-        int low=0;
-        int high = allMovies.size()-1;
+        int low=0; // first index
+        int high = allMovies.size()-1; //last index
         int middle; // we nn
         while(low<high){
-            middle = low + (high-low)/2;
+            middle = low + (high-low)/2; // if there is no middle (even number) the first number we round down
 
-            if(allMovies.get(middle).getRating() < minimalRating)
+            if(allMovies.get(middle).getRating() < minimalRating) // mid is smaller than searched number
                 low =  middle + 1;
+            // if(allMovies.get(middle).getRating()==minimalRating)
+            //return middle; now for the best scenario O(1)
             else
-                high=middle;
+                high=middle; // minimal rating is smaller or equal
         }
         //if nothing was found. its indication that nothing was found.
 
